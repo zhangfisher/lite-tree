@@ -1,0 +1,27 @@
+{
+  "name": "lite-tree",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.vue",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@tsconfig/node20": "^20.1.2",
+    "@types/node": "^20.11.28",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "@vue/tsconfig": "^0.5.1",
+    "less": "^4.2.0",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.2",
+    "vite": "^5.1.6",
+    "vite-plugin-vue-devtools": "^7.0.17",
+    "vue-tsc": "^2.0.6"
+  },
+  "dependencies": {
+    "vue": "^3.4.21"
+  }
+}
