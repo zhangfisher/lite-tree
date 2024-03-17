@@ -13,12 +13,12 @@ import LiteTree from '../../src/index.vue'
           {
             title: "行政中心",
             children:[
-              {title: "总裁办"},
+              {title: "{color:red;font-weight:bold;}总裁办"},
               {title: "人力资源部",tags:['{color:red;}重点','{success}紧急']},
               {title: "财务部",mark:"success"},
               {title: "行政部"},
               {title: "法务部",mark:"warning"},
-              {title: "审计部"},
+              {title: "审计部",style:"font-size:16px;font-style:italic"},
               {title: "信息中心",memo:"备用"},
               {title: "安全保卫部",memo:"{color:red}+"}
             ]
@@ -33,7 +33,20 @@ import LiteTree from '../../src/index.vue'
               {title: "市场策划部"},
               {title: "市场营销部",memo:"好",tags:["{info}ddddd"]}
             ]
-          } 
+          },
+          {
+            title: "研发中心",
+            children:[
+              {title: "移动研发部",mark:"warning"},
+              {title: "平台研发部",tags:["{success}Java","{error}Go"]},
+              {title: "测试部"},
+              {title: "运维部"},
+              {title: "产品部",mark:"success"},
+              {title: "设计部"},
+              {title: "项目管理部",memo:"{color:red;}+"}
+            ]
+
+          }
         ]
       }      
     </LiteTree> 

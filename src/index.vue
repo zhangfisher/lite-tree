@@ -1,33 +1,38 @@
 <template>
   <ul :class="['lite-tree-nodes',{'root':root}]">
-    <li v-for="node in nodes" :key="node.id || node.title">
+    <li v-for="node in nodes" :key="node.id || node.title" >
       <span class="lite-tree-node"
         :class="node.mark"
         @click="toggleNode(node)"
+        :style="node.style"
       >
         <span class="indent" :style="{width:indent+'px'}"></span>
-        <span class="control" :class="hasChildren(node) ? ['arrow',{open:node.open==undefined ? true : node.open}] : null"></span>       
+        <span :class="hasChildren(node) ? ['arrow',{open:node.open==undefined ? true : node.open}] : null"></span>       
         <span class="icon"></span>
-        <span class="title">{{ node.title }}</span>
+        <span class="title" :style="withStyleString(node.title).style">{{ withStyleString(node.title).value }}</span>
         <Memo :value="node.memo"/>
         <Tag v-for=" tag in node.tags" :key="tag" :value="tag"/>        
       </span>      
-      <LiteTree v-if="hasChildren(node) && isOpen(node)" 
-        :root="false"
-        :indent="indent+20"
-        :class="isOpen(node) ? 'open' : 'close'"
-      >
-            {{ node.children }}
-      </LiteTree>
+      <SlideUpDown :active="isOpen(node)" :duration="200">
+        <LiteTree v-if="hasChildren(node) && isOpen(node)" 
+          :root="false"
+          :indent="indent+20"
+          :class="isOpen(node) ? 'open' : 'close'"
+        >
+              {{ node.children }}
+        </LiteTree>
+    </SlideUpDown>
     </li>    
   </ul>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, defineProps } from 'vue';
+import { defineProps } from 'vue';
 import { safeParseJson } from "./utils";
 import Memo from './Memo.vue';
 import Tag from './Tag.vue';
+import { withStyleString } from './utils';
+import SlideUpDown from 'vue-slide-up-down'
 
 interface LiteTreeNode {
   id?: string;
@@ -64,7 +69,6 @@ const hasChildren = (node: LiteTreeNode): boolean=>{
 const isOpen = (node: LiteTreeNode): boolean=>{
   return node.open==undefined ? true : node.open;
 };
-
 
 </script>
 
@@ -150,14 +154,10 @@ export default {
     }
     .title{
       flex-grow: 1;
-    }
-    .control{
-      width: 20px;
-      height:10px;
-    }
+    } 
     .arrow{
-      width: 0;  
-      height: 0;  
+      width: 20px;
+      height:10px;  
       border-left: 10px solid #999;   
       border-right: 10px solid transparent;  
       border-bottom: 5px solid transparent;   
@@ -181,5 +181,4 @@ export default {
     } 
   }
 }  
-
-</style>
+</style> 

@@ -8,6 +8,9 @@ dependencies:
   vue:
     specifier: ^3.4.21
     version: 3.4.21(typescript@5.4.2)
+  vue-slide-up-down:
+    specifier: ^3.0.0
+    version: 3.0.0(vue@3.4.21)
 
 devDependencies:
   '@tsconfig/node20':
@@ -2327,6 +2330,14 @@ packages:
     optionalDependencies:
       fsevents: 2.3.3
     dev: true
+
+  /vue-slide-up-down@3.0.0(vue@3.4.21):
+    resolution: {integrity: sha512-4ckwKgpkPfjDmwVKdu5UANvxt7nKemIKpqbRGhcekgDuvEwep8YFwkb8G9dix4lL+Wt2G73X1Z90c1oPJvXdOQ==}
+    peerDependencies:
+      vue: '>=3.0.0'
+    dependencies:
+      vue: 3.4.21(typescript@5.4.2)
+    dev: false
 
   /vue-template-compiler@2.7.16:
     resolution: {integrity: sha512-AYbUWAJHLGGQM7+cNTELw+KsOG9nl2CnSv467WobS5Cv9uk3wFcnr1Etsz2sEIHEZvw1U+o9mRlEO6QbZvUPGQ==}

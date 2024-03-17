@@ -27,7 +27,7 @@ const badKeyRegex = /([\s\[\,\{\b]{1})(?<!\"])(\w+)(?!\")(\s*\:)/gm
  * @returns 
  */
 export function safeParseJson(str:string,callback?:(key:string,value:any)=>any){
-    let matched;     
+    
     // 先尝试解析一个JSON字符串，如果解析失败，再尝试进行修复
     try{
         return JSON.parse(str,(key,value)=>{
@@ -54,35 +54,33 @@ export function safeParseJson(str:string,callback?:(key:string,value:any)=>any){
         .replaceAll("“","\"")
         .replaceAll("”","\"")
 
-    
-    // // 将key处理没有""包裹的全部加上""
 
-    // while ((matched = badJsonRegex.exec(resultStr)) !== null) {
-    //     if (matched.index === badJsonRegex.lastIndex) {
-    //         badJsonRegex.lastIndex++;
-    //     }                
-    //     let oldLen = resultStr.length
-    //     let item = matched[0].trim()
-    //     const matchedLength = matched[0].length
-    //     if(item.startsWith("'") && item.endsWith("'")){
-    //         item = item.substring(1,item.length-1)
-    //     }
-    //     item = '"'+item+'"'
-    //     resultStr = `${resultStr.substring(0,matched.index)}${item}${resultStr.substring(matched.index+matchedLength)}`
-    //     badJsonRegex.lastIndex += resultStr.length - oldLen
-    // }
-    try{
-        return JSON.parse(resultStr,(key,value)=>{
-            if(typeof(value)=="string") value= decodeURI(value)
-            if(callback){
-                return callback(key,value)
-            }
-            return value
-        })
-    }catch(e){
-        return JSON.parse(str,callback)
-    }
+   
+    return JSON.parse(resultStr,(key,value)=>{
+        if(typeof(value)=="string") value= decodeURI(value)
+        if(callback){
+            return callback(key,value)
+        }
+        return value
+    }) 
     
 } 
  
  
+/**
+ * 一个简单的形式如
+ * 
+ * "{css样式}xxxx"的字符串，字符串开头的{xxxx}会被解析为css样式
+ * 
+ * 如：  withStyleString("{color:red}hello world")  =  ["color:red",hello world]
+ * 
+ * @param str 
+ */
+export function withStyleString(str:string){
+    let style = str.match(/^\{.*?\}/)?.[0]
+    if(style){
+        str = str.replace(style,"")
+        style = style.slice(1,-1)
+    }
+    return {style,value:str}
+}
