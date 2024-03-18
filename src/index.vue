@@ -59,7 +59,6 @@ const props = defineProps({
 });
 
 const toggleNode = (node: LiteTreeNode): void => {
-  console.log('toggleNode:',node);
   node.open =node.open==undefined ? false : !node.open;
 };
 const hasChildren = (node: LiteTreeNode): boolean=>{
@@ -103,12 +102,13 @@ export default {
 }
 
 </script>
-<style lang="less" scoped>
+<style bundle lang="less" >
+
 .lite-tree-nodes {
   color: #555;
   display: flex;
   flex-direction: column;
-  list-style: none;  
+  list-style: none!important;;  
   padding: 0;
   &.root{
     padding: 8px;

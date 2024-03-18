@@ -5,8 +5,8 @@
 
 
 // 匹配键名和值不规范的JSON字符串
-//const badJsonRegex = /(\s*[\w\u4e00-\u9fa5]+\s*(?=:))|((?=:\s*)\'.*\')|(\'.*?\'(?=\s*:))|((?<=:\s*)\'.*?\')/gm
-const badJsonRegex =/(\s*[\w\u4e00-\u9fa5]+\s*(?=:))|((?=:\s*)\'.*\')|(\'.*?\'(?=\s*:))|((?<=:\s*)\'.*?\')|((?<=,|\[\s*)\'.*?\')/gm
+// //const badJsonRegex = /(\s*[\w\u4e00-\u9fa5]+\s*(?=:))|((?=:\s*)\'.*\')|(\'.*?\'(?=\s*:))|((?<=:\s*)\'.*?\')/gm
+// const badJsonRegex =/(\s*[\w\u4e00-\u9fa5]+\s*(?=:))|((?=:\s*)\'.*\')|(\'.*?\'(?=\s*:))|((?<=:\s*)\'.*?\')|((?<=,|\[\s*)\'.*?\')/gm
 
 
 // 匹配未添加逗号的行
@@ -27,7 +27,7 @@ const badKeyRegex = /([\s\[\,\{\b]{1})(?<!\"])(\w+)(?!\")(\s*\:)/gm
  * @returns 
  */
 export function safeParseJson(str:string,callback?:(key:string,value:any)=>any){
-    
+    console.log("JSONTree = ",str)
     // 先尝试解析一个JSON字符串，如果解析失败，再尝试进行修复
     try{
         return JSON.parse(str,(key,value)=>{

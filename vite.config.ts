@@ -4,25 +4,32 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import VueDevTools from 'vite-plugin-vue-devtools'
 import { resolve } from 'node:path'
+import StyleBundler from "vite-plugin-vue-style-bundler"
+import dts from 'vite-plugin-dts'
+
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
+    StyleBundler(),
     VueDevTools(),
+    dts({ rollupTypes: true })
   ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
-  },
-  build:{
+    
+  },   
+  build:{    
     lib: {
       entry: resolve(__dirname, 'src/index.vue'),
       name: 'litetree',
       // the proper extensions will be added
       fileName: 'litetree'
-    },
+
+    },    
     rollupOptions: {
       // 确保外部化处理那些你不想打包进库的依赖
       external: ['vue'],
@@ -32,6 +39,12 @@ export default defineConfig({
           vue: 'Vue'
         }
       }
+    },
+    commonjsOptions: {
+      sourceMap:true
     }
+  },
+  esbuild:{
+    sourcemap:true
   }
 })

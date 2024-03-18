@@ -34,7 +34,7 @@ if (tag.style in presetStyles) {
 export default {}
 
 </script>
-<style lang="less" scoped>
+<style lang="less" bundle>
 .lite-tree-node-tag {
     background-color: #eee;
     color: #333;

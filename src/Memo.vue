@@ -22,7 +22,7 @@ const memo= reactive(withStyleString(props.value))
 export default {}
 </script>
    
-<style lang="less" scoped>
+<style lang="less" bundle>
 .lite-tree-node-memo {
     color: #aaa;
     margin-right: 4px;
