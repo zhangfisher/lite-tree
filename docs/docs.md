@@ -47,8 +47,8 @@ import Tree from 'lite-tree'
                 {title: "行政部"},
                 {title: "法务部",mark:"warning"},
                 {title: "审计部",style:"font-size:16px;font-style:italic"},
-                {title: "信息中心",memo:"备用"},
-                {title: "安全保卫部",memo:"{color:red}+"}
+                {title: "信息中心",comment:"备用"},
+                {title: "安全保卫部",comment:"{color:red}+"}
             ]
         },
         { 
@@ -59,7 +59,7 @@ import Tree from 'lite-tree'
                 {title: "客服部"},
                 {title: "品牌部",mark:'error'},
                 {title: "市场策划部"},
-                {title: "市场营销部",memo:"好",tags:["{info}ddddd"]}
+                {title: "市场营销部",comment:"好",tags:["{info}ddddd"]}
             ]
         },
         {
@@ -71,7 +71,7 @@ import Tree from 'lite-tree'
                 {title: "运维部"},
                 {title: "产品部",mark:"success"},
                 {title: "设计部"},
-                {title: "项目管理部",memo:"{color:red;}+"}
+                {title: "项目管理部",comment:"{color:red;}+"}
             ]
         }
         ]
@@ -86,7 +86,7 @@ import Tree from 'lite-tree'
 <Tree>
   {
         title: "A公司",
-        expend: true,
+        open: true,
         children:[          
           {
             title: "行政中心",
@@ -97,8 +97,8 @@ import Tree from 'lite-tree'
               {title: "行政部"},
               {title: "法务部",mark:"warning"},
               {title: "审计部",style:"font-size:16px;font-style:italic"},
-              {title: "信息中心",memo:"备用"},
-              {title: "安全保卫部",memo:"{color:red}+"}
+              {title: "信息中心",comment:"备用"},
+              {title: "安全保卫部",comment:"{color:red}+"}
             ]
           },
           { 
@@ -109,7 +109,7 @@ import Tree from 'lite-tree'
               {title: "客服部"},
               {title: "品牌部",mark:'error'},
               {title: "市场策划部"},
-              {title: "市场营销部",memo:"好",tags:["{info}ddddd"]}
+              {title: "市场营销部",comment:"好",tags:["{info}ddddd"]}
             ]
           },
           {
@@ -121,7 +121,7 @@ import Tree from 'lite-tree'
               {title: "运维部"},
               {title: "产品部",mark:"success"},
               {title: "设计部"},
-              {title: "项目管理部",memo:"{color:red;}+"}
+              {title: "项目管理部",comment:"{color:red;}+"}
             ]
           }
         ]
@@ -146,6 +146,7 @@ import Tree from 'lite-tree'
     "style": "color:red",   // 节点CSS
     "mark": "success",      // 节点标记，取值为`success`、`info`、`warning`、`error`
     "tags": ["",""],        // 节点标签
+    "comment":"",           // 节点注释
     "children":[
         // 子节点
     ]

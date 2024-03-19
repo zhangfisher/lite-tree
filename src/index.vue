@@ -10,7 +10,7 @@
         <span :class="hasChildren(node) ? ['arrow',{open:node.open==undefined ? true : node.open}] : null"></span>       
         <span class="icon"></span>
         <span class="title" :style="withStyleString(node.title).style">{{ withStyleString(node.title).value }}</span>
-        <Memo :value="node.memo"/>
+        <Comment :value="node.comment"/>
         <Tag v-for=" tag in node.tags" :key="tag" :value="tag"/>        
       </span>      
       <SlideUpDown :active="isOpen(node)" :duration="200">
@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import { defineProps, reactive, ref, useSlots } from 'vue';
 import { safeParseJson } from "./utils";
-import Memo from './Memo.vue';
+import Comment from './Comment.vue';
 import Tag from './Tag.vue';
 import { withStyleString } from './utils';
 // @ts-ignore
@@ -41,7 +41,7 @@ interface LiteTreeNode {
   icon?: string;
   open?: boolean;    
   mark?: 'success' | 'warning' | 'error' | 'info';
-  memo?:string
+  comment?:string
   style?:string
   tags?:string[]
   children?: LiteTreeNode[];
@@ -173,7 +173,7 @@ export default {
         transition: all 0.2s;
       }     
     } 
-    .memo{
+    .comment{
       color: #aaa;    
     }
  
@@ -183,4 +183,4 @@ export default {
     } 
   }
 }  
-</style> 
+</style> ./Comment.vue

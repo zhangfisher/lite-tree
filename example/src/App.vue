@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import LiteTree from '../../src/index.vue'
-import LiteIcon from '../../src/Icon.vue'
+import LiteTree from '../../src/index.vue' 
 
 </script>
 
@@ -20,8 +19,8 @@ import LiteIcon from '../../src/Icon.vue'
               {title: "行政部"},
               {title: "法务部",mark:"warning"},
               {title: "审计部",style:"font-size:16px;font-style:italic"},
-              {title: "信息中心",memo:"备用"},
-              {title: "安全保卫部",memo:"{color:red}+"} 
+              {title: "信息中心",comment:"备用"},
+              {title: "安全保卫部",comment:"{color:red}+"} 
             ]
           },
           { 
@@ -33,7 +32,7 @@ import LiteIcon from '../../src/Icon.vue'
               {title: "客服部"},
               {title: "品牌部",mark:'error'},
               {title: "市场策划部"},
-              {title: "市场营销部",memo:"好",tags:["{info}ddddd"]}
+              {title: "市场营销部",comment:"好",tags:["{info}ddddd"]}
             ]
           },
           {
@@ -45,7 +44,7 @@ import LiteIcon from '../../src/Icon.vue'
               {title: "运维部"},
               {title: "产品部",mark:"success"},
               {title: "设计部"},
-              {title: "项目管理部",memo:"{color:red;}+"}
+              {title: "项目管理部",comment:"{color:red;}+"}
             ]
 
           }
@@ -56,6 +55,9 @@ import LiteIcon from '../../src/Icon.vue'
 </template>
 
 <style scoped>
+main{
+  width:600px;
+}
 header {
   line-height: 1.5;
 }

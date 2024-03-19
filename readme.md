@@ -49,8 +49,8 @@ import Tree from 'lite-tree'
                 {title: "Administrative Department"},
                 {title: "Legal Department",mark:"warning"},
                 {title: "Audit Department",style:"font-size:16px;font-style:italic"},
-                {title: "Information Center",memo:"备用"},
-                {title: "Security Department",memo:"{color:red}+"}
+                {title: "Information Center",comment:"hi"},
+                {title: "Security Department",comment:"{color:red}+"}
             ]
         },
         { 
@@ -61,7 +61,7 @@ import Tree from 'lite-tree'
                 {title: "Customer Service Department"},
                 {title: "Brand Department",mark:'error'},
                 {title: "Market Planning Department"},
-                {title: "Market Marketing Department",memo:"Good",tags:["{info}ddddd"]}
+                {title: "Market Marketing Department",comment:"Good",tags:["{info}ddddd"]}
             ]
         },
         {
@@ -99,11 +99,10 @@ The final rendering effect is as follows:
 ```json
 {
     "title": "A Company",       // Node title, for display
-
     "open": true,           // Whether to expand
-
     "style": "color:red",   // node css style
     "mark": "success",      //  `success`、`info`、`warning`、`error`
+    "comment":"",          
     "tags": ["",""],        // 
     "children":[
         // ...
@@ -114,7 +113,7 @@ The final rendering effect is as follows:
 - The node `title`, `mark` or `tags` string is prefixed with `{...}` to declare `css` style, such as `tags:["{color:red;font-weight:bold;}OK","{color:blue}+"]` means `OK` is red and bold, `+` is blue.
 - Each node can be pre-marked with `mark`, with values of `success`, `info`, `warning`, `error`, which are rendered in different colors.
 - Each node can be pre-tagged with `tags`, and the tags are rendered in different colors.
-- Each node can be pre-marked with `memo`, which is rendered in different colors.
+- Each node can be pre-marked with `comment`, which is rendered in different colors.
 - The node can declare `css` style through `style`.
 - suppoer event? Not support yet, because this component is mainly used in the `vitepress` static page for static display, so it does not support events for the time being.
 

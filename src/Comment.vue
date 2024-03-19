@@ -1,5 +1,5 @@
 <template>
-    <span v-if="value && String(value).trim().length>0" class="lite-tree-node-memo" :style="memo.style">{{memo.value}}</span>    
+    <span v-if="value && String(value).trim().length>0" class="lite-tree-node-comment" :style="comment.style">{{comment.value}}</span>    
 </template>
   
 <script setup lang="ts">
@@ -13,7 +13,7 @@ const props = defineProps({
     }
 });
   
-const memo= reactive(withStyleString(props.value)) 
+const comment= reactive(withStyleString(props.value)) 
 
 </script>
 
@@ -23,7 +23,7 @@ export default {}
 </script>
    
 <style lang="less" bundle>
-.lite-tree-node-memo {
+.lite-tree-node-comment {
     color: #aaa;
     margin-right: 4px;
 }  
