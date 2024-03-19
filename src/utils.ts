@@ -27,7 +27,6 @@ const badKeyRegex = /([\s\[\,\{\b]{1})(?<!\"])(\w+)(?!\")(\s*\:)/gm
  * @returns 
  */
 export function safeParseJson(str:string,callback?:(key:string,value:any)=>any){
-    console.log("JSONTree = ",str)
     // 先尝试解析一个JSON字符串，如果解析失败，再尝试进行修复
     try{
         return JSON.parse(str,(key,value)=>{
@@ -37,8 +36,6 @@ export function safeParseJson(str:string,callback?:(key:string,value:any)=>any){
             return value
         })
     }catch{}
-    
-
     // 1. 如果行未添加逗号，添加逗号
     let resultStr = str.replaceAll(addLineCommaRegex,",\n")
     // 2. 匹配使用""或''包裹字符串，全部编码以防止后继正则出错
@@ -52,10 +49,7 @@ export function safeParseJson(str:string,callback?:(key:string,value:any)=>any){
     // 4. 将一些全角字符转换为半角字符，容错
     resultStr = resultStr.replaceAll("，",",")
         .replaceAll("“","\"")
-        .replaceAll("”","\"")
-
-
-   
+        .replaceAll("”","\"")   
     return JSON.parse(resultStr,(key,value)=>{
         if(typeof(value)=="string") value= decodeURI(value)
         if(callback){
@@ -83,4 +77,16 @@ export function withStyleString(str:string){
         style = style.slice(1,-1)
     }
     return {style,value:str}
+}
+
+
+
+/**
+ * 压缩svg字符串
+ * 
+ * @param svg 
+ * @returns 
+ */
+export function compressSvg(svg:string){
+    return svg
 }

@@ -14,7 +14,7 @@
         <Tag v-for=" tag in node.tags" :key="tag" :value="tag"/>        
       </span>      
       <SlideUpDown :active="isOpen(node)" :duration="200">
-        <LiteTree v-if="hasChildren(node) && isOpen(node)" 
+        <LiteTree v-if="hasChildren(node) && isOpen(node) && !hasError" 
           :root="false"
           :indent="indent+20"
           :class="isOpen(node) ? 'open' : 'close'"
@@ -27,11 +27,12 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
+import { defineProps, reactive, ref, useSlots } from 'vue';
 import { safeParseJson } from "./utils";
 import Memo from './Memo.vue';
 import Tag from './Tag.vue';
 import { withStyleString } from './utils';
+// @ts-ignore
 import SlideUpDown from 'vue-slide-up-down'
 
 interface LiteTreeNode {
@@ -40,6 +41,9 @@ interface LiteTreeNode {
   icon?: string;
   open?: boolean;    
   mark?: 'success' | 'warning' | 'error' | 'info';
+  memo?:string
+  style?:string
+  tags?:string[]
   children?: LiteTreeNode[];
 }
 
@@ -47,11 +51,7 @@ const props = defineProps({
   root:{
     type: Boolean, 
     default: true
-  },
-  level: {
-    type: Number,
-    default: 0
-  },
+  }, 
   indent:{
     type: Number,
     default: 0  
@@ -69,22 +69,15 @@ const isOpen = (node: LiteTreeNode): boolean=>{
   return node.open==undefined ? true : node.open;
 };
 
-</script>
 
-<script lang="ts">
+const hasError = ref<boolean>(false); 
 
-export default {
-  name: 'LiteTree',
-  data() {
-    return {
-      nodes: this.getTreeData()
-    }
-  },
-  methods:{
-    getTreeData(){
-      const slotContent = this.$slots.default?.()[0];
-      if (slotContent && typeof slotContent.children === 'string') {
-        let nodes =[]
+const slots = useSlots();
+let nodes:LiteTreeNode[] = []
+
+if(slots.default){
+  const slotContent = slots.default?.()[0];
+  if (slotContent && typeof slotContent.children === 'string') {
         try {
           nodes =  safeParseJson(slotContent.children.trim(),(key,value)=>{
             if(typeof(value)=='object' && !Array.isArray(value)){
@@ -92,13 +85,22 @@ export default {
             }
             return value;          
           });
-          return Array.isArray(nodes) ? nodes : [nodes];
+          hasError.value=false
+          nodes =  reactive(Array.isArray(nodes) ? nodes : [nodes])
         } catch (error) {
-          console.error('Invalid JSON data provided to LiteTree:',nodes)
+          hasError.value=true;
+          nodes =[{title:"Invalid JSON data provided to LiteTree",mark:'error'}]       
         }
       }
-    }
-  }
+}
+ 
+
+</script>
+
+<script lang="ts">
+
+export default {
+  name: 'LiteTree'
 }
 
 </script>

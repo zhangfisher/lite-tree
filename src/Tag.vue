@@ -23,7 +23,7 @@ const presetStyles: Record<string, string> = {
 let tag = withStyleString(props.value)
 
 
-if (tag.style in presetStyles) {
+if (tag.style && tag.style in presetStyles) {
     tag.style = presetStyles[tag.style!]
 }
 

@@ -26,7 +26,7 @@ pnpm add lite-tree
 
 ## 使用方法
 
-在`vitepress`中
+在`vitepress`中使用
 
 ```md
 <script setup>
@@ -82,9 +82,50 @@ import Tree from 'lite-tree'
 
 最终的渲染效果如下：
 
+![](./docs/tree.png)
 
 
+## 说明
 
+- 树数据的格式可以是`JSON`，并且具备一定的容错性:
+    - 节点`Key`可以使用`"..."`或`'...'`包裹，也可以省略。
+    - 字符串`Value`可以使用`"..."`或`'...'`包裹
+    - 如果不小心漏掉了,号，也是可以补全的。
 
+- 节点数据声明如下：
 
+```json
+{
+    "title": "A公司",       // 节点标题，显示用
+    "open": true,           // 是否展开
+    "style": "color:red",   // 节点CSS
+    "mark": "success",      // 节点标记，取值为`success`、`info`、`warning`、`error`
+    "tags": ["",""],        // 节点标签
+    "children":[
+        // 子节点
+    ]
+}
+```
 
+- 节点`title`,`mark`或`tags`字符串前置`{...}`包裹来声明`css`样式，如`tags:["{color:red;font-weight:bold;}OK","{color:blue}+"]`代表`OK`为红色加粗，`+`为蓝色。
+- 每个节点可以通过`mark`来预置标记，取值为`success`、`info`、`warning`、`error`，分别代表`成功`、`信息`、`警告`、`错误`。分别用不同的颜色渲染。
+- 节点可以通过`style`来声明`css`样式。
+- 支持事件？ 暂不支持，因为本组件主要是用在`vitepress`静态页面中进行静态显示，所以目前不支持事件。
+
+## 推荐
+
+- [全流程一健化React/Vue/Nodejs国际化方案 - VoerkaI18n](https://zhangfisher.github.io/voerka-i18n/)
+- [无以伦比的React表单开发库 - speedform](https://zhangfisher.github.io/speed-form/)
+- [终端界面开发增强库 - Logsets](https://zhangfisher.github.io/logsets/)
+- [简单的日志输出库 - VoerkaLogger](https://zhangfisher.github.io/voerkalogger/)
+- [装饰器开发 - FlexDecorators](https://zhangfisher.github.io/flex-decorators/)
+- [有限状态机库 - FlexState](https://zhangfisher.github.io/flexstate/)
+- [通用函数工具库 - FlexTools](https://zhangfisher.github.io/flex-tools/)
+- [小巧优雅的CSS-IN-JS库 - Styledfc](https://zhangfisher.github.io/styledfc/)
+- [为JSON文件添加注释的VSCODE插件 - json_comments_extension](https://github.com/zhangfisher/json_comments_extension)
+- [开发交互式命令行程序库 - mixed-cli](https://github.com/zhangfisher/mixed-cli)
+- [强大的字符串插值变量处理工具库 - flexvars](https://github.com/zhangfisher/flexvars)
+- [前端link调试辅助工具 - yald](https://github.com/zhangfisher/yald)
+- [异步信号 - asyncsignal](https://github.com/zhangfisher/asyncsignal)
+- [捆绑Vue组件CSS到JS的插件 - vite-plugin-vue-style-bundler ](https://github.com/zhangfisher/vite-plugin-vue-style-bundler)
+- [Vue树组件 - LiteTree](https://github.com/zhangfisher/lite-tree)

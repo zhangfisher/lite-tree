@@ -1,7 +1,7 @@
 {
   "name": "lite-tree",
   "version": "1.0.0",
-  "description": "",
+  "description": "simple vue tree component for vitepress",
   "main": "dist/litetree.mjs",
   "types": "dist/litetree.d.ts",
   "module": "dist/litetree.mjs",

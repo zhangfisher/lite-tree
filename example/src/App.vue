@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import LiteTree from '../../src/index.vue'
+import LiteIcon from '../../src/Icon.vue'
 
 </script>
 
 <template> 
-  <main>
+  <main> 
     <LiteTree>
       {
         title: "A公司",
@@ -20,11 +21,12 @@ import LiteTree from '../../src/index.vue'
               {title: "法务部",mark:"warning"},
               {title: "审计部",style:"font-size:16px;font-style:italic"},
               {title: "信息中心",memo:"备用"},
-              {title: "安全保卫部",memo:"{color:red}+"}
+              {title: "安全保卫部",memo:"{color:red}+"} 
             ]
           },
           { 
             title: "市场中心",
+            open:false,
             children:[
               {title: "市场部",mark:"info",tags:['{error}出错','{warning}警告']},
               {title: "销售部"},

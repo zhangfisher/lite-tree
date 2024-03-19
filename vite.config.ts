@@ -39,12 +39,6 @@ export default defineConfig({
           vue: 'Vue'
         }
       }
-    },
-    commonjsOptions: {
-      sourceMap:true
-    }
-  },
-  esbuild:{
-    sourcemap:true
-  }
+    } 
+  } 
 })
