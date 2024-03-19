@@ -4,26 +4,25 @@ layout: home
 
 hero:
   name: "LiteTree"
-  text: "A simple vue tree component for vitepress"
-  tagline: My great project tagline
+  text: "Simple vue tree component "
+  tagline: 适合vitepress场景中使用
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: Github
+      link: https://github.com/zhangfisher/lite-tree
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: 文档
+      link: docs
 
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: 简单小巧
+    details: 组件小巧，无第三方依赖，使用简单
+  - title: 支持非标JSON数据
+    details: 支持非标JSON数据，具备一定的容错性，便于使用
+  - title: 样式灵活
+    details: 支持自定义节点样式，支持节点标记、标签、备注等
 ---
-
-
+ 
 <Tree>
   {
         title: "A公司",
@@ -67,4 +66,5 @@ features:
           }
         ]
       }      
-</Tree>
+</Tree>  
+
