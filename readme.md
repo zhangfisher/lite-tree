@@ -1,5 +1,8 @@
 # LiteTree
 
+[中文](./readme_CN.md)
+[English)(./readme.md)
+
 `LiteTree` is a very simple `vue` tree component, which is designed to make it easier to display tree structures in `vitepress`.
 
 We know that there are many `Vue` tree components, but in general, when using these components on `vitepress`, there are some problems, such as style conflicts, excessive volume, and too many functions, which are not suitable for the display of `VitePress` which is mainly for display.
