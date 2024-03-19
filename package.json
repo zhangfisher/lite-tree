@@ -2,6 +2,11 @@
   "name": "lite-tree",
   "version": "1.0.0",
   "description": "simple vue tree component for vitepress",
+  "homepage": "https://zhangfisher.github.io/lite-tree/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhangfisher/lite-tree"
+  },
   "main": "dist/litetree.mjs",
   "module": "dist/litetree.mjs",
   "unpkg": "dist/litetree.umd.js",
