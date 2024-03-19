@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "simple vue tree component for vitepress",
   "main": "dist/litetree.mjs",
-  "types": "dist/litetree.d.ts",
   "module": "dist/litetree.mjs",
   "unpkg": "dist/litetree.umd.js",
   "scripts": {
@@ -39,6 +38,7 @@
   },
   "dependencies": {
     "vue": "^3.4.21",
-    "vue-slide-up-down": "^3.0.0"
+    "vue-slide-up-down": "^3.0.0",
+    "lite-tree":"latest"
   }
 }
