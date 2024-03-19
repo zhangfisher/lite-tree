@@ -4,6 +4,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "LiteTree",
   description: "A simple vue tree component for vitepress",
+  base: '/lite-tree/',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
