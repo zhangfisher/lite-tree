@@ -1,7 +1,7 @@
 # LiteTree
 
 [中文](./readme_CN.md)
-[English)(./readme.md)
+[English](./readme.md)
 
 `LiteTree` is a very simple `vue` tree component, which is designed to make it easier to display tree structures in `vitepress`.
 
@@ -36,46 +36,50 @@ import Tree from 'lite-tree'
 </script>
 
 <Tree>
-    {
-        title: "A Company",
+         {
+        title: "A公司",
         expend: true,
         children:[          
-        {
-            title: "Administrative Center",
+          {
+            title: "行政中心",
             children:[
-                {title: "{color:red;font-weight:bold;}CEO Office"},
-                {title: "Human Resources Department",tags:['{color:red;}Key','{success}Urgent']},
-                {title: "Finance Department",mark:"success"},                
-                {title: "Administrative Department"},
-                {title: "Legal Department",mark:"warning"},
-                {title: "Audit Department",style:"font-size:16px;font-style:italic"},
-                {title: "Information Center",comment:"hi"},
-                {title: "Security Department",comment:"{color:red}+"}
+              {title: "{color:red;font-weight:bold;}总裁办",mark:"success"},
+              {title: "人力资源部",tags:['{color:red;}重点','{success}紧急']},
+              {title: "财务部"},
+              {title: "行政部",diff:'add'},
+              {title: "法务部",diff:'add'},
+              {title: "审计部",diff:'add'},
+              {title: "信息中心",comment:"备用"},
+              {title: "安全保卫部",comment:"{color:red}+",style:"font-size:16px;font-style:italic"} 
             ]
-        },
-        { 
-            title: "Market Center",
+          },
+          { 
+            title: "市场中心",
+            open:false,
             children:[
-                {title: "Marketing Department",mark:"info",tags:['{error}Error','{warning}Warning']},
-                {title: "Sales Department"},
-                {title: "Customer Service Department"},
-                {title: "Brand Department",mark:'error'},
-                {title: "Market Planning Department"},
-                {title: "Market Marketing Department",comment:"Good",tags:["{info}ddddd"]}
+              {title: "市场部",mark:"info",tags:['{error}出错','{warning}警告']},
+              {title: "销售部",diff:'delete'},
+              {title: "客服部",diff:'delete'},
+              {title: "品牌部",diff:"delete"},
+              {title: "市场策划部"},
+              {title: "市场营销部",comment:"好",tags:["{info}ddddd"]}
             ]
-        },
-        {
-            title: "R&D Center",
+          },
+          {
+            title: "研发中心",
             children:[
-                {title: "Mobile R&D Department",mark:"warning"},
-                {title: "Test Department"},
-                {title: "Operation and Maintenance Department",mark:"success"},
-                {title: "Product",mark:"success"},
-                {title: "Design Department"},                
+              {title: "移动研发部",mark:"warning"},
+              {title: "平台研发部",tags:["{success}Java","{error}Go"]},
+              {title: "测试部"},
+              {title: "运维部",prefix:"{color:red;}+"},
+              {title: "产品部",mark:"success"},
+              {title: "设计部",diff:"modify"},
+              {title: "项目管理部",comment:"{color:red;}+",diff:"modify"}
             ]
-        }
+
+          }
         ]
-    }
+      }    
 </Tree>
 
 ```
@@ -86,36 +90,65 @@ The final rendering effect is as follows:
 ![](./docs/tree.png)
 
 
-## Explain
+## Props
 
-- The tree data is passed through the default `slot`, which is very convenient.
-- The tree data format can be `JSON` and has a certain fault tolerance:
-    - The node `Key` can be wrapped in `"..."` or `'...'`, or omitted.
-    - The string `Value` can be wrapped in `"..."` or `'...'`.
-    - If you accidentally miss the `,`, it can also be completed.
-    
-- The node data declaration is as follows:
+- `prefix:Boolean` 
 
-```json
+Whether to display the prefix
+
+- `diff:'add' | 'delete' | 'modify'`
+
+Whether to display the difference
+
+## Features
+
+### Tree data
+
+The tree data is directly declared in the component `Slot`, which is generally in `JSON` format, but has good fault tolerance, as follows:
+ 
+```js
 {
-    "title": "A Company",       // Node title, for display
-    "open": true,           // Whether to expand
-    "style": "color:red",   // node css style
-    "mark": "success",      //  `success`、`info`、`warning`、`error`
-    "comment":"",          
-    "tags": ["",""],        // 
-    "children":[
-        // ...
+    title  : "A Company",         // Node title, displayed    
+    open : true,                // Whether to expand
+    style  : "color:red",     // CSS style
+    mark   : "success",       // value: `success`、`info`、`warning`、`error`
+    tags   : ["",...,""],     // Node tags
+    comment: "...",           // Node comment
+    prefix : "...",           // Node prefix
+    diff   : "add",           // display difference, value: `add`、`delete`、`modify`，or "+"、"-"、"*"
+    children:[
+        // child node
     ]
 }
 ```
 
-- The node `title`, `mark` or `tags` string is prefixed with `{...}` to declare `css` style, such as `tags:["{color:red;font-weight:bold;}OK","{color:blue}+"]` means `OK` is red and bold, `+` is blue.
-- Each node can be pre-marked with `mark`, with values of `success`, `info`, `warning`, `error`, which are rendered in different colors.
-- Each node can be pre-tagged with `tags`, and the tags are rendered in different colors.
-- Each node can be pre-marked with `comment`, which is rendered in different colors.
-- The node can declare `css` style through `style`.
-- suppoer event? Not support yet, because this component is mainly used in the `vitepress` static page for static display, so it does not support events for the time being.
+### Data fault tolerance
+
+The standard `JSON` format has strict requirements for the format, while `LiteTree` preprocesses the data format and has a certain fault tolerance:
+
+- The node `Key` can be wrapped with `"..."` or `'...'`, or omitted.
+- The string `Value` can be wrapped with `"..."` or `'...'`
+- If you accidentally miss the `,`, it can also be completed.
+
+### Node features
+
+Each node has the following features:
+
+- `comment`:  Node comment, displayed at the end of the node
+- `tags`:     Node tags, displayed at the end of the node
+- `prefix`:   Node prefix, displayed at the beginning of the node
+- `diff`:     Node difference, displayed at the beginning of the node
+- `mark`:     Node mark, value: `success`、`info`、`warning`、`error`, respectively representing `success`, `information`, `warning`, `error`. Rendered in different colors.
+
+### Node style
+
+- The `style` of the node can be used to specify `css style` for the node.
+
+- The `title`, `comment`, `prefix`, `mark` or `tags` of the node also support the declaration of `css` style by wrapping the string with `{...}`. For example, `tags:["{color:red;font-weight:bold;}OK","{color:blue}+"]` means that `OK` is red and bold, and `+` is blue.
+
+### Event
+
+Not supported yet.
 
 
 ## Recommendation

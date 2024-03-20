@@ -2,10 +2,12 @@
   <ul :class="['lite-tree-nodes',{'root':root}]">
     <li v-for="node in nodes" :key="node.id || node.title" >
       <span class="lite-tree-node"
-        :class="node.mark"
+        :class="[getDiffClass(node.diff),node.mark]"
         @click="toggleNode(node)"
         :style="node.style"
       >
+        <span class="prefix" v-if="prefix" >{{ withStyleString(node.prefix!).value }}</span>
+        <span  v-if="diff" class="diff">{{ getDiffChar(node.diff) }}</span>
         <span class="indent" :style="{width:indent+'px'}"></span>
         <span :class="hasChildren(node) ? ['arrow',{open:node.open==undefined ? true : node.open}] : null"></span>       
         <span class="icon"></span>
@@ -17,9 +19,11 @@
         <LiteTree v-if="hasChildren(node) && isOpen(node) && !hasError" 
           :root="false"
           :indent="indent+20"
+          :prefix="prefix"
+          :diff="diff"
           :class="isOpen(node) ? 'open' : 'close'"
         >
-              {{ node.children }}
+          {{ node.children }}
         </LiteTree>
     </SlideUpDown>
     </li>    
@@ -41,8 +45,10 @@ interface LiteTreeNode {
   icon?: string;
   open?: boolean;    
   mark?: 'success' | 'warning' | 'error' | 'info';
+  diff?: 'add' | 'delete' | 'modify' | "+" | "-" | "*";
   comment?:string
   style?:string
+  prefix?:string
   tags?:string[]
   children?: LiteTreeNode[];
 }
@@ -55,6 +61,14 @@ const props = defineProps({
   indent:{
     type: Number,
     default: 0  
+  }, 
+  prefix:{
+    type: Boolean,
+    default: false 
+  }, 
+  diff:{
+    type: Boolean,
+    default: false 
   }
 });
 
@@ -69,8 +83,20 @@ const isOpen = (node: LiteTreeNode): boolean=>{
   return node.open==undefined ? true : node.open;
 };
 
+const diffChars:Record<string,string> = {add:"+",delete:"-",modify:'*'}
+const getDiffChar = (c: string | undefined): string=>{
+  if(!c) return '';
+  return c in diffChars ? diffChars[c] :'';
+};
+const getDiffClass = (c: string | undefined): string=>{
+  if(!c) return '';
+  if(c=='+') return 'diff-add';
+  if(c=='-') return 'diff-delete';
+  if(c=='*') return 'diff-modify';
+  return c in diffChars ? 'diff-'+c :'';
+};
 
-const hasError = ref<boolean>(false); 
+const hasError = ref<boolean>(false);  
 
 const slots = useSlots();
 let nodes:LiteTreeNode[] = []
@@ -130,6 +156,25 @@ export default {
     overflow: hidden; 
   }
 
+  .diff{    
+    width: 24px;
+    text-align: center;
+    height: 100%;
+  }
+  
+  .diff-add{
+    background-color: #f3ffec;
+    color:green;
+  }
+  .diff-modify{
+    background-color: #fff6e9;
+    color:orange;
+  }
+  .diff-delete{
+    background-color: #ffeaea;
+    color:red
+  }
+
   span.lite-tree-node{
     cursor: pointer;
     display: flex;
@@ -153,6 +198,12 @@ export default {
     &.info{
       background-color: #f5f5f5;
 
+    }
+    .prefix{
+      width: 24px; 
+      text-align: center;
+      overflow: hidden; 
+      height:100%;
     }
     .title{
       flex-grow: 1;
@@ -183,4 +234,4 @@ export default {
     } 
   }
 }  
-</style> ./Comment.vue
+</style> 

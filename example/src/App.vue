@@ -5,7 +5,7 @@ import LiteTree from '../../src/index.vue'
 
 <template> 
   <main> 
-    <LiteTree>
+    <LiteTree :prefix="false" :diff="true">
       {
         title: "A公司",
         expend: true,
@@ -13,14 +13,14 @@ import LiteTree from '../../src/index.vue'
           {
             title: "行政中心",
             children:[
-              {title: "{color:red;font-weight:bold;}总裁办"},
+              {title: "{color:red;font-weight:bold;}总裁办",mark:"success"},
               {title: "人力资源部",tags:['{color:red;}重点','{success}紧急']},
-              {title: "财务部",mark:"success"},
-              {title: "行政部"},
-              {title: "法务部",mark:"warning"},
-              {title: "审计部",style:"font-size:16px;font-style:italic"},
+              {title: "财务部"},
+              {title: "行政部",diff:'add'},
+              {title: "法务部",diff:'add'},
+              {title: "审计部",diff:'add'},
               {title: "信息中心",comment:"备用"},
-              {title: "安全保卫部",comment:"{color:red}+"} 
+              {title: "安全保卫部",comment:"{color:red}+",style:"font-size:16px;font-style:italic"} 
             ]
           },
           { 
@@ -28,9 +28,9 @@ import LiteTree from '../../src/index.vue'
             open:false,
             children:[
               {title: "市场部",mark:"info",tags:['{error}出错','{warning}警告']},
-              {title: "销售部"},
-              {title: "客服部"},
-              {title: "品牌部",mark:'error'},
+              {title: "销售部",diff:'delete'},
+              {title: "客服部",diff:'delete'},
+              {title: "品牌部",diff:"delete"},
               {title: "市场策划部"},
               {title: "市场营销部",comment:"好",tags:["{info}ddddd"]}
             ]
@@ -41,10 +41,10 @@ import LiteTree from '../../src/index.vue'
               {title: "移动研发部",mark:"warning"},
               {title: "平台研发部",tags:["{success}Java","{error}Go"]},
               {title: "测试部"},
-              {title: "运维部"},
+              {title: "运维部",prefix:"{color:red;}+"},
               {title: "产品部",mark:"success"},
-              {title: "设计部"},
-              {title: "项目管理部",comment:"{color:red;}+"}
+              {title: "设计部",diff:"modify"},
+              {title: "项目管理部",comment:"{color:red;}+",diff:"modify"}
             ]
 
           }

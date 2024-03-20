@@ -71,6 +71,7 @@ export function safeParseJson(str:string,callback?:(key:string,value:any)=>any){
  * @param str 
  */
 export function withStyleString(str:string){
+    if(typeof(str)!=="string") return {style:"",value:str||''}
     let style = str.match(/^\{.*?\}/)?.[0]
     if(style){
         str = str.replace(style,"")

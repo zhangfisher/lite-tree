@@ -1,6 +1,6 @@
 {
   "name": "lite-tree",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "simple vue tree component for vitepress",
   "homepage": "https://zhangfisher.github.io/lite-tree/",
   "repository": {
