@@ -33,25 +33,12 @@
 <script setup lang="ts">
 import { defineProps, reactive, ref, useSlots,withDefaults } from 'vue';
 import { safeParseJson } from "./utils";
+import type { LiteTreeNode } from './types';
 import Comment from './Comment.vue';
 import Tag from './Tag.vue';
 import { withStyleString } from './utils';
 // @ts-ignore
 import SlideUpDown from 'vue-slide-up-down'
-
-interface LiteTreeNode {
-  id?: string;
-  title: string;
-  icon?: string;
-  open?: boolean;    
-  mark?: 'success' | 'warning' | 'error' | 'info';
-  diff?: 'add' | 'delete' | 'modify' | "+" | "-" | "*";
-  comment?:string
-  style?:string
-  prefix?:string
-  tags?:string[]
-  children?: LiteTreeNode[];
-}
 
 interface LiteTreeProps {
   root: boolean;

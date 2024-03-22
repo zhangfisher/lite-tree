@@ -1,3 +1,4 @@
+import type { LiteTreeNode } from "../types";
 import type { ParseTreeOptions } from "../parser"
 
 
@@ -21,16 +22,16 @@ export interface LiteTreeParseOptions{
             子节点1.2
         +子节点2                                            ==> +表示折叠状态
             子节点2.1        
-            子节点2.2           // {css}                     ==> 用于设置整行节点的样式
-            子节点2.3(注释)                                  ==> 节点注释内容
-            子节点2.4({css}注释)                             ==> 节点注释内容包含样式
-            子节点2.5           // [tag1] [{}tag2]           ==> 节点标签，其中{}表示标签样式
-            子节点2.6(注释)     // [{#red}tag1] [{}tag2]     ==> 包含注释与节点标签，包含自定义样式#red
-            {css}子节点2.7                                   ==> 只设置当前节点标题的样式
-            -{css}子节点2.7                                  ==> 只设置当前节点标题的样式，并该节点展开状态 
-        -子节点3                                             ==> - 表示展开状态 
+            子节点2.2                     // {css}          ==> 用于设置整行节点的样式
+            子节点2.3                     // comment        ==> 节点注释内容
+            子节点2.4                     // {css}注释      ==> 节点注释内容包含样式
+            子节点2.5(tag1,{css}tag2)                       ==> 节点标签，其中{}表示标签样式
+            子节点2.6(tag1,{css}tag2)     // comment        ==> 包含注释与节点标签，包含自定义样式#red
+            {css}子节点2.7                                  ==> 只设置当前节点标题的样式
+        -子节点3                                            ==> - 表示展开状态 
             子节点3.1 
-    
+
+
 
 
 
@@ -40,7 +41,8 @@ export default function parseLTF(treeData:string,callback?:((key:string,value:st
     const opts = Object.assign({indent:2},options)
     const lines = treeData.split("\n")
     const nodes = []
-    function parseNode(line:string,parent: Record<string,any> | null){
+
+    function parseNode(line:string){
         let nodeLine = line.substring(preSpace.length)      // 去掉前置空格
         let node = {open:false,title:'',tags:[],comment:'',style:'',icon:''}
         
@@ -53,13 +55,50 @@ export default function parseLTF(treeData:string,callback?:((key:string,value:st
     }
     // 第一行的前置空格，接下的每一行在缩进的基础上都应该有相同的前置空格
     const preSpace = (lines[0].match(/^\s+/) || [''])[0]
-    let currentNode = null
-    let parentNode = null
+    let currentNode:LiteTreeNode | null = null
+    let parentNode:LiteTreeNode | null = null
+    const stackNodes:LiteTreeNode[] = []
+    let curLevel:number = 0   
+    let pLevel:number = 0  // 上一个级别
+
+
+
     for(let line of lines){
+
         if(line.trim()=='') continue
-        const level = (line.match(/^\s+/) || [''])[0].length
-        const node = parseNode(line,parentNode)
-        nodes.push(node)
+        line = line.substring(preSpace.length)
+        
+        // 层级分析
+        curLevel = Math.ceil((line.match(/^\s+/) || [''])[0].length / opts.indent)
+
+        if(curLevel==0){
+            parentNode = null
+            pLevel = 0
+        }else{
+            if(pLevel==0){
+
+            }else if(pLevel == curLevel) {      // 同一级别
+
+            }else if(pLevel < curLevel) {       // 子级别
+                parentNode = currentNode
+            }
+            
+        }
+
+        const node = parseNode(line.trim())
+        
+        
+
+        if(parentNode == null){
+            nodes.push(node)
+        }else {
+            if(!(parentNode as LiteTreeNode).children) {
+                (parentNode as LiteTreeNode).children = [];
+            };
+            
+        }
+
+        
     }
 
 
