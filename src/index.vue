@@ -69,6 +69,10 @@ const props = defineProps({
   diff:{
     type: Boolean,
     default: false 
+  },
+  format:{
+    type: String,
+    default:'json'
   }
 });
 
