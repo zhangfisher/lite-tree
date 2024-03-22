@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, reactive, ref, useSlots } from 'vue';
+import { defineProps, reactive, ref, useSlots,withDefaults } from 'vue';
 import { safeParseJson } from "./utils";
 import Comment from './Comment.vue';
 import Tag from './Tag.vue';
@@ -53,27 +53,19 @@ interface LiteTreeNode {
   children?: LiteTreeNode[];
 }
 
-const props = defineProps({  
-  root:{
-    type: Boolean, 
-    default: true
-  }, 
-  indent:{
-    type: Number,
-    default: 0  
-  }, 
-  prefix:{
-    type: Boolean,
-    default: false 
-  }, 
-  diff:{
-    type: Boolean,
-    default: false 
-  },
-  format:{
-    type: String,
-    default:'json'
-  }
+interface LiteTreeProps {
+  root: boolean;
+  indent: number;
+  prefix: boolean;
+  diff: boolean;
+  format: 'json' | 'ltf';
+}
+const props = withDefaults(defineProps<LiteTreeProps>(),{  
+  root: true,
+  indent:0,
+  prefix:false,  
+  diff:false,
+  format:'json'
 });
 
 const toggleNode = (node: LiteTreeNode): void => {
@@ -92,6 +84,7 @@ const getDiffChar = (c: string | undefined): string=>{
   if(!c) return '';
   return c in diffChars ? diffChars[c] :'';
 };
+
 const getDiffClass = (c: string | undefined): string=>{
   if(!c) return '';
   if(c=='+') return 'diff-add';
@@ -103,13 +96,32 @@ const getDiffClass = (c: string | undefined): string=>{
 const hasError = ref<boolean>(false);  
 
 const slots = useSlots();
-let nodes:LiteTreeNode[] = []
 
-if(slots.default){
+
+
+
+// 返回默认插槽的内容字符串
+const getDefaultSlot = ()=>{
   const slotContent = slots.default?.()[0];
   if (slotContent && typeof slotContent.children === 'string') {
+    const content = slotContent.children.trim();
+    // 分解出样式和内容,之间采用---分割
+    if(content.includes('---')){
+      const [styleMacros,treeContent] = content.split('---');
+      return [styleMacros,treeContent]
+    }
+    return content;
+  }else{
+    return ['','']
+  }
+}
+
+let nodes:LiteTreeNode[] = []
+if(slots.default){
+  const [styleMacros,treeContent] = getDefaultSlot();
+  if(treeContent){
         try {
-          nodes =  safeParseJson(slotContent.children.trim(),(key,value)=>{
+          nodes =  safeParseJson(treeContent,(key,value)=>{
             if(typeof(value)=='object' && !Array.isArray(value)){
               value.open = value.open==undefined ? true : value.open;
             }
@@ -121,7 +133,8 @@ if(slots.default){
           hasError.value=true;
           nodes =[{title:"Invalid JSON data provided to LiteTree",mark:'error'}]       
         }
-      }
+    }
+  }
 }
  
 
