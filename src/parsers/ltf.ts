@@ -2,10 +2,13 @@ import type { LiteTreeNode } from "../types";
 import type { ParseTreeOptions } from "../parser"
 
 
-export interface LiteTreeParseOptions{
+ interface LiteTreeParseOptions{
     indent?:number;                 // 缩进空格数 
 }
 
+// 节点正则表达式
+const nodeRegex = /(\+|\-)?\s*(\w+)(\((.*?)\))?\s*(\/\/\s*(.*))?\s*$/gm
+const nodeTagsRegex  = /([^,]+)\,?/g
 /**
    解析LiteTreeFormat格式的树，简称LTF
     
@@ -37,77 +40,92 @@ export interface LiteTreeParseOptions{
 
 * @param callback 
  */
-export default function parseLTF(treeData:string,callback?:((key:string,value:string)=>void),options?:LiteTreeParseOptions){
-    const opts = Object.assign({indent:2},options)
+ function parseLTF(treeData:string,callback?:((key:string,value:string)=>void),options?:LiteTreeParseOptions){
+    const opts = Object.assign({indent:4},options)
     const lines = treeData.split("\n")
-    const nodes = []
 
-    function parseNode(line:string){
-        let nodeLine = line.substring(preSpace.length)      // 去掉前置空格
-        let node = {open:false,title:'',tags:[],comment:'',style:'',icon:''}
-        
-        if(nodeLine.startsWith('+')){
-            node.open = true
-            nodeLine = nodeLine.substring(1)
+    // 形式如： tag1,{css}tag2,ta\,g3    
+    function parseTags(strTags:string){
+        if(!strTags) return []
+        let matched
+        let tags:string[]=[]
+        while ((matched = nodeTagsRegex.exec(strTags)) !== null) {
+            // 这对于避免零宽度匹配的无限循环是必要的
+            if (matched.index === nodeTagsRegex.lastIndex) {
+                nodeTagsRegex.lastIndex++;
+            }
+            tags.push(matched[1])
+        }
+        return tags
+    }
+    function parseNode(line:string):LiteTreeNode{
+        let node:LiteTreeNode = {
+            open:false,title:'',tags:[],comment:'',style:'',icon:'',
+            level:0,  prefix:"",diff:'+',mark:'success'
+        }
+        nodeRegex.lastIndex = 0
+        const match =nodeRegex.exec(line.trim())
+        if(match){
+            node.open =  match[1]=='-'  ?  true : false
+            node.title = match[2] || ''
+            node.tags = parseTags(match[4])  
+            node.comment = match[6] || ''
         }
 
+        return node as LiteTreeNode
 
-    }
+    } 
     // 第一行的前置空格，接下的每一行在缩进的基础上都应该有相同的前置空格
     const preSpace = (lines[0].match(/^\s+/) || [''])[0]
-    let currentNode:LiteTreeNode | null = null
-    let parentNode:LiteTreeNode | null = null
-    const stackNodes:LiteTreeNode[] = []
-    let curLevel:number = 0   
-    let pLevel:number = 0  // 上一个级别
 
+    let previousNode:LiteTreeNode | undefined = undefined
+    let parentNode:LiteTreeNode | undefined = undefined
+    // @ts-ignore
+    let rootNode:LiteTreeNode = {level:0,children:[]}
+    const stackNodes:LiteTreeNode[] = [rootNode]
 
 
     for(let line of lines){
+        if(line.trim() == '') continue
+        line = line.substring(preSpace.length)        
 
-        if(line.trim()=='') continue
-        line = line.substring(preSpace.length)
-        
-        // 层级分析
-        curLevel = Math.ceil((line.match(/^\s+/) || [''])[0].length / opts.indent)
+        const node = parseNode(line) 
+        node.level= Math.ceil((line.match(/^\s+/) || [''])[0].length / opts.indent) + 1
 
-        if(curLevel==0){
-            parentNode = null
-            pLevel = 0
-        }else{
-            if(pLevel==0){
-
-            }else if(pLevel == curLevel) {      // 同一级别
-
-            }else if(pLevel < curLevel) {       // 子级别
-                parentNode = currentNode
+        if(!previousNode){ // 没有上一级时，如果curLevel>0,则为根节点      
+            parentNode = rootNode 
+        }else if( node.level == previousNode.level ) {      // 同一级别
+            
+        }else if(node.level > previousNode.level ) {       // 子级别                
+            stackNodes.push(previousNode)
+            parentNode = previousNode
+        }else if(node.level < previousNode.level) {        // 父级别
+            for(let i = stackNodes.length-1;i>=0;i--){
+                if(stackNodes[i].level>=node.level){
+                    stackNodes.pop()                                             
+                }else {
+                    parentNode = stackNodes[i]
+                    break
+                }
             }
-            
         }
-
-        const node = parseNode(line.trim())
-        
-        
-
-        if(parentNode == null){
-            nodes.push(node)
-        }else {
-            if(!(parentNode as LiteTreeNode).children) {
-                (parentNode as LiteTreeNode).children = [];
-            };
             
-        }
 
-        
+        // 添加节点         
+        if(parentNode && !parentNode.children) {
+            parentNode.children=[]
+        }
+        parentNode?.children!.push(node)
+        previousNode = node
     }
 
-
+    return rootNode.children
 }
 
 
 
 
-export type MacroStyles = Record<`#${string}`,string>
+ type MacroStyles = Record<`#${string}`,string>
 /**
 
  解析自定义样式宏定义
@@ -120,7 +138,43 @@ export type MacroStyles = Record<`#${string}`,string>
 @param content 
  @returns 
 */
-export  function parseMacroStyle(content:string):MacroStyles {
+  function parseMacroStyle(content:string):MacroStyles {
     return {}
 }
 
+
+const treeData=`
+ROOT
+    A
+        a1
+        a2
+        a3
+    + B                                            
+        b1        
+        - b2                     // {css}         
+            b21
+            b22
+            b23
+        b3                     // comment       
+        b4                     // {css}注释     
+        b5(tag1,{css}tag2)                      
+        b6(tag1,{css}tag2)     // comment        
+        {css}b7                                  
+    - C
+        c1        
+        c2
+`
+
+
+const tree = parseLTF(treeData)!
+
+// 按照树结构显示tree树，只显示树节点中的title
+function displayTree(tree:LiteTreeNode[]){
+    for(let node of tree){
+        console.log(" ".repeat(node.level),node.title,"commect=",node.comment,"tags=",node.tags.join(','),"open=",node.open)
+        if(node.children){
+            displayTree(node.children)
+        }
+    }
+}
+displayTree(tree)

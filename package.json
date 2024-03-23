@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "description": "simple vue tree component for vitepress",
   "homepage": "https://zhangfisher.github.io/lite-tree/",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/zhangfisher/lite-tree"
@@ -32,6 +33,7 @@
     "@vue/tsconfig": "^0.5.1",
     "less": "^4.2.0",
     "rollup-plugin-dts": "^6.1.0",
+    "ts-node": "^10.9.2",
     "tsup": "^8.0.2",
     "typescript": "^5.4.2",
     "vite": "^5.1.6",
@@ -42,8 +44,8 @@
     "vue-tsc": "^2.0.6"
   },
   "dependencies": {
+    "lite-tree": "latest",
     "vue": "^3.4.21",
-    "vue-slide-up-down": "^3.0.0",
-    "lite-tree":"latest"
+    "vue-slide-up-down": "^3.0.0"
   }
 }
