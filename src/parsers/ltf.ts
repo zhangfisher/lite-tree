@@ -2,12 +2,13 @@ import type { LiteTreeNode } from "../types";
 import type { ParseTreeOptions } from "../parser"
 
 
- interface LiteTreeParseOptions{
+export interface LtfParseOptions{
     indent?:number;                 // 缩进空格数 
 }
 
 // 节点正则表达式
-const nodeRegex = /(\+|\-)?\s*(\w+)(\((.*?)\))?\s*(\/\/\s*(.*))?\s*$/gm
+// const nodeRegex = /(\+|\-)?\s*(\w+)(\((.*?)\))?\s*(\/\/\s*(.*))?\s*$/gm
+const nodeRegex = /(\+|\-)?\s*(\[\s*(\w+)\s*\])?\s*(\w+)(\((.*?)\))?\s*(\/\/\s*(.*))?\s*$/gm
 const nodeTagsRegex  = /([^,]+)\,?/g
 /**
    解析LiteTreeFormat格式的树，简称LTF
@@ -16,8 +17,11 @@ const nodeTagsRegex  = /([^,]+)\,?/g
 
 例如:
 
-#red=color:red;            ---> 用于声明样式
-#green=color:green;        ---> 用于声明样式
+red=color:red;            ---> 用于声明样式
+green=color:green;        ---> 用于声明样式
+icon1=<svg></svg>         ---> 用于声明图标
+icon2=<svg></svg>         ---> 用于声明图标
+
 ---                        ===> 用于分割样式与树内容
     根节点
         子节点1
@@ -26,7 +30,7 @@ const nodeTagsRegex  = /([^,]+)\,?/g
         +子节点2                                            ==> +表示折叠状态
             子节点2.1        
             子节点2.2                     // {css}          ==> 用于设置整行节点的样式
-            子节点2.3                     // comment        ==> 节点注释内容
+            [icon] 子节点2.3                     // comment        ==> 节点注释内容
             子节点2.4                     // {css}注释      ==> 节点注释内容包含样式
             子节点2.5(tag1,{css}tag2)                       ==> 节点标签，其中{}表示标签样式
             子节点2.6(tag1,{css}tag2)     // comment        ==> 包含注释与节点标签，包含自定义样式#red
@@ -40,7 +44,7 @@ const nodeTagsRegex  = /([^,]+)\,?/g
 
 * @param callback 
  */
- function parseLTF(treeData:string,callback?:((key:string,value:string)=>void),options?:LiteTreeParseOptions){
+export function parseLTF(treeData:string,options?:LtfParseOptions){
     const opts = Object.assign({indent:4},options)
     const lines = treeData.split("\n")
 
@@ -67,9 +71,10 @@ const nodeTagsRegex  = /([^,]+)\,?/g
         const match =nodeRegex.exec(line.trim())
         if(match){
             node.open =  match[1]=='-'  ?  true : false
-            node.title = match[2] || ''
-            node.tags = parseTags(match[4])  
-            node.comment = match[6] || ''
+            node.icon = match[3] || ''
+            node.title = match[4] || ''
+            node.tags = parseTags(match[6])  
+            node.comment = match[8] || ''
         }
 
         return node as LiteTreeNode
@@ -108,8 +113,7 @@ const nodeTagsRegex  = /([^,]+)\,?/g
                     break
                 }
             }
-        }
-            
+        } 
 
         // 添加节点         
         if(parentNode && !parentNode.children) {
@@ -122,59 +126,38 @@ const nodeTagsRegex  = /([^,]+)\,?/g
     return rootNode.children
 }
 
+// const treeData=`
+// ROOT
+//     A
+//         a1
+//         [OK]a2
+//         [save]a3
+//     + B                                            
+//         b1        
+//         - b2                     // {css}         
+//             b21
+//             b22
+//             b23
+//         b3                     // comment       
+//         b4                     // {css}注释     
+//         b5(tag1,{css}tag2)                      
+//         b6(tag1,{css}tag2)     // comment        
+//         {css}b7                                  
+//     - C
+//         c1        
+//         c2
+// `
 
 
+// const tree = parseLTF(treeData)!
 
- type MacroStyles = Record<`#${string}`,string>
-/**
-
- 解析自定义样式宏定义
-
-自定义样式被定义在树组件内容的开头
-
-- 以#开头，例如：#red=color:red;
-- 与树内容之间用---分割
-
-@param content 
- @returns 
-*/
-  function parseMacroStyle(content:string):MacroStyles {
-    return {}
-}
-
-
-const treeData=`
-ROOT
-    A
-        a1
-        a2
-        a3
-    + B                                            
-        b1        
-        - b2                     // {css}         
-            b21
-            b22
-            b23
-        b3                     // comment       
-        b4                     // {css}注释     
-        b5(tag1,{css}tag2)                      
-        b6(tag1,{css}tag2)     // comment        
-        {css}b7                                  
-    - C
-        c1        
-        c2
-`
-
-
-const tree = parseLTF(treeData)!
-
-// 按照树结构显示tree树，只显示树节点中的title
-function displayTree(tree:LiteTreeNode[]){
-    for(let node of tree){
-        console.log(" ".repeat(node.level),node.title,"commect=",node.comment,"tags=",node.tags.join(','),"open=",node.open)
-        if(node.children){
-            displayTree(node.children)
-        }
-    }
-}
-displayTree(tree)
+// // 按照树结构显示tree树，只显示树节点中的title
+// function displayTree(tree:LiteTreeNode[]){
+//     for(let node of tree){
+//         console.log(" ".repeat(node.level),node.title,"\t\tcomment=",node.comment,"tags=",node.tags.join(','),"open=",node.open,"icon=",node.icon)
+//         if(node.children){
+//             displayTree(node.children)
+//         }
+//     }
+// }
+// displayTree(tree)

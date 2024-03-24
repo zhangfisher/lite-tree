@@ -105,10 +105,10 @@ const getDefaultSlot = ()=>{
 
 let nodes:LiteTreeNode[] = []
 if(slots.default){
-  const [styleMacros,treeContent] = getDefaultSlot();
-  if(treeContent){
+  const [vars,treeData] = getDefaultSlot();
+  if(treeData){
         try {
-          nodes =  safeParseJson(treeContent,(key,value)=>{
+          nodes =  safeParseJson(treeData,(key,value)=>{
             if(typeof(value)=='object' && !Array.isArray(value)){
               value.open = value.open==undefined ? true : value.open;
             }
@@ -121,8 +121,7 @@ if(slots.default){
           nodes =[{title:"Invalid JSON data provided to LiteTree",mark:'error'}]       
         }
     }
-  }
-}
+  } 
  
 
 </script>
