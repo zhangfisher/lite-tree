@@ -118,7 +118,8 @@ if(slots.default){
           nodes =  reactive(Array.isArray(nodes) ? nodes : [nodes])
         } catch (error) {
           hasError.value=true;
-          nodes =[{title:"Invalid JSON data provided to LiteTree",mark:'error'}]       
+          // @ts-ignore
+          nodes =[{title:"Invalid JSON data provided to LiteTree",style:'color:red'}]       
         }
     }
   } 

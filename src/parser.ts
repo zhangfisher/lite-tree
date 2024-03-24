@@ -1,5 +1,5 @@
 import jsonParser from "./parsers/json";
-import lftParser, { type LiteTreeParseOptions } from "./parsers/ltf";
+import lftParser, { type LtfParseOptions } from "./parsers/ltf";
 
 
 const SplitterRegex = /^---\s*$/gm;
@@ -21,9 +21,7 @@ export function parseTreeContent(context:string){
 export interface ParseTreeOptions{
     format?: 'ltf' | 'json' 
     // ltf解析参数
-    ltfOptions?:LiteTreeParseOptions
-    // 遍历节点时的回调
-    forEachNode?:(key:string,value:any)=>any
+    ltfOptions?:LtfParseOptions 
 } 
 
 

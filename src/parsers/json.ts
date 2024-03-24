@@ -1,5 +1,4 @@
-import { safeParseJson } from "../utils";
-import type { ParseTreeOptions } from "../parser"
+import { safeParseJson } from "../utils"; 
 
 
 export default function parseJson(content:string){

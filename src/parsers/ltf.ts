@@ -25,26 +25,24 @@ icon2=<svg></svg>         ---> 用于声明图标
 ---                        ===> 用于分割样式与树内容
     根节点
         子节点1
-            子节点1.1
-            子节点1.2
+            子节点1.1(+)
+            +子节点1.2(+)
         +子节点2                                            ==> +表示折叠状态
             子节点2.1        
             子节点2.2                     // {css}          ==> 用于设置整行节点的样式
-            [icon] 子节点2.3                     // comment        ==> 节点注释内容
+            [icon] 子节点2.3              // comment        ==> 节点注释内容
             子节点2.4                     // {css}注释      ==> 节点注释内容包含样式
             子节点2.5(tag1,{css}tag2)                       ==> 节点标签，其中{}表示标签样式
             子节点2.6(tag1,{css}tag2)     // comment        ==> 包含注释与节点标签，包含自定义样式#red
             {css}子节点2.7                                  ==> 只设置当前节点标题的样式
+            {!css}子节点2.7                                 ==> 设置当前整个节点的样式
+            {!css}子节点2.7                                 ==> 设置当前整个节点的样式
         -子节点3                                            ==> - 表示展开状态 
             子节点3.1 
 
-
-
-
-
 * @param callback 
  */
-export function parseLTF(treeData:string,options?:LtfParseOptions){
+export default function parseLTF(treeData:string,options?:LtfParseOptions){
     const opts = Object.assign({indent:4},options)
     const lines = treeData.split("\n")
 
@@ -74,6 +72,9 @@ export function parseLTF(treeData:string,options?:LtfParseOptions){
             node.icon = match[3] || ''
             node.title = match[4] || ''
             node.tags = parseTags(match[6])  
+            const diffIndex= node.tags.findIndex(v=>['+','-','*'].includes(v))            
+            // @ts-ignore
+            node.diff=diffIndex==-1 ? undefined : node.tags[diffIndex]             
             node.comment = match[8] || ''
         }
 

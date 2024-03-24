@@ -4,7 +4,7 @@ export interface LiteTreeNode {
     open: boolean;    
     level:number
     mark: 'success' | 'warning' | 'error' | 'info';
-    diff: 'add' | 'delete' | 'modify' | "+" | "-" | "*";
+    diff: "+" | "-" | "*" | undefined;
     comment:string
     style:string
     prefix:string
