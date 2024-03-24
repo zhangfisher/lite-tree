@@ -2,13 +2,14 @@ import type { LiteTreeNode } from "../types";
 import type { ParseTreeOptions } from "../parser"
 
 
-export interface LtfParseOptions{
+export interface SimpleTreeParseOptions{
     indent?:number;                 // 缩进空格数 
 }
 
 // 节点正则表达式
 // const nodeRegex = /(\+|\-)?\s*(\w+)(\((.*?)\))?\s*(\/\/\s*(.*))?\s*$/gm
-const nodeRegex = /(\+|\-)?\s*(\[\s*(\w+)\s*\])?\s*(\w+)(\((.*?)\))?\s*(\/\/\s*(.*))?\s*$/gm
+// const nodeRegex = /(\+|\-)?\s*(\[\s*(\w+)\s*\])?\s*(\w+)(\((.*?)\))?\s*(\/\/\s*(.*))?\s*$/gm
+const nodeRegex= /(\+|\-)?\s*(\[\s*(\w?)\s*\])?\s*(\w+)(\((.*?)\))?\s*(\/\/([\*\+\-])?\s*(.*?))?$/gm
 const nodeTagsRegex  = /([^,]+)\,?/g
 /**
    解析LiteTreeFormat格式的树，简称LTF
@@ -36,13 +37,19 @@ icon2=<svg></svg>         ---> 用于声明图标
             子节点2.6(tag1,{css}tag2)     // comment        ==> 包含注释与节点标签，包含自定义样式#red
             {css}子节点2.7                                  ==> 只设置当前节点标题的样式
             {!css}子节点2.7                                 ==> 设置当前整个节点的样式
-            {!css}子节点2.7                                 ==> 设置当前整个节点的样式
         -子节点3                                            ==> - 表示展开状态 
-            子节点3.1 
+            子节点3.1                     //+
+            子节点3.1                     //+
+            子节点3.1                     //-
+            子节点3.1                     //-
+            子节点3.1                     //-
+            子节点3.1                     //*
+            子节点3.1                     //*
+            子节点3.1                     //*
 
 * @param callback 
  */
-export default function parseLTF(treeData:string,options?:LtfParseOptions){
+export default function parseSimpleTree(treeData:string,options?:SimpleTreeParseOptions){
     const opts = Object.assign({indent:4},options)
     const lines = treeData.split("\n")
 
@@ -63,7 +70,7 @@ export default function parseLTF(treeData:string,options?:LtfParseOptions){
     function parseNode(line:string):LiteTreeNode{
         let node:LiteTreeNode = {
             open:false,title:'',tags:[],comment:'',style:'',icon:'',
-            level:0,  prefix:"",diff:'+',mark:'success'
+            level:0,diff:'+'
         }
         nodeRegex.lastIndex = 0
         const match =nodeRegex.exec(line.trim())
@@ -72,10 +79,9 @@ export default function parseLTF(treeData:string,options?:LtfParseOptions){
             node.icon = match[3] || ''
             node.title = match[4] || ''
             node.tags = parseTags(match[6])  
-            const diffIndex= node.tags.findIndex(v=>['+','-','*'].includes(v))            
             // @ts-ignore
-            node.diff=diffIndex==-1 ? undefined : node.tags[diffIndex]             
-            node.comment = match[8] || ''
+            node.diff= match[8]
+            node.comment = match[9] || ''
         }
 
         return node as LiteTreeNode
@@ -124,7 +130,7 @@ export default function parseLTF(treeData:string,options?:LtfParseOptions){
         previousNode = node
     }
 
-    return rootNode.children
+    return rootNode.children!
 }
 
 // const treeData=`
@@ -150,7 +156,7 @@ export default function parseLTF(treeData:string,options?:LtfParseOptions){
 // `
 
 
-// const tree = parseLTF(treeData)!
+// const tree = parseSimpleTree(treeData)!
 
 // // 按照树结构显示tree树，只显示树节点中的title
 // function displayTree(tree:LiteTreeNode[]){

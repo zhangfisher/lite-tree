@@ -5,7 +5,7 @@ import LiteTree from '../../src/index.vue'
 
 <template> 
   <main> 
-    <LiteTree :prefix="false" :diff="true">
+    <LiteTree>
       {
         title: "A公司",
         expend: true,
@@ -27,7 +27,7 @@ import LiteTree from '../../src/index.vue'
             title: "市场中心",
             open:false,
             children:[
-              {title: "市场部",mark:"info",tags:['{error}出错','{warning}警告']},
+              {title: "市场部",tags:['{error}出错','{warning}警告']},
               {title: "销售部",diff:'delete'},
               {title: "客服部",diff:'delete'},
               {title: "品牌部",diff:"delete"},
@@ -56,32 +56,8 @@ import LiteTree from '../../src/index.vue'
 
 <style scoped>
 main{
-  width:600px;
-}
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+  width:800px;
+  text-align: center;
+  margin: 0 auto;
 }
 </style>

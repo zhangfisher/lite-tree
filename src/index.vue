@@ -1,25 +1,24 @@
 <template>
   <ul :class="['lite-tree-nodes',{'root':root}]">
-    <li v-for="node in nodes" :key="node.id || node.title" >
+    <li v-for="(node,index) in nodes" :key="index" >
       <span class="lite-tree-node"
-        :class="[getDiffClass(node.diff),node.mark]"
+        :class="[getDiffClass(node.diff)]"
         @click="toggleNode(node)"
         :style="node.style"
       >
-        <span class="prefix" v-if="prefix" >{{ withStyleString(node.prefix!).value }}</span>
         <span  v-if="diff" class="diff">{{ getDiffChar(node.diff) }}</span>
         <span class="indent" :style="{width:indent+'px'}"></span>
         <span :class="hasChildren(node) ? ['arrow',{open:node.open==undefined ? true : node.open}] : null"></span>       
         <span class="icon"></span>
-        <span class="title" :style="withStyleString(node.title).style">{{ withStyleString(node.title).value }}</span>
-        <Comment :value="node.comment"/>
-        <Tag v-for=" tag in node.tags" :key="tag" :value="tag"/>        
+        <StyledSpan class="title" :value="node.title"/>
+        <StyledSpan class="comment" :value="node.comment"/>
+        <StyledSpan class="tag" v-for=" tag in node.tags" :key="tag" :value="tag"/>        
       </span>      
       <SlideUpDown :active="isOpen(node)" :duration="200">
         <LiteTree v-if="hasChildren(node) && isOpen(node) && !hasError" 
           :root="false"
           :indent="indent+20"
-          :prefix="prefix"
+          :format="format"
           :diff="diff"
           :class="isOpen(node) ? 'open' : 'close'"
         >
@@ -32,25 +31,21 @@
 
 <script setup lang="ts">
 import { defineProps, reactive, ref, useSlots,withDefaults } from 'vue';
-import { safeParseJson } from "./utils";
 import type { LiteTreeNode } from './types';
-import Comment from './Comment.vue';
-import Tag from './Tag.vue';
-import { withStyleString } from './utils';
+import StyledSpan from './StyledSpan.vue';
 // @ts-ignore
 import SlideUpDown from 'vue-slide-up-down'
+import { parseTree } from './parser';
 
 interface LiteTreeProps {
-  root: boolean;
-  indent: number;
-  prefix: boolean;
-  diff: boolean;
-  format: 'json' | 'ltf';
+  root?: boolean;
+  indent?: number;
+  diff?: boolean;
+  format?: 'json' | 'simple';
 }
 const props = withDefaults(defineProps<LiteTreeProps>(),{  
   root: true,
   indent:0,
-  prefix:false,  
   diff:false,
   format:'json'
 });
@@ -84,45 +79,33 @@ const hasError = ref<boolean>(false);
 
 const slots = useSlots();
 
-
-
-
 // 返回默认插槽的内容字符串
-const getDefaultSlot = ()=>{
+const parseSlotTree = ()=>{
   const slotContent = slots.default?.()[0];
   if (slotContent && typeof slotContent.children === 'string') {
-    const content = slotContent.children.trim();
-    // 分解出样式和内容,之间采用---分割
-    if(content.includes('---')){
-      const [styleMacros,treeContent] = content.split('---');
-      return [styleMacros,treeContent]
-    }
-    return content;
+    return parseTree(slotContent.children,{format:props.format})
   }else{
-    return ['','']
+    return {styles:{},icons:{},treeData:[]}
   }
 }
 
 let nodes:LiteTreeNode[] = []
+let styles:Record<string,string> ={}
+let icons:Record<string,string> ={}
 if(slots.default){
-  const [vars,treeData] = getDefaultSlot();
-  if(treeData){
-        try {
-          nodes =  safeParseJson(treeData,(key,value)=>{
-            if(typeof(value)=='object' && !Array.isArray(value)){
-              value.open = value.open==undefined ? true : value.open;
-            }
-            return value;          
-          });
-          hasError.value=false
-          nodes =  reactive(Array.isArray(nodes) ? nodes : [nodes])
-        } catch (error) {
-          hasError.value=true;
-          // @ts-ignore
-          nodes =[{title:"Invalid JSON data provided to LiteTree",style:'color:red'}]       
-        }
-    }
-  } 
+      try {
+        const result = parseSlotTree();
+        nodes =  result.treeData
+        styles = result.styles
+        icons = result.icons
+        hasError.value=false
+        nodes =  reactive(Array.isArray(nodes) ? nodes : [nodes])
+      } catch (error) {
+        hasError.value=true;
+        // @ts-ignore
+        nodes =[{title:"Invalid JSON data provided to LiteTree",style:'color:red'}]       
+      }
+  }
  
 
 </script>
@@ -142,6 +125,7 @@ export default {
   flex-direction: column;
   list-style: none!important;;  
   padding: 0;
+  text-align: left;
   &.root{
     padding: 8px;
     border: 1px solid #eee;
@@ -202,16 +186,23 @@ export default {
     &.info{
       background-color: #f5f5f5;
 
-    }
-    .prefix{
-      width: 24px; 
-      text-align: center;
-      overflow: hidden; 
-      height:100%;
-    }
-    .title{
+    } 
+    &>.title{
       flex-grow: 1;
     } 
+    &>.tag{
+        background-color: #eee;
+        color: #333;
+        padding: 2px 4px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        margin-left: 2px;
+        margin-right: 2px;
+        font-size: 12px;
+    }
+    &>.comment{
+      color: #aaa;    
+    }
     .arrow{
       width: 20px;
       height:10px;  
@@ -228,9 +219,7 @@ export default {
         transition: all 0.2s;
       }     
     } 
-    .comment{
-      color: #aaa;    
-    }
+    
  
     &:hover{
        background-color: #f8f8f8;       

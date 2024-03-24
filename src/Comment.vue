@@ -23,8 +23,5 @@ export default {}
 </script>
    
 <style lang="less" bundle>
-.lite-tree-node-comment {
-    color: #aaa;
-    margin-right: 4px;
-}  
+
 </style>

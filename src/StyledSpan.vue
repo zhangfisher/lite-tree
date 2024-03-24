@@ -1,5 +1,5 @@
 <template>
-    <span :style="styled.style">{{ styled.value}}</span>
+    <span v-if="styled.value.length>0" :style="styled.style">{{ styled.value}}</span>
 </template>
 <script setup lang="ts">
 /**
@@ -24,4 +24,10 @@ const props = defineProps({
 const styled = withStyleString(props.value);
 
 
+</script>
+
+<script lang="ts">
+export default {
+
+}
 </script>

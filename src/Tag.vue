@@ -1,10 +1,10 @@
 <template>
-    <span class="lite-tree-node-tag " :style="tag.style">{{ tag.value }}</span>
+    <StyledString class="lite-tree-node-tag " :style="tag.style" :value="tag.value "/>
 </template>
 
 <script setup lang="ts">
 import { defineProps } from 'vue';
-import { withStyleString } from './utils';
+import StyledString from './StyledSpan.vue';
 
 const props = defineProps({
     value: {
