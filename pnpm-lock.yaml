@@ -53,8 +53,8 @@ devDependencies:
     specifier: ^7.0.17
     version: 7.0.17(rollup@4.13.0)(vite@5.1.6)(vue@3.4.21)
   vite-plugin-vue-style-bundler:
-    specifier: ^1.0.0
-    version: 1.0.0(@types/less@3.0.6)(less@4.2.0)(sass@1.72.0)(vite@5.1.6)(vue@3.4.21)
+    specifier: ^1.0.1
+    version: 1.0.1(@types/less@3.0.6)(less@4.2.0)(sass@1.72.0)(vite@5.1.6)(vue@3.4.21)
   vitepress:
     specifier: 1.0.0-rc.45
     version: 1.0.0-rc.45(@algolia/client-search@4.22.1)(@types/node@20.11.28)(less@4.2.0)(sass@1.72.0)(search-insights@2.13.0)(typescript@5.4.2)
@@ -3168,8 +3168,8 @@ packages:
       - supports-color
     dev: true
 
-  /vite-plugin-vue-style-bundler@1.0.0(@types/less@3.0.6)(less@4.2.0)(sass@1.72.0)(vite@5.1.6)(vue@3.4.21):
-    resolution: {integrity: sha512-CiTe8vck0dvFJsOohGSnVAfP3yYiMgBs7e/XsAkE28ruCtwYDUvI4Uc0Ma4NDZT/5eXaTuvM6DQ9yVHPCQu3cg==}
+  /vite-plugin-vue-style-bundler@1.0.1(@types/less@3.0.6)(less@4.2.0)(sass@1.72.0)(vite@5.1.6)(vue@3.4.21):
+    resolution: {integrity: sha512-Jk6Bg+ilAiNRtXGkl4Spwc5Fe+NY5cUP3gjaAo+BQNH2M42lD0i6a9hq/FvRzf3OiZTS2oOqaF3XJpA7oDkIow==}
     peerDependencies:
       '@types/less': ^3.0.6
       less: ^4.2.0
