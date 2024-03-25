@@ -24,7 +24,7 @@ export default defineConfig({
   },   
   build:{    
     lib: {
-      entry: resolve(__dirname, 'src/index.vue'),
+      entry: resolve(__dirname, 'src/vue/index.vue'),
       name: 'litetree',
       // the proper extensions will be added
       fileName: 'litetree'

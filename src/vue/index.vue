@@ -34,11 +34,11 @@
 
 <script setup lang="ts">
 import { defineProps, reactive, ref, useSlots,withDefaults } from 'vue';
-import type { LiteTreeNode } from './types';
+import type { LiteTreeNode } from '../types';
 import StyledSpan from './StyledSpan.vue';
 // @ts-ignore
 import SlideUpDown from 'vue-slide-up-down'
-import { parseTree } from './parser';
+import { parseTree } from '../parse';
 
 interface LiteTreeProps {
   root?: boolean;
@@ -245,4 +245,4 @@ export default {
     } 
   }
 }  
-</style> 
+</style> ../parse

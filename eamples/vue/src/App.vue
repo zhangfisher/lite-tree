@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import LiteTree from '../../src/index.vue' 
+import LiteTree from '../../src/vue/index.vue' 
 
 </script>
 

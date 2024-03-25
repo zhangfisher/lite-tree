@@ -12,7 +12,7 @@
 
  */
 import { defineProps } from 'vue';
-import { withStyleString } from './utils';
+import { withStyleString } from '../utils';
 
 const props = defineProps({
   value: {
