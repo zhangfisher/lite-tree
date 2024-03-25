@@ -5,7 +5,7 @@ import LiteTree from '../../src/index.vue'
 
 <template> 
   <main> 
-    <LiteTree>
+    <!-- <LiteTree format="json">
       {
         title: "A公司",
         expend: true,
@@ -50,7 +50,35 @@ import LiteTree from '../../src/index.vue'
           }
         ]
       }      
-    </LiteTree> 
+    </LiteTree>  -->
+    
+    <LiteTree>
+- A公司
+    行政中心
+        {color:red;font-weight:bold;}总裁办
+        人力资源部({color:red;}重点,{success}紧急)
+        财务部
+        行政部        //+
+        法务部        //+
+        审计部        //+
+        信息中心      // 重点
+        安全保卫部    
+    + 市场中心    
+        市场部({error}出错,"{warning}警告")
+        销售部            //-
+        客服部            //-
+        品牌部            //-
+        市场策划部
+        市场营销部        //
+    研发中心
+        移动研发部
+        平台研发部({success}Java,{error}Go)
+        测试部
+        运维部
+        产品部            //*
+        设计部            //*
+        项目管理部        //*
+    </LiteTree>     
   </main>
 </template>
 

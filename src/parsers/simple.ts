@@ -1,6 +1,4 @@
-import type { LiteTreeNode } from "../types";
-import type { ParseTreeOptions } from "../parser"
-
+import type { LiteTreeNode } from "../types"; 
 
 export interface SimpleTreeParseOptions{
     indent?:number;                 // 缩进空格数 
@@ -9,7 +7,7 @@ export interface SimpleTreeParseOptions{
 // 节点正则表达式
 // const nodeRegex = /(\+|\-)?\s*(\w+)(\((.*?)\))?\s*(\/\/\s*(.*))?\s*$/gm
 // const nodeRegex = /(\+|\-)?\s*(\[\s*(\w+)\s*\])?\s*(\w+)(\((.*?)\))?\s*(\/\/\s*(.*))?\s*$/gm
-const nodeRegex= /(\+|\-)?\s*(\[\s*(\w?)\s*\])?\s*(\w+)(\((.*?)\))?\s*(\/\/([\*\+\-])?\s*(.*?))?$/gm
+const nodeRegex= /(\+|\-)?\s*(\[\s*([\w]?)\s*\])?\s*([^\(\/\\]+)(\((.*?)\))?\s*(\/\/([\*\+\-])?\s*(.*?))?$/gm
 const nodeTagsRegex  = /([^,]+)\,?/g
 /**
    解析LiteTreeFormat格式的树，简称LTF
@@ -63,7 +61,14 @@ export default function parseSimpleTree(treeData:string,options?:SimpleTreeParse
             if (matched.index === nodeTagsRegex.lastIndex) {
                 nodeTagsRegex.lastIndex++;
             }
-            tags.push(matched[1])
+            let tag = matched[1]
+            if(tag.startsWith("'") || tag.startsWith('"')){
+                tag = tag.substring(1)
+            }
+            if(tag.endsWith("'") || tag.endsWith('"')){
+                tag = tag.substring(0,tag.length-1)
+            }            
+            tags.push(tag)
         }
         return tags
     }
@@ -75,7 +80,7 @@ export default function parseSimpleTree(treeData:string,options?:SimpleTreeParse
         nodeRegex.lastIndex = 0
         const match =nodeRegex.exec(line.trim())
         if(match){
-            node.open =  match[1]=='-'  ?  true : false
+            node.open =  match[1]=='+'  ?  false : true
             node.icon = match[3] || ''
             node.title = match[4] || ''
             node.tags = parseTags(match[6])  

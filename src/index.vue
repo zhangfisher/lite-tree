@@ -5,8 +5,9 @@
         :class="[getDiffClass(node.diff)]"
         @click="toggleNode(node)"
         :style="node.style"
+        :data-diff="node.diff"
       >
-        <span  v-if="diff" class="diff">{{ getDiffChar(node.diff) }}</span>
+        <!-- <span  v-if="diff" class="diff">{{ getDiffChar(node.diff) }}</span> -->
         <span class="indent" :style="{width:indent+'px'}"></span>
         <span :class="hasChildren(node) ? ['arrow',{open:node.open==undefined ? true : node.open}] : null"></span>       
         <span class="icon"></span>
@@ -21,8 +22,10 @@
           :format="format"
           :diff="diff"
           :class="isOpen(node) ? 'open' : 'close'"
+          :vars="vars"
+          :icons="icons"
+          :children="node.children"
         >
-          {{ node.children }}
         </LiteTree>
     </SlideUpDown>
     </li>    
@@ -42,13 +45,17 @@ interface LiteTreeProps {
   indent?: number;
   diff?: boolean;
   format?: 'json' | 'simple';
+  vars?: Record<string, string>;
+  icons?: Record<string, string>;
+  children?: LiteTreeNode[];
 }
 const props = withDefaults(defineProps<LiteTreeProps>(),{  
   root: true,
   indent:0,
-  diff:false,
-  format:'json'
+  diff:false, 
+  format:'simple'
 });
+
 
 const toggleNode = (node: LiteTreeNode): void => {
   node.open =node.open==undefined ? false : !node.open;
@@ -59,9 +66,7 @@ const hasChildren = (node: LiteTreeNode): boolean=>{
 
 const isOpen = (node: LiteTreeNode): boolean=>{
   return node.open==undefined ? true : node.open;
-};
-
-const diffChars:Record<string,string> = {add:"+",delete:"-",modify:'*'}
+}; 
 const getDiffChar = (c: string | undefined): string=>{
   if(!c) return '';
   return c in diffChars ? diffChars[c] :'';
@@ -69,10 +74,15 @@ const getDiffChar = (c: string | undefined): string=>{
 
 const getDiffClass = (c: string | undefined): string=>{
   if(!c) return '';
-  if(c=='+') return 'diff-add';
-  if(c=='-') return 'diff-delete';
-  if(c=='*') return 'diff-modify';
-  return c in diffChars ? 'diff-'+c :'';
+  let r = '' 
+  if(c=='+') {
+    r='diff-add'
+  }else if(c=='-'){
+    r ="diff-delete"
+  }else if(c=='*'){
+    r ="diff-modify"
+  }
+  return r.length > 0 ? "diff " + r : ''
 };
 
 const hasError = ref<boolean>(false);  
@@ -90,23 +100,29 @@ const parseSlotTree = ()=>{
 }
 
 let nodes:LiteTreeNode[] = []
-let styles:Record<string,string> ={}
-let icons:Record<string,string> ={}
-if(slots.default){
-      try {
-        const result = parseSlotTree();
-        nodes =  result.treeData
-        styles = result.styles
-        icons = result.icons
-        hasError.value=false
-        nodes =  reactive(Array.isArray(nodes) ? nodes : [nodes])
-      } catch (error) {
-        hasError.value=true;
-        // @ts-ignore
-        nodes =[{title:"Invalid JSON data provided to LiteTree",style:'color:red'}]       
-      }
-  }
- 
+
+if(props.root){
+  let styles:Record<string,string> ={}
+  let icons:Record<string,string> ={}
+  if(slots.default){
+        try {
+          const result = parseSlotTree();
+          nodes =  result.treeData
+          styles = result.styles
+          icons = result.icons
+          hasError.value=false
+          nodes =  reactive(Array.isArray(nodes) ? nodes : [nodes])
+        } catch (error) {
+          hasError.value=true;
+          // @ts-ignore
+          nodes =[{title:"Invalid JSON data provided to LiteTree",style:'color:red'}]       
+        }
+    } 
+}else{
+  nodes = props.children || []
+}
+
+
 
 </script>
 
@@ -144,25 +160,7 @@ export default {
     overflow: hidden; 
   }
 
-  .diff{    
-    width: 24px;
-    text-align: center;
-    height: 100%;
-  }
   
-  .diff-add{
-    background-color: #f3ffec;
-    color:green;
-  }
-  .diff-modify{
-    background-color: #fff6e9;
-    color:orange;
-  }
-  .diff-delete{
-    background-color: #ffeaea;
-    color:red
-  }
-
   span.lite-tree-node{
     cursor: pointer;
     display: flex;
@@ -203,6 +201,26 @@ export default {
     &>.comment{
       color: #aaa;    
     }
+
+    &.diff{     
+      height: 100%;
+    }
+    &.diff:before{
+      content: attr(data-diff);        
+    }
+    &.diff-add{
+      background-color: #f3ffec;
+      color:green;
+    }
+    &.diff-modify{
+      background-color: #fff6e9;
+      color:orange;
+    }
+    &.diff-delete{
+      background-color: #ffeaea;
+      color:red
+    }
+
     .arrow{
       width: 20px;
       height:10px;  
