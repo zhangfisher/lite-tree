@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import LiteTree from '../../../src/vue/index.vue' 
+import LiteTree from '../../../src/vue/LiteTree.vue' 
 
 </script>
 
@@ -7,7 +7,7 @@ import LiteTree from '../../../src/vue/index.vue'
   <main> 
     <!-- <LiteTree format="json">
       {
-        title: "A公司",
+        title: "A公司",   
         expend: true,
         children:[          
           {
@@ -53,15 +53,17 @@ import LiteTree from '../../../src/vue/index.vue'
     </LiteTree>  -->
     
     <LiteTree>
-- A公司
+#blue=color:blue;
+---
+- A公司         //+
     行政中心
         {color:red;font-weight:bold;}总裁办
-        人力资源部({color:red;}重点,{success}紧急)
-        财务部
+        人力资源部({color:red;}重点,{#blue}紧急)
+        {#blue}财务部
         行政部        //+
         法务部        //+
         审计部        //+
-        信息中心      // 重点
+        信息中心      // {#blue}重点
         安全保卫部    
     + 市场中心    
         市场部({error}出错,"{warning}警告")

@@ -70,12 +70,18 @@ export function safeParseJson(str:string,callback?:(key:string,value:any)=>any){
  * 
  * @param str 
  */
-export function withStyleString(str:string){
+export function withStyleString(str:string,vars:Record<string,string>){
     if(typeof(str)!=="string") return {style:"",value:str||''}
     let style = str.match(/^\{.*?\}/)?.[0]
     if(style){
         str = str.replace(style,"")
         style = style.slice(1,-1)
+        if(typeof(vars)=="object"){
+            Object.entries(vars).forEach(([key,val])=>{
+                if(!val.endsWith(";")) val=val+";"
+                style = style!.replace(key,val);
+            });
+        }        
     }
     return {style,value:str}
 }

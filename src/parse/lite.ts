@@ -1,7 +1,9 @@
+import type { ParseTreeOptions } from ".";
 import type { LiteTreeNode } from "../types"; 
 
-export interface SimpleTreeParseOptions{
-    indent?:number;                 // 缩进空格数 
+export interface LiteTreeParseOptions{
+    indent?:number;                     // 缩进空格数 
+    forEach?:(node:LiteTreeNode)=>void;  // 遍历节点
 }
 
 // 节点正则表达式
@@ -47,8 +49,8 @@ icon2=<svg></svg>         ---> 用于声明图标
 
 * @param callback 
  */
-export default function parseSimpleTree(treeData:string,options?:SimpleTreeParseOptions){
-    const opts = Object.assign({indent:4},options)
+export default function parseLiteTree(treeData:string,options:ParseTreeOptions){
+    const opts = Object.assign({indent:4},options.ltfOptions)
     const lines = treeData.split("\n")
 
     // 形式如： tag1,{css}tag2,ta\,g3    
@@ -126,50 +128,17 @@ export default function parseSimpleTree(treeData:string,options?:SimpleTreeParse
                 }
             }
         } 
-
         // 添加节点         
         if(parentNode && !parentNode.children) {
             parentNode.children=[]
         }
         parentNode?.children!.push(node)
         previousNode = node
+        if(typeof(options.forEach)=='function'){
+            options.forEach(node)
+        }
     }
 
     return rootNode.children!
 }
-
-// const treeData=`
-// ROOT
-//     A
-//         a1
-//         [OK]a2
-//         [save]a3
-//     + B                                            
-//         b1        
-//         - b2                     // {css}         
-//             b21
-//             b22
-//             b23
-//         b3                     // comment       
-//         b4                     // {css}注释     
-//         b5(tag1,{css}tag2)                      
-//         b6(tag1,{css}tag2)     // comment        
-//         {css}b7                                  
-//     - C
-//         c1        
-//         c2
-// `
-
-
-// const tree = parseSimpleTree(treeData)!
-
-// // 按照树结构显示tree树，只显示树节点中的title
-// function displayTree(tree:LiteTreeNode[]){
-//     for(let node of tree){
-//         console.log(" ".repeat(node.level),node.title,"\t\tcomment=",node.comment,"tags=",node.tags.join(','),"open=",node.open,"icon=",node.icon)
-//         if(node.children){
-//             displayTree(node.children)
-//         }
-//     }
-// }
-// displayTree(tree)
+ 

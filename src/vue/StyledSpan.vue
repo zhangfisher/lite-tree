@@ -4,10 +4,8 @@
 <script setup lang="ts">
 /**
  
-  用来显示一个支持指定样式的字符串
-
-  "{css}I am a string with style."
-
+用来显示一个支持指定样式的字符串
+"{css}I am a string with style."
 <StyledString value="{css}I am a string with style."/>
 
  */
@@ -18,11 +16,14 @@ const props = defineProps({
   value: {
     type: String,
     default: ''
+  },
+  vars:{
+    type:Object,
+    default:()=>({})  
   }
 });
 
-const styled = withStyleString(props.value);
-
+const styled = withStyleString(props.value,props.vars);
 
 </script>
 

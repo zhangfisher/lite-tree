@@ -23,7 +23,7 @@
     "typescript": "~5.4.0",
     "vite": "^5.1.5",
     "vite-plugin-vue-devtools": "^7.0.16",
-    "vite-plugin-vue-style-bundler": "^1.0.1",
+    "vite-plugin-vue-style-bundler": "^1.0.4",
     "vue-tsc": "^2.0.6"
   }
 }

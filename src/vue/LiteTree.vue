@@ -4,36 +4,36 @@
       <span class="lite-tree-node"
         :class="[getDiffClass(node.diff)]"
         @click="toggleNode(node)"
-        :style="node.style"
-        :data-diff="node.diff"
+        :style="node.style" 
       >
-        <!-- <span  v-if="diff" class="diff">{{ getDiffChar(node.diff) }}</span> -->
+        <span class="diff" v-if="hasDiff">{{ node.diff }}</span>
         <span class="indent" :style="{width:indent+'px'}"></span>
-        <span :class="hasChildren(node) ? ['arrow',{open:node.open==undefined ? true : node.open}] : null"></span>       
+        <span :class="hasChildren(node) ? ['indicate',{open:node.open==undefined ? true : node.open}] : null"></span>       
         <span class="icon"></span>
-        <StyledSpan class="title" :value="node.title"/>
-        <StyledSpan class="comment" :value="node.comment"/>
-        <StyledSpan class="tag" v-for=" tag in node.tags" :key="tag" :value="tag"/>        
+        <StyledSpan class="title" :value="node.title" :vars="vars"/>
+        <StyledSpan class="comment" :value="node.comment" :vars="vars"/>
+        <StyledSpan class="tag" v-for=" tag in node.tags" :key="tag" :value="tag" :vars="vars"/>        
       </span>      
       <SlideUpDown :active="isOpen(node)" :duration="200">
         <LiteTree v-if="hasChildren(node) && isOpen(node) && !hasError" 
           :root="false"
           :indent="indent+20"
           :format="format"
-          :diff="diff"
+          :diff="hasDiff"
           :class="isOpen(node) ? 'open' : 'close'"
           :vars="vars"
+          :classs="classs"
           :icons="icons"
           :children="node.children"
         >
         </LiteTree>
-    </SlideUpDown>
+    </SlideUpDown> 
     </li>    
   </ul>
 </template>
 
 <script setup lang="ts">
-import { defineProps, reactive, ref, useSlots,withDefaults } from 'vue';
+import { defineProps, reactive, ref, useSlots,withDefaults,provide,inject  } from 'vue';
 import type { LiteTreeNode } from '../types';
 import StyledSpan from './StyledSpan.vue';
 // @ts-ignore
@@ -44,8 +44,9 @@ interface LiteTreeProps {
   root?: boolean;
   indent?: number;
   diff?: boolean;
-  format?: 'json' | 'simple';
+  format?: 'json' | 'lite';
   vars?: Record<string, string>;
+  classs?: Record<string, string>;
   icons?: Record<string, string>;
   children?: LiteTreeNode[];
 }
@@ -53,7 +54,7 @@ const props = withDefaults(defineProps<LiteTreeProps>(),{
   root: true,
   indent:0,
   diff:false, 
-  format:'simple'
+  format:'lite'
 });
 
 
@@ -66,26 +67,14 @@ const hasChildren = (node: LiteTreeNode): boolean=>{
 
 const isOpen = (node: LiteTreeNode): boolean=>{
   return node.open==undefined ? true : node.open;
-}; 
-const getDiffChar = (c: string | undefined): string=>{
-  if(!c) return '';
-  return c in diffChars ? diffChars[c] :'';
-};
+};  
 
 const getDiffClass = (c: string | undefined): string=>{
-  if(!c) return '';
-  let r = '' 
-  if(c=='+') {
-    r='diff-add'
-  }else if(c=='-'){
-    r ="diff-delete"
-  }else if(c=='*'){
-    r ="diff-modify"
-  }
-  return r.length > 0 ? "diff " + r : ''
+    return c=="+" ? 'diff diff-add' : c=="-" ? 'diff diff-delete' : c=="*" ? 'diff diff-modify' : ''
 };
 
 const hasError = ref<boolean>(false);  
+const hasDiff = ref<boolean>(props.diff);  
 
 const slots = useSlots();
 
@@ -93,30 +82,48 @@ const slots = useSlots();
 const parseSlotTree = ()=>{
   const slotContent = slots.default?.()[0];
   if (slotContent && typeof slotContent.children === 'string') {
-    return parseTree(slotContent.children,{format:props.format})
+    return parseTree(slotContent.children,{
+      format:props.format,
+      forEach:(node:LiteTreeNode)=>{ 
+        if(node.diff) hasDiff.value=true
+      }
+    })
   }else{
-    return {styles:{},icons:{},treeData:[]}
+    return {classs:{},vars:{},icons:{},treeData:[]}
   }
 }
+const treeContext = inject('LiteTreeContext')
 
 let nodes:LiteTreeNode[] = []
+let vars:Record<string,string> ={}
+let classs:Record<string,string> ={}
+let icons:Record<string,string> ={}
 
-if(props.root){
-  let styles:Record<string,string> ={}
-  let icons:Record<string,string> ={}
+
+if(props.root){   
   if(slots.default){
         try {
           const result = parseSlotTree();
           nodes =  result.treeData
-          styles = result.styles
+          vars = result.vars
           icons = result.icons
+          classs = result.classs
           hasError.value=false
           nodes =  reactive(Array.isArray(nodes) ? nodes : [nodes])
         } catch (error) {
           hasError.value=true;
           // @ts-ignore
-          nodes =[{title:"Invalid JSON data provided to LiteTree",style:'color:red'}]       
+          nodes =[{title:"Invalid data provided to LiteTree",style:'color:red',
+              // @ts-ignore
+              children:[{title:error.message,style:'color:red'},]
+            }]            
         }
+        provide("LiteTreeContext",{
+          diff:hasDiff,
+          vars,
+          icons,
+          classs,        
+        })
     } 
 }else{
   nodes = props.children || []
@@ -124,15 +131,7 @@ if(props.root){
 
 
 
-</script>
-
-<script lang="ts">
-
-export default {
-  name: 'LiteTree'
-}
-
-</script>
+</script> 
 <style bundle lang="less" >
 
 .lite-tree-nodes {
@@ -143,24 +142,12 @@ export default {
   padding: 0;
   text-align: left;
   &.root{
-    padding: 8px;
+    padding: 8px;    
     border: 1px solid #eee;
-    
   }
   > li{
     width: 100%;
-  }
-  .open{
-    transition: height 0.3s;  
-    height: auto;      
-  }
-  .close{
-    transition: height 0.3s;  
-    height: 0;  
-    overflow: hidden; 
-  }
-
-  
+  }  
   span.lite-tree-node{
     cursor: pointer;
     display: flex;
@@ -168,7 +155,7 @@ export default {
     padding:4px;
     margin:0px;     
     align-items: center;
-
+    position: relative;     
     &.success{
       background-color: #f3ffec;
       color:green;
@@ -183,8 +170,8 @@ export default {
     }
     &.info{
       background-color: #f5f5f5;
-
     } 
+
     &>.title{
       flex-grow: 1;
     } 
@@ -206,7 +193,8 @@ export default {
       height: 100%;
     }
     &.diff:before{
-      content: attr(data-diff);        
+      content: attr(data-diff);   
+      position: relative;     
     }
     &.diff-add{
       background-color: #f3ffec;
@@ -220,8 +208,12 @@ export default {
       background-color: #ffeaea;
       color:red
     }
+    & > span.diff{
+        width:20px;
+        text-align: center;
+    }
 
-    .arrow{
+    .indicate{
       width: 20px;
       height:10px;  
       border-left: 10px solid #999;   
@@ -237,12 +229,10 @@ export default {
         transition: all 0.2s;
       }     
     } 
-    
- 
     &:hover{
        background-color: #f8f8f8;       
        border-radius: 4px;
     } 
   }
 }  
-</style> ../parse
+</style>  
