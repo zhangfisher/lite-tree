@@ -1,5 +1,5 @@
 import type { ParseTreeOptions } from ".";
-import type { LiteTreeNode } from "../types"; 
+import type { LiteTreeNode } from "../vue/types"; 
 
 export interface LiteTreeParseOptions{
     indent?:number;                     // 缩进空格数 

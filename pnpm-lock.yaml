@@ -7,7 +7,7 @@ settings:
 dependencies:
   lite-tree:
     specifier: latest
-    version: 1.0.0(typescript@5.4.2)
+    version: 1.0.1(typescript@5.4.2)
   vue:
     specifier: ^3.4.21
     version: 3.4.21(typescript@5.4.2)
@@ -2248,16 +2248,6 @@ packages:
   /lines-and-columns@1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
     dev: true
-
-  /lite-tree@1.0.0(typescript@5.4.2):
-    resolution: {integrity: sha512-Bv9Db03ITdMO4PaofpWCvqJlLwhKlFclNnbGzSLN1f+YZ49blaLZkHyEZwCzmmcK2P3SVc/WGSEL9NvPzo3raQ==}
-    dependencies:
-      lite-tree: 1.0.1(typescript@5.4.2)
-      vue: 3.4.21(typescript@5.4.2)
-      vue-slide-up-down: 3.0.0(vue@3.4.21)
-    transitivePeerDependencies:
-      - typescript
-    dev: false
 
   /lite-tree@1.0.1(typescript@5.4.2):
     resolution: {integrity: sha512-HE+/pBP5kREbo44cO9I2Iju18IkhWcmCBsrUkJojFsiRJbI3ApKXhggKoqYv2/AsW0BvReLYTzG6tP2on/MBbA==}

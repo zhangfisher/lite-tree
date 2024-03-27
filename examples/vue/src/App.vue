@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import LiteTree from '../../../src/vue/LiteTree.vue' 
+import LiteTree from '../../../src/vue/index.vue' 
 
 </script>
 
@@ -57,23 +57,23 @@ import LiteTree from '../../../src/vue/LiteTree.vue'
 ---
 - A公司         //+
     行政中心
-        {color:red;font-weight:bold;}总裁办
+        {color:red;font-weight:bold;}总裁{color:bule}办
         人力资源部({color:red;}重点,{#blue}紧急)
         {#blue}财务部
-        行政部        //+
-        法务部        //+
-        审计部        //+
+        行政部        //+  负责行政管理
+        法务部        //+  打官司等
+        审计部        //+  审计财务
         信息中心      // {#blue}重点
-        安全保卫部    
+        安全保卫部    //   保密工作
     + 市场中心    
-        市场部({error}出错,"{warning}警告")
+        市场部({#error}出错,"{#warning}警告")
         销售部            //-
         客服部            //-
         品牌部            //-
         市场策划部
         市场营销部        //
     研发中心
-        移动研发部
+        移动{color:red}研发部
         平台研发部({success}Java,{error}Go)
         测试部
         运维部

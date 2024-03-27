@@ -1,6 +1,6 @@
 import jsonParser from "./json";
 import parseLiteTree, { type LiteTreeParseOptions } from "./lite";
-import type { LiteTreeNode } from "../types";
+import type { LiteTreeNode } from "../vue/types";
 
 
 const SplitterRegex = /^---\s*$/gm;
@@ -11,9 +11,9 @@ const SplitterRegex = /^---\s*$/gm;
  */
 export function splitTreeContent(context:string){
     const results = context.split(SplitterRegex)
-    const [vars,treeData] = results.length==1 ? ["",results[0]] : results
+    const [macros,treeData] = results.length==1 ? ["",results[0]] : results
     return [
-        vars.trim(),
+        macros.trim(),
         treeData.trim()
     ]
 }
@@ -34,7 +34,7 @@ icon2=<svg></svg>                                    //声明图标
  * @returns 
  */
 export function parseMicros(str:string){
-    const vars:Record<string,any> = {}
+    const styles:Record<string,any> = {}
     const classs:Record<string,any> = {}
     const icons:Record<string,any> = {}
     const varRegex = /^\s*([\w\#\.]+)\s*\=\s*((\{([\w\n\S\s]*?)\})|(\<svg[\w\n\S\s]*?<\/svg\>)|(.*$))/gm
@@ -55,13 +55,12 @@ export function parseMicros(str:string){
             if(value.endsWith("}")) value = value.substring(0,value.length-1)
             if(key.startsWith(".")){
                 classs[key] = value.replaceAll("\n",";")
-            }else{
-                vars[key] = value.replaceAll("\n",";")
-            }
-            
+            }else if(key.startsWith("#")){
+                styles[key] = value.replaceAll("\n",";")
+            }            
         }
     }
-    return {vars,classs,icons}
+    return {styles,classs,icons}
 }
 
 export function parseTreeObject(strTree:string,options:ParseTreeOptions){    
@@ -94,15 +93,18 @@ export interface ParseTreeOptions{
 
 export type ParseTreeResults = {
     classs:Record<string,string>,
-    vars:Record<string,string>,
+    styles:Record<string,string>,
     icons:Record<string,string>,
-    treeData: LiteTreeNode[]
+    nodes: LiteTreeNode[]
 }
 
 
 export function parseTree(context:string,options?:ParseTreeOptions):ParseTreeResults{
     const opts = Object.assign({},options)
-    const [strVars,strTree] = splitTreeContent(context)
-    const treeData = parseTreeObject(strTree,opts)
-    return {...parseMicros(strVars),treeData}
+    const [strMicros,strTree] = splitTreeContent(context)
+    const nodes = parseTreeObject(strTree,opts)
+    return {
+        ...parseMicros(strMicros),
+        nodes
+    }
 }

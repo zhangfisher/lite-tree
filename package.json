@@ -45,7 +45,10 @@
   },
   "dependencies": {
     "lite-tree": "latest",
-    "vue": "^3.4.21",
     "vue-slide-up-down": "^3.0.0"
+  },
+  "peerDependencies": {
+    "vue": "^3.4.21"
   }
+
 }
