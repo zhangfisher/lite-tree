@@ -1,8 +1,4 @@
-<script setup lang="ts">
-import LiteTree from '../../../src/vue/index.vue' 
-
-</script>
-
+ 
 <template> 
   <main> 
     <!-- <LiteTree format="json">
@@ -52,8 +48,9 @@ import LiteTree from '../../../src/vue/index.vue'
       }      
     </LiteTree>  -->
     
-    <LiteTree>
-#blue=color:blue;
+    <button @click="toggleTree">显示/隐藏树</button>
+    <LiteTree v-if="isShowTree">
+#error=color:red;border: 1px solid red;background:#ffd2d2;padding:2px;
 ---
 - A公司         //+
     行政中心
@@ -69,9 +66,9 @@ import LiteTree from '../../../src/vue/index.vue'
         市场部({#error}出错,"{#warning}警告")
         销售部            //-
         客服部            //-
-        品牌部            //-
+        品牌部            //-  this is cool
         市场策划部
-        市场营销部        //
+        市场营销部        // this is cool
     研发中心
         移动{color:red}研发部
         平台研发部({success}Java,{error}Go)
@@ -83,6 +80,15 @@ import LiteTree from '../../../src/vue/index.vue'
     </LiteTree>     
   </main>
 </template>
+<script setup lang="ts">  
+import LiteTree from '../../../src/vue/index.vue' 
+import { ref } from "vue";
+
+const isShowTree = ref<boolean>(true)
+const toggleTree = ()=>isShowTree.value=!isShowTree.value
+
+
+</script>
 
 <style scoped>
 main{

@@ -3,6 +3,7 @@
   "compilerOptions": {
     "declaration": true,
     "composite": true,
+    "moduleResolution": "Node",
     "target": "ES2021",
     "lib": ["ES2021", "DOM"],
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",

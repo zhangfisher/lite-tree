@@ -1,6 +1,6 @@
 <template>
   <span v-if="styledStrs.length>0">
-    <span v-for="[value,css] of styledStrs" :style="[css]">{{value}}</span>
+    <span v-for="([value,css],index) of styledStrs" :style="[css]" :key="index">{{value}}</span>
   </span> 
 </template>
 <script setup lang="ts">

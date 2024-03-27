@@ -11,10 +11,10 @@
         <span :class="hasChildren(node) ? ['folder',{open:node.open==undefined ? true : node.open}] : null"></span>       
         <span class="icon"></span>
         <span class="title">
-          <Styled :value="node.title"/>        
-          <Styled class="tag" v-for="tag in node.tags" :key="tag" :value="tag"/>  
+          <RichLabel :value="node.title"/>        
+          <StyledLabel class="tag" v-for="tag in node.tags" :key="tag" :value="tag"/>  
         </span>
-        <Styled class="a comment" :value="node.comment" />              
+        <StyledLabel class="a comment" :value="node.comment" />              
       </span>      
       <SlideUpDown :active="isOpen(node)" :duration="200">
         <LiteTreeNodes v-if="hasChildren(node) && isOpen(node)"
@@ -31,7 +31,8 @@
 <script setup lang="ts">
 import { defineProps, withDefaults,inject  } from 'vue';
 import type { LiteTreeNode } from './types';
-import Styled from './Styled.vue';
+import StyledLabel from './StyledLabel.vue';
+import RichLabel from "./RichLabel.vue";
 // @ts-ignore
 import SlideUpDown from 'vue-slide-up-down'
 import { LiteTreeContextId } from './consts';
@@ -67,6 +68,9 @@ const getDiffClass = (c: string | undefined): string=>{
 };
 
 </script>  
+<script lang="ts">
+export default {}
+</script>
 <style bundle lang="less"> 
   .lite-tree-nodes {
       color: #555;
@@ -94,25 +98,7 @@ const getDiffClass = (c: string | undefined): string=>{
               &.diff-delete {
                   background-color: #ffeaea;
                   color: red
-              }
-              &.success {
-                  background-color: #f3ffec;
-                  color: green;
-              }
-
-              &.warning {
-                  background-color: #fff6e9;
-                  color: orange;
-              }
-
-              &.error {
-                  background-color: #ffeaea;
-                  color: red
-              }
-              &.info {
-                  background-color: #f5f5f5;
-              }
-              
+              }             
               &>span.diff-flag {
                   width: 24px;
                   text-align: center;                    
@@ -133,7 +119,7 @@ const getDiffClass = (c: string | undefined): string=>{
                   }
               } 
               &>span.comment {
-                  color: #aaa;
+                  color: #bbb;
               }
 
               &>span.folder {
@@ -159,6 +145,20 @@ const getDiffClass = (c: string | undefined): string=>{
               }
           }
       }
-
+      .success {
+          background-color: #f3ffec;
+          color: green;
+      }
+      .warning {
+          background-color: #fff6e9;
+          color: orange;
+      }
+      .error {
+          background-color: #ffeaea;
+          color: red
+      }
+      .info {
+          background-color: #f5f5f5;
+      }
   } 
 </style> 

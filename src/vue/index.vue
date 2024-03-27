@@ -1,21 +1,22 @@
 <template>
-    <div class="lite-tree">
+    <div class="lite-tree" ref="el">
         <LiteTreeNodes :nodes="nodes"></LiteTreeNodes>
     </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref, useSlots, withDefaults, provide, reactive } from 'vue';
+import { defineProps, ref, useSlots, withDefaults, provide, reactive,onMounted } from 'vue';
 import type { LiteTreeNode } from './types';
 import { LiteTreeContextId } from './consts';
 import { parseTree } from '../parse';
 import type { LiteTreeContext } from './types';
-import LiteTreeNodes from "./LiteTreeNodes.vue"
+import LiteTreeNodes from "./LiteTreeNodes.vue";
+import { injectStylesheet } from '../utils';
 
 interface LiteTreeProps {
-    indent?: number;            // 启用lite格式时的缩进空格数量       
-    lite?: boolean               // Lite格式
-    json?: boolean               // JSON格式
+    indent?: number;                // 启用lite格式时的缩进空格数量       
+    lite?: boolean                  // Lite格式
+    json?: boolean                  // JSON格式
 }
 
 // 默认使用Lite格式
@@ -60,6 +61,16 @@ const parseSlotData = () => {
 const { nodes:rNodes, styles, classs, icons } = parseSlotData();
 
 const nodes=reactive(rNodes)
+const el = ref<HTMLElement>()
+
+onMounted(()=>{    
+    if(classs){
+        const css = Object.entries(classs).map(([key,value])=>{
+            return `${key}{ ${value} }`
+        }).join('\n')
+        injectStylesheet(css,"lite-tree-styles")
+    }
+})
 
 provide<LiteTreeContext>(LiteTreeContextId, {
     hasDiff: hasDiff.value,

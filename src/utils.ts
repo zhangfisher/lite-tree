@@ -1,3 +1,4 @@
+import { inject } from 'vue';
 /**
  *   使用正则表达式解析非标JOSN
  *
@@ -55,6 +56,26 @@ export function safeParseJson(str: string, callback?: (key: string, value: any) 
 	});
 }
 
+/**
+ * 一个简单的形式如
+ * 
+ * "{css样式}xxxx"的字符串，字符串开头的{xxxx}会被解析为css样式
+ * 
+ * 如：  withStyleString("{color:red}hello world")  =  ["color:red",hello world]
+ * 
+ * @param str 
+ */
+export function withStyleString(str:string,micros:Record<string,string>){
+    if(typeof(str)!=="string") return {style:"",value:str||''}
+    let style = str.match(/^\{.*?\}/)?.[0]
+    if(style){
+        str = str.replace(style,"")
+        style = style.slice(1,-1) // 移除{}
+        style = replaceStyleVar(style,micros)
+    }
+    return {style,value:str}
+}
+
 function replaceStyleVar(css:string,styles:Record<string,string>):string{
     // 替换样式变量值
     if (typeof styles == "object") {
@@ -101,4 +122,15 @@ export function parseStyledString(str: string,styles:Record<string,string>): [st
  */
 export function compressSvg(svg: string) {
 	return svg;
+}
+
+export function injectStylesheet(css:string,id:string){
+	let style = document.head.querySelector(`#${id}`)
+	if(!style){
+		style = document.createElement('style');
+		style.innerHTML = css;
+		style.id = id
+		document.head.appendChild(style);
+	}	
+	return style
 }
