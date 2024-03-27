@@ -6,9 +6,7 @@ export interface LiteTreeParseOptions{
     forEach?:(node:LiteTreeNode)=>void;  // 遍历节点
 }
 
-// 节点正则表达式
-// const nodeRegex = /(\+|\-)?\s*(\w+)(\((.*?)\))?\s*(\/\/\s*(.*))?\s*$/gm
-// const nodeRegex = /(\+|\-)?\s*(\[\s*(\w+)\s*\])?\s*(\w+)(\((.*?)\))?\s*(\/\/\s*(.*))?\s*$/gm
+// 节点正则表达式 
 const nodeRegex= /(\+|\-)?\s*(\[\s*([\w]?)\s*\])?\s*([^\(\/\\]+)(\((.*?)\))?\s*(\/\/([\*\+\-])?\s*(.*?))?$/gm
 const nodeTagsRegex  = /([^,]+)\,?/g
 /**
