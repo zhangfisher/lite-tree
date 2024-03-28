@@ -2,16 +2,16 @@
   <ul :class="['lite-tree-nodes']">
     <li v-for="(node,index) in nodes" :key="index" >
       <span class="lite-tree-node"
-        :class="[getDiffClass(node.diff)]"
+        :class="[getDiffClass(node.diff),getNodeClasss(node)]"
         @click="toggleNode(node)"
-        :style="node.style" 
+        :style="[getNodeStyle(node),node.style]" 
       >
         <span class="diff-flag" v-if="treeCtx.hasDiff">{{ node.diff }}</span>
         <span class="indent" :style="{width:indent+'px'}"></span>
         <span :class="hasChildren(node) ? ['folder',{open:node.open==undefined ? true : node.open}] : null"></span>       
-        <span class="icon"></span>
+        <span class="icon file"></span>
         <span class="title">
-          <RichLabel :value="node.title"/>        
+          <StyledLabel :value="removeStyledHead(node.title)"/>        
           <StyledLabel class="tag" v-for="tag in node.tags" :key="tag" :value="tag"/>  
         </span>
         <StyledLabel class="a comment" :value="node.comment" />              
@@ -32,11 +32,11 @@
 import { defineProps, withDefaults,inject  } from 'vue';
 import type { LiteTreeNode } from './types';
 import StyledLabel from './StyledLabel.vue';
-import RichLabel from "./RichLabel.vue";
 // @ts-ignore
 import SlideUpDown from 'vue-slide-up-down'
 import { LiteTreeContextId } from './consts';
 import type { LiteTreeContext } from './types';
+import { StyledString,removeStyledHead } from '../utils';
 
 interface LiteTreeNodesProps {
   indent?: number;
@@ -66,6 +66,9 @@ const isOpen = (node: LiteTreeNode): boolean=>{
 const getDiffClass = (c: string | undefined): string=>{
     return c=="+" ? 'diff-add' : c=="-" ? 'diff-delete' : c=="*" ? 'diff-modify' : ''
 };
+
+const getNodeStyle = (node:LiteTreeNode)=>StyledString(node.title,treeCtx.styles).style
+const getNodeClasss = (node:LiteTreeNode)=>StyledString(node.title,treeCtx.styles).classs
 
 </script>  
 <script lang="ts">

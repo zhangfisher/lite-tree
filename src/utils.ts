@@ -55,7 +55,18 @@ export function safeParseJson(str: string, callback?: (key: string, value: any) 
 		return value;
 	});
 }
-
+/**
+ * 移除字符串中的样式
+ * 
+ * "{color:red}hello world"  =  "hello world"
+ * "{color:red}{border:1px solid red}hello world"  =  "{border:1px solid red}hello world"
+ * 
+ * @param str 
+ */
+export function removeStyledHead(str:string){
+	if(typeof(str)!=="string") return str
+	return str.replace(/^\{.*?\}/,"")
+}
 /**
  * 一个简单的形式如
  * 
@@ -65,19 +76,29 @@ export function safeParseJson(str: string, callback?: (key: string, value: any) 
  * 
  * @param str 
  */
-export function withStyleString(str:string,micros:Record<string,string>){
+export function StyledString(str:string,styles:Record<string,string>){
     if(typeof(str)!=="string") return {style:"",value:str||''}
     let style = str.match(/^\{.*?\}/)?.[0]
+	const classList = []
     if(style){
         str = str.replace(style,"")
         style = style.slice(1,-1) // 移除{}
-        style = replaceStyleVar(style,micros)
-    }
-    return {style,value:str}
+		// 替换样式变量
+        style = replaceStyleVar(style,styles)
+		if(!style.endsWith(";")) style = style + ";"
+		// 提取用到的样式类, 样式类在字符串中以.开头,以;结尾,没有{},如".success;"
+		const clsRegex = /\.([\w\s*\.]+)\;/g
+		// 提取clsRegex匹配到的样式类
+		let matched
+		while((matched = clsRegex.exec(style))!==null){
+			const cls = matched[1]
+			classList.push(cls)
+		}
+    }	
+    return {style,value:str,classs:classList}
 }
 
 function replaceStyleVar(css:string,styles:Record<string,string>):string{
-    // 替换样式变量值
     if (typeof styles == "object") {
         Object.entries(styles).forEach(([key, val]) => {
             if (!val.endsWith(";")) val = val + ";";
@@ -87,33 +108,6 @@ function replaceStyleVar(css:string,styles:Record<string,string>):string{
     return css
 }
 
-export function parseStyledString(str: string,styles:Record<string,string>): [string,string][]  {
-	const regex = /(\\?\{[^{}]+\}\\?)/g;
-	const result: [string, string][] = [];
-    let splited = str.split(regex)
-    const isStyle = (s:string)=>s.startsWith("{") && s.endsWith("}")
-    // 1. 交换样式与文本顺序
-    for(let i=0;i<splited.length;i++){
-        const s = splited[i]
-        if(s.startsWith("{") && s.endsWith("}")){
-            if(i<splited.length-1){
-                [splited[i], splited[i + 1]] = [splited[i + 1], splited[i]];
-            }
-        }
-    }
-    // 2. 
-    for(let i=0;i<splited.length;i++){
-        if(splited[i].trim()=='') continue
-        const next = splited[i+1]
-        if(next && isStyle(next)){            
-            result.push([splited[i],replaceStyleVar(next.substring(1,next.length-1),styles)])
-            i++
-        }else if(!isStyle(splited[i])){
-            result.push([splited[i],''])
-        }
-    }  
-	return  result;
-  }
 /**
  * 压缩svg字符串
  *
@@ -124,13 +118,27 @@ export function compressSvg(svg: string) {
 	return svg;
 }
 
-export function injectStylesheet(css:string,id:string){
+
+export interface InjectStylesheetOptions{
+	id:string
+	mode:'replace' | 'append' 
+}
+
+export function injectStylesheet(css:string,options?:InjectStylesheetOptions){
+	const {id,mode} = Object.assign({mode:'replace'},options)
 	let style = document.head.querySelector(`#${id}`)
 	if(!style){
 		style = document.createElement('style');
 		style.innerHTML = css;
-		style.id = id
+		style.id = id		
 		document.head.appendChild(style);
+		return style
 	}	
+	if(mode=='replace'){
+		style.innerHTML = css
+	}else{
+		style.innerHTML += css
+	}
 	return style
 }
+

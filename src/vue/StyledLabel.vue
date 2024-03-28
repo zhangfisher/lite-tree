@@ -1,5 +1,5 @@
 <template>
-    <span :style="styled.style" >{{styled.value}}</span>
+    <span :style="styled.style" :class="styled.classs">{{styled.value}}</span>
 </template>
 <script setup lang="ts">
 /**
@@ -12,7 +12,7 @@
 import { defineProps,inject } from 'vue';
 import type { LiteTreeContext } from './types';
 import { LiteTreeContextId } from './consts';
-import { withStyleString } from '../utils';
+import { StyledString } from '../utils';
 
 const props = defineProps({
   value: {
@@ -21,7 +21,7 @@ const props = defineProps({
   } 
 });
 const treeCtx = inject<LiteTreeContext>(LiteTreeContextId)!
-const styled = withStyleString(props.value,treeCtx.styles);
+const styled = StyledString(props.value,treeCtx.styles);
 </script>
 
 <script lang="ts">

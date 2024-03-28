@@ -34,7 +34,7 @@
           {
             title: "研发中心",
             children:[
-              {title: "移动研发部",mark:"warning"},
+              {title: "{.primary}移动研发部",mark:"warning"},
               {title: "平台研发部",tags:["{success}Java","{error}Go"]},
               {title: "测试部"},
               {title: "运维部",prefix:"{color:red;}+"},
@@ -51,10 +51,11 @@
     <button @click="toggleTree">显示/隐藏树</button>
     <LiteTree v-if="isShowTree">
 #error=color:red;border: 1px solid red;background:#ffd2d2;padding:2px;
+.blue=color:red;border: 1px solid blue;background:#ffd2d2;padding:2px;
 ---
 - A公司         //+
     行政中心
-        {color:red;font-weight:bold;}总裁{color:bule}办
+        {color:red;font-weight:bold;background:#ffeaea}总裁办
         人力资源部({color:red;}重点,{#blue}紧急)
         {#blue}财务部
         行政部        //+  负责行政管理
@@ -66,13 +67,13 @@
         市场部({#error}出错,"{#warning}警告")
         销售部            //-
         客服部            //-
-        品牌部            //-  this is cool
+        {.blue}品牌部            //   this is cool
         市场策划部
-        市场营销部        // this is cool
+        市场营销部        // {.blue}this is cool
     研发中心
-        移动{color:red}研发部
+        移动研发部
         平台研发部({success}Java,{error}Go)
-        测试部
+        {.success}测试部
         运维部
         产品部            //*
         设计部            //*

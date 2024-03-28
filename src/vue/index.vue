@@ -1,5 +1,5 @@
 <template>
-    <div class="lite-tree" ref="el">
+    <div class="lite-tree">
         <LiteTreeNodes :nodes="nodes"></LiteTreeNodes>
     </div>
 </template>
@@ -12,6 +12,7 @@ import { parseTree } from '../parse';
 import type { LiteTreeContext } from './types';
 import LiteTreeNodes from "./LiteTreeNodes.vue";
 import { injectStylesheet } from '../utils';
+import { injectSvgIcons } from '../icons';
 
 interface LiteTreeProps {
     indent?: number;                // 启用lite格式时的缩进空格数量       
@@ -57,20 +58,30 @@ const parseSlotData = () => {
     }
 }
 
+// 增加一些预设的样式
+const injectPresetStyles =(classs:Record<string,string>)=>{
+    injectStylesheet(`
+        .lite-tree .diff-add { color: green; }
+        .lite-tree .diff-delete { color: red; }
+        .lite-tree .diff-modify { color: blue; }
+        .lite-tree .success { background-color: #f3ffec;color: green; }
+        .lite-tree .warning { background-color: #fff3e6;color: orange; }
+        .lite-tree .error { background-color: #ffe6e6;color: red; }
+        .lite-tree .info { background-color: #e6f7ff;color: blue; }
+        .lite-tree .primary { background-color: #f0f5ff;color: #0052cc; }
+        .lite-tree .secondary { background-color: #f4f4f4;color: #333; }    
+        ${Object.keys(classs).map(k=>`.lite-tree ${k} { ${classs[k]} }`).join('\n')} 
+    `,{id:'lite-tree-preset-styles',mode:'replace'})
+}
 
+ 
 const { nodes:rNodes, styles, classs, icons } = parseSlotData();
 
-const nodes=reactive(rNodes)
-const el = ref<HTMLElement>()
+injectPresetStyles(classs)
+injectSvgIcons(icons)
 
-onMounted(()=>{    
-    if(classs){
-        const css = Object.entries(classs).map(([key,value])=>{
-            return `${key}{ ${value} }`
-        }).join('\n')
-        injectStylesheet(css,"lite-tree-styles")
-    }
-})
+
+const nodes=reactive(rNodes)
 
 provide<LiteTreeContext>(LiteTreeContextId, {
     hasDiff: hasDiff.value,
