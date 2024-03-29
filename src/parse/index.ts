@@ -5,35 +5,38 @@ import type { LiteTreeNode } from "../vue/types";
 
 const SplitterRegex = /^---\s*$/gm;
 
+export interface LiteTreeVars{
+    styles:Record<string,any> 
+    classs:Record<string,any>
+    icons:Record<string,any>
+}
 
 /** 
  * @param context 
  */
 export function splitTreeContent(context:string){
     const results = context.split(SplitterRegex)
-    const [macros,treeData] = results.length==1 ? ["",results[0]] : results
+    const [vars,treeData] = results.length==1 ? ["",results[0]] : results
     return [
-        macros.trim(),
+        vars.trim(),
         treeData.trim()
     ]
 }
 /**
- * 解析内容中的图标
- * 
+ 
+解析声明的样式、类、图标等变量
+  
 .classname=color:red;border:1px solid red;           //声明类样式
 .classname2=color:red;border:1px solid red;          //声明类样式
 #style1=display:flex;                                //声明样式
 #style2=margin:2px;                                  //声明样式
 icon1=<svg></svg>                                    //声明图标
-icon2=<svg></svg>                                    //声明图标
-  
-  
-  
+icon2=<svg></svg>                                    //声明图标 
  * 
  * @param str 
  * @returns 
  */
-export function parseMicros(str:string){
+export function parseVars(str:string):LiteTreeVars{
     const styles:Record<string,any> = {}
     const classs:Record<string,any> = {}
     const icons:Record<string,any> = {}
@@ -63,7 +66,7 @@ export function parseMicros(str:string){
     return {styles,classs,icons}
 }
 
-export function parseTreeObject(strTree:string,options:ParseTreeOptions){    
+export function parseTreeObject(strTree:string,vars:LiteTreeVars, options:ParseTreeOptions){    
     let treeData:LiteTreeNode[] = []
     try{
         if(options.format=='json'){
@@ -75,10 +78,10 @@ export function parseTreeObject(strTree:string,options:ParseTreeOptions){
                 }           
             })
         }else{
-            treeData = parseLiteTree(strTree,options)
+            treeData = parseLiteTree(strTree,vars,options)
         }
     }catch(e:any){
-        treeData = [{title:`解析错误:${e.message}`,icon:"error",open:true,level:0,diff:undefined,comment:e.message,style:"",tags:[]}]
+        treeData = [{title:`解析错误:${e.message}`,icon:"error",expand:true,level:0,flag:'',classs:[''],comment:e.message,style:"",tags:[]}]
     }
     return treeData
 }
@@ -101,10 +104,11 @@ export type ParseTreeResults = {
 
 export function parseTree(context:string,options?:ParseTreeOptions):ParseTreeResults{
     const opts = Object.assign({},options)
-    const [strMicros,strTree] = splitTreeContent(context)
-    const nodes = parseTreeObject(strTree,opts)
+    const [strVars,strTree] = splitTreeContent(context)
+    const vars = parseVars(strVars)
+    const nodes = parseTreeObject(strTree,vars,opts)
     return {
-        ...parseMicros(strMicros),
+        ...vars,
         nodes
     }
 }

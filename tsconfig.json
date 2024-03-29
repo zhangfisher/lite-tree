@@ -15,6 +15,7 @@
   },
   "include": [
     "env.d.ts",  
+    "src/*.ts", 
     "src/**/*.ts", 
     "src/**/*/*.ts", 
     "src/**/*.vue",

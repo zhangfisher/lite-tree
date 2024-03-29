@@ -1,4 +1,5 @@
-import type { ParseTreeOptions } from ".";
+import { parseStyleString } from "../utils";
+import type { LiteTreeVars, ParseTreeOptions } from ".";
 import type { LiteTreeNode } from "../vue/types"; 
 
 export interface LiteTreeParseOptions{
@@ -7,7 +8,7 @@ export interface LiteTreeParseOptions{
 }
 
 // 节点正则表达式 
-const nodeRegex= /(\+|\-)?\s*(\[\s*([\w]?)\s*\])?\s*([^\(\/\\]+)(\((.*?)\))?\s*(\/\/([\*\+\-])?\s*(.*?))?$/gm
+const nodeRegex= /(\+|\-)?\s*(\[\s*([\w]?)\s*\])?\s*([^\(\/\\]+)(\((.*?)\))?\s*(\/\/(\S+)?\s*(.*?))?$/gm
 const nodeTagsRegex  = /([^,]+)\,?/g
 /**
    解析LiteTreeFormat格式的树，简称LTF
@@ -47,7 +48,7 @@ icon2=<svg></svg>         ---> 用于声明图标
 
 * @param callback 
  */
-export default function parseLiteTree(treeData:string,options:ParseTreeOptions){
+export default function parseLiteTree(treeData:string,vars:LiteTreeVars,options:ParseTreeOptions){
     const opts = Object.assign({indent:4},options.ltfOptions)
     const lines = treeData.split("\n")
 
@@ -73,20 +74,24 @@ export default function parseLiteTree(treeData:string,options:ParseTreeOptions){
         return tags
     }
     function parseNode(line:string):LiteTreeNode{
-        let node:LiteTreeNode = {
-            open:false,title:'',tags:[],comment:'',style:'',icon:'',
-            level:0,diff:'+'
-        }
+        let node:LiteTreeNode = {expand:false,title:'',tags:[],comment:'',style:'',icon:'',level:0,flag:'',classs:[]}
         nodeRegex.lastIndex = 0
         const match =nodeRegex.exec(line.trim())
         if(match){
-            node.open =  match[1]=='+'  ?  false : true
-            node.icon = match[3] || ''
-            node.title = match[4] || ''
-            node.tags = parseTags(match[6])  
-            // @ts-ignore
-            node.diff= match[8]
+            node.expand    = match[1]=='+'  ?  false : true
+            node.icon    = match[3] || ''
+            node.title   = match[4] || ''
+            node.tags    = parseTags(match[6])              
             node.comment = match[9] || ''
+            // 紧随//符合的内容样式==  //flag.class.class{.class;style}
+            const flagMatch= /([\w\!\+\*\&\-\=\$\%\@\~\.]+)?(\{[\s\S]*?\})?/g.exec(match[8] || '')            
+            if(flagMatch){
+                const f = (flagMatch[1] || '').split(".")
+                node.flag  = f[0]            
+                const r = parseStyleString(flagMatch[2] || '',vars.styles)
+                node.style = r.style
+                node.classs = [...r.classs,...f.slice(1)]
+            }
         }
 
         return node as LiteTreeNode

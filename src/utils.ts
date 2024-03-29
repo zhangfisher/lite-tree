@@ -55,57 +55,33 @@ export function safeParseJson(str: string, callback?: (key: string, value: any) 
 		return value;
 	});
 }
-/**
- * 移除字符串中的样式
- * 
- * "{color:red}hello world"  =  "hello world"
- * "{color:red}{border:1px solid red}hello world"  =  "{border:1px solid red}hello world"
- * 
- * @param str 
- */
-export function removeStyledHead(str:string){
-	if(typeof(str)!=="string") return str
-	return str.replace(/^\{.*?\}/,"")
-}
-/**
- * 一个简单的形式如
- * 
- * "{css样式}xxxx"的字符串，字符串开头的{xxxx}会被解析为css样式
- * 
- * 如：  withStyleString("{color:red}hello world")  =  ["color:red",hello world]
- * 
- * @param str 
- */
-export function StyledString(str:string,styles:Record<string,string>){
-    if(typeof(str)!=="string") return {style:"",value:str||''}
-    let style = str.match(/^\{.*?\}/)?.[0]
-	const classList = []
-    if(style){
-        str = str.replace(style,"")
-        style = style.slice(1,-1) // 移除{}
-		// 替换样式变量
-        style = replaceStyleVar(style,styles)
-		if(!style.endsWith(";")) style = style + ";"
-		// 提取用到的样式类, 样式类在字符串中以.开头,以;结尾,没有{},如".success;"
-		const clsRegex = /\.([\w\s*\.]+)\;/g
-		// 提取clsRegex匹配到的样式类
-		let matched
-		while((matched = clsRegex.exec(style))!==null){
-			const cls = matched[1]
-			classList.push(cls)
-		}
-    }	
-    return {style,value:str,classs:classList}
-}
 
-function replaceStyleVar(css:string,styles:Record<string,string>):string{
-    if (typeof styles == "object") {
-        Object.entries(styles).forEach(([key, val]) => {
-            if (!val.endsWith(";")) val = val + ";";
-            css = css!.replace(key, val);
-        });
-    }
-    return css
+/**
+ * 替换样式变量
+ * 将css里面的变量替换为实际的值
+ * 例如:
+ * replaceStyleVar("{#aaa;color:red;.bbb;}",{"#aaa":"font-size:9px;",".bbb":"border:none;"})
+ *    =>  {font-size:9px;color:red;}
+ * 
+ * 注意: 类样式会被替换为空字符串
+ * 
+ * @param css 
+ * @param vars 
+ * @returns 
+ */
+export function replaceStyleVar(css:string,styles:Record<string,string>):string{
+	const varRegex = /(?<!:)(([#\.]{1}\w+))\s*;\b(?!:)/g
+	if(css.trim().endsWith(";")) css=css.trim()+";"
+	return css.replace(varRegex,(matched,key)=>{
+		if(key in styles){
+			let r = styles[key]
+			if(!r.endsWith(";")) r = r+";"
+			return r
+		}else if(matched.startsWith(".")){
+			return ''
+		}
+		return matched
+	})
 }
 
 /**
@@ -142,3 +118,98 @@ export function injectStylesheet(css:string,options?:InjectStylesheetOptions){
 	return style
 }
 
+/**
+ * 对css字符串里面的所在的样式加上!important
+ * @param css 
+ */
+export function enableImportant(css:string){
+	return css.replace(/(.*?)(\s*;)/g,(matched,p1,p2)=>{
+		if(p1.trim().endsWith("!important")) return matched
+		return p1.trim() + "!important;"
+	})
+}
+
+/**
+ * pickStyle("{color:red}") = "color:red;
+ * @param css 
+ * @returns 
+ */
+export function pickStyle(css:string){
+	css= css.trim()
+	if(css.startsWith("{") && css.endsWith("}")){
+		css = css.slice(1,-1)
+	}
+	css= css.trim()
+	if(!css.endsWith(";")) css = css + ";"
+	return css
+}
+
+
+/**
+ * 解析样式字符串
+ * 
+ * 1. 将样式字符串里面的#aaa替换为vars里面的值
+ * 2. 返回样式字符串里面的类名称列表
+ * 
+ * parseStyleString("#aaa;border:1px solid red;.bbb", {aaa:"color:red;"}) 
+ * ==> {style:{color:red;border:"1px solid red;"},classs:[".bbb"]}
+ * 
+ * 
+ * @param str 
+ * @returns 
+ */
+export function parseStyleString(str:string | undefined,vars:Record<string,string>){
+	let style = str
+	if(!style || style.trim().length==0) return {style:"",classs:[]}
+	const classList:string[] = []
+	const varRegex = /(?<!:)(([#\.]{1}\w+))\s*;(?!:)/g
+	if(!style.trim().endsWith(";")) style=style.trim()+";"
+	style = style.replace(varRegex,(matched,key)=>{
+		if(key in vars){
+			let r = vars[key]
+			if(!r.endsWith(";")) r = r+";"
+			return r
+		}else if(key.startsWith("#")){
+			return ""
+		}else if(matched.startsWith(".")){
+			classList.push(key)
+            return ""
+		}
+		return matched
+	})
+	return {style,classs:classList}
+}
+
+// /**
+//  * 移除字符串中的样式
+//  * 
+//  * "{color:red}hello world"  =  "hello world"
+//  * "{color:red}{border:1px solid red}hello world"  =  "{border:1px solid red}hello world"
+//  * 
+//  * @param str 
+//  */
+// export function removeStyledHead(str:string){
+// 	if(typeof(str)!=="string") return str
+// 	return str.replace(/^\{.*?\}/,"")
+// }
+/**
+ * 一个简单的形式如
+ * 
+ * "{css样式}xxxx"的字符串，字符串开头的{xxxx}会被解析为css样式
+ * 
+ * 如：  withStyleString("{color:red}hello world")  =  ["color:red",hello world]
+ * 
+ * @param str 
+ */
+export function StyledString(str:string,styles:Record<string,string>){
+    if(typeof(str)!=="string") return {style:"",value:str||''}
+	const styleRegex =/^\{(.*?)\}/g
+    let style:string='',classs:string[]=[]
+	const value = str.replace(styleRegex,(matched,css)=>{
+		const result = parseStyleString(css,styles)
+		style = result.style
+		classs.push(...result.classs)
+		return ''
+	})
+    return {value,style,classs}
+}

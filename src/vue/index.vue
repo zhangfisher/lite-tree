@@ -5,30 +5,33 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref, useSlots, withDefaults, provide, reactive,onMounted } from 'vue';
+import { defineProps, ref, useSlots, withDefaults, provide, reactive } from 'vue';
 import type { LiteTreeNode } from './types';
-import { LiteTreeContextId } from './consts';
+import { LiteTreeContextId,flagAlias} from './consts';
 import { parseTree } from '../parse';
 import type { LiteTreeContext } from './types';
 import LiteTreeNodes from "./LiteTreeNodes.vue";
-import { injectStylesheet } from '../utils';
+import { injectStylesheet,enableImportant } from '../utils';
 import { injectSvgIcons } from '../icons';
 
 interface LiteTreeProps {
     indent?: number;                // 启用lite格式时的缩进空格数量       
     lite?: boolean                  // Lite格式
     json?: boolean                  // JSON格式
+    iconset?: string[]              // 图标集,如[file,folder,arrow]
 }
+
 
 // 默认使用Lite格式
 const props = withDefaults(defineProps<LiteTreeProps>(), {
     indent: 4,
     lite: true,
-    json: false
+    json: false,
+    iconset:()=>['folder','file']
 });
 
 const hasError = ref<boolean>(false);
-const hasDiff = ref<boolean>(false);
+const hasFlag = ref<boolean>(false);
 
 const slots = useSlots();
 
@@ -40,7 +43,11 @@ const parseSlotData = () => {
             return parseTree(slotContent.children, {
                 format: props.lite ? 'lite' : 'json',
                 forEach: (node: LiteTreeNode) => {
-                    if (node.diff) hasDiff.value = true     // 通过遍历确认是否显示diff列
+                    const flag = node.flag
+                    if (flag && flag.length>0) {
+                        hasFlag.value = true     // 通过遍历确认是否显示diff列
+                        if(flag in flagAlias) node.classs.push(flagAlias[flag])
+                    }                    
                 }
             })
         } catch (error) {
@@ -58,33 +65,22 @@ const parseSlotData = () => {
     }
 }
 
-// 增加一些预设的样式
-const injectPresetStyles =(classs:Record<string,string>)=>{
-    injectStylesheet(`
-        .lite-tree .diff-add { color: green; }
-        .lite-tree .diff-delete { color: red; }
-        .lite-tree .diff-modify { color: blue; }
-        .lite-tree .success { background-color: #f3ffec;color: green; }
-        .lite-tree .warning { background-color: #fff3e6;color: orange; }
-        .lite-tree .error { background-color: #ffe6e6;color: red; }
-        .lite-tree .info { background-color: #e6f7ff;color: blue; }
-        .lite-tree .primary { background-color: #f0f5ff;color: #0052cc; }
-        .lite-tree .secondary { background-color: #f4f4f4;color: #333; }    
-        ${Object.keys(classs).map(k=>`.lite-tree ${k} { ${classs[k]} }`).join('\n')} 
-    `,{id:'lite-tree-preset-styles',mode:'replace'})
+const injectCustomStyles =(classs:Record<string,string>)=>{
+    injectStylesheet(`        
+        ${Object.keys(classs).map(k=>`.lite-tree ${k} { ${enableImportant(classs[k])} }`).join('\n')} 
+    `,{id:'lite-tree-custom-styles',mode:'replace'})   
 }
-
  
 const { nodes:rNodes, styles, classs, icons } = parseSlotData();
 
-injectPresetStyles(classs)
+injectCustomStyles(classs)
 injectSvgIcons(icons)
 
 
 const nodes=reactive(rNodes)
 
 provide<LiteTreeContext>(LiteTreeContextId, {
-    hasDiff: hasDiff.value,
+    hasFlag: hasFlag.value,
     indent: props.indent,
     styles,
     classs,

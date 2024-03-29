@@ -1,19 +1,19 @@
-import type { Ref } from "vue";
 
 export interface LiteTreeNode {
     title: string;
     icon: string;
-    open: boolean;    
+    expand: boolean;    
     level:number
-    diff: "+" | "-" | "*" | undefined;
+    flag: string;
     comment:string
     style:string
+    classs:string[]
     tags:string[]
     children?: LiteTreeNode[];
   }
   
 export interface LiteTreeContext {    
-    hasDiff:boolean  
+    hasFlag:boolean  
     indent:number
     styles:Record<string,string>
     classs:Record<string,string>
@@ -22,4 +22,8 @@ export interface LiteTreeContext {
 }
   
 
- 
+export  interface LiteTreeIconsets{
+  file: string
+  folder: string
+  folderExpand: string  
+}

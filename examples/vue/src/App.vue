@@ -51,27 +51,27 @@
     <button @click="toggleTree">显示/隐藏树</button>
     <LiteTree v-if="isShowTree">
 #error=color:red;border: 1px solid red;background:#ffd2d2;padding:2px;
-.blue=color:red;border: 1px solid blue;background:#ffd2d2;padding:2px;
+#blue=color:red;border: 1px solid blue;background:#e6e6ff;padding:2px;
 ---
-- A公司         //+
+- A公司({color:red;}重点,{#blue}紧急)          //   企业名称
     行政中心
         {color:red;font-weight:bold;background:#ffeaea}总裁办
-        人力资源部({color:red;}重点,{#blue}紧急)
-        {#blue}财务部
+        人力资源部
+        {.blue}财务部
         行政部        //+  负责行政管理
-        法务部        //+  打官司等
-        审计部        //+  审计财务
-        信息中心      // {#blue}重点
+        [x]法务部        //+  打官司等
+        []审计部        //+  审计财务[保存](sss) [连接](sss)
+        信息中心      // {#blue}重点[保存](www.baidu.com) [连接](www.baidu.com)
         安全保卫部    //   保密工作
     + 市场中心    
         市场部({#error}出错,"{#warning}警告")
         销售部            //-
         客服部            //-
-        {.blue}品牌部            //   this is cool
-        市场策划部
+        {#blue}品牌部            //   this is cool
+        市场策划部    //!  重点
         市场营销部        // {.blue}this is cool
     研发中心
-        移动研发部
+        移动研发部      //!
         平台研发部({success}Java,{error}Go)
         {.success}测试部
         运维部

@@ -22,6 +22,27 @@ const props = defineProps({
 });
 const treeCtx = inject<LiteTreeContext>(LiteTreeContextId)!
 const styled = StyledString(props.value,treeCtx.styles);
+
+/**
+ * 解析字符串里面的链接,如"I am a string with [link](www.baidu.com),is cool"
+ * 返回
+ * ["I am a string with ",{link:"www.baidu.com",text:"link"},"is cool"]
+ * @param content 
+ */
+const parseLinks =(content:string)=>{
+    const regex = /\[(.*?)\]\((.*?)\)/g;
+    const result = content.split(regex).map((s)=>{
+        if(s.startsWith("[") && s.endsWith("]")){
+            const link = s.match(/\((.*?)\)/)![1]
+            const text = s.match(/\[(.*?)\]/)![1]
+            return {link,text}
+        }else{
+            return s
+        }
+    })
+    return result  
+}
+
 </script>
 
 <script lang="ts">
