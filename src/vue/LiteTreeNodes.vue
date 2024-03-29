@@ -14,12 +14,12 @@
             'icon',
             'arrow',
             { expand: isExpand(node) }]"/>
-        <span class="icon" :class="hasChildren(node) ? isExpand(node) ? 'folder-open':'folder' : 'file'"/>
+        <span class="icon" :class="node.icon ? node.icon : (hasChildren(node) ? isExpand(node) ? 'folder-open':'folder' : 'file')"/>
         <span class="title">
-          <StyledLabel :value="node.title" />
-          <StyledLabel class="tag" v-for="tag in node.tags" :key="tag" :value="tag" />
+          <RichLabel :value="node.title" />
+          <RichLabel class="tag" v-for="tag in node.tags" :key="tag" :value="tag" />
         </span>
-        <StyledLabel  class="comment" :value="node.comment" />
+        <RichLabel  class="comment" :value="node.comment" />
       </span>
       <SlideUpDown :active="isExpand(node)" :duration="200">
         <LiteTreeNodes v-if="hasChildren(node) && isExpand(node)" :indent="indent + 20"
@@ -33,7 +33,7 @@
 <script setup lang="ts">
 import { defineProps, withDefaults, inject } from 'vue';
 import type { LiteTreeNode } from './types';
-import StyledLabel from './StyledLabel.vue';
+import RichLabel from './RichLabel.vue';
 // @ts-ignore
 import SlideUpDown from 'vue-slide-up-down'
 import { LiteTreeContextId } from './consts';

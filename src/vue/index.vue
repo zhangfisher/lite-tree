@@ -16,8 +16,7 @@ import { injectSvgIcons } from '../icons';
 
 interface LiteTreeProps {
     indent?: number;                // 启用lite格式时的缩进空格数量       
-    lite?: boolean                  // Lite格式
-    json?: boolean                  // JSON格式
+    format?: 'lite' | 'json'
     iconset?: string[]              // 图标集,如[file,folder,arrow]
 }
 
@@ -25,8 +24,7 @@ interface LiteTreeProps {
 // 默认使用Lite格式
 const props = withDefaults(defineProps<LiteTreeProps>(), {
     indent: 4,
-    lite: true,
-    json: false,
+    format: "lite",
     iconset:()=>['folder','file']
 });
 
@@ -41,17 +39,20 @@ const parseSlotData = () => {
     if (slotContent && typeof slotContent.children === 'string') {
         try {
             return parseTree(slotContent.children, {
-                format: props.lite ? 'lite' : 'json',
+                format: props.format,
                 forEach: (node: LiteTreeNode) => {
                     const flag = node.flag
                     if (flag && flag.length>0) {
                         hasFlag.value = true     // 通过遍历确认是否显示diff列
-                        if(flag in flagAlias) node.classs.push(flagAlias[flag])
+                        if(flag in flagAlias){
+                            node.classs.push(flagAlias[flag])
+                        }
                     }                    
                 }
             })
         } catch (error) {
             hasError.value = true;
+            console.error(error)
             // @ts-ignore
             nodes = [{
                 title: "Invalid data provided to LiteTree", style: 'color:red',

@@ -8,7 +8,7 @@ export interface LiteTreeParseOptions{
 }
 
 // 节点正则表达式 
-const nodeRegex= /(\+|\-)?\s*(\[\s*([\w]?)\s*\])?\s*([^\(\/\\]+)(\((.*?)\))?\s*(\/\/(\S+)?\s*(.*?))?$/gm
+const nodeRegex= /(\+|\-)?\s*(\[([\w]+?)\])?\s*([^\(\/\\]+)(\((.*?)\))?\s*(\/\/(\S+)?\s*(.*?))?$/gm
 const nodeTagsRegex  = /([^,]+)\,?/g
 /**
    解析LiteTreeFormat格式的树，简称LTF

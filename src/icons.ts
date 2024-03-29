@@ -40,7 +40,7 @@ function compressSvgData(svgData:string){
  */
 export function injectSvgIcons(svgIcons:Record<string,string>){
     const svgIconContainer = getSvgIconContainer()
-    for(let [name,define] of Object.entries(icons)){
+    for(let [name,define] of Object.entries({...svgIcons,...icons})){
         const iconClassName = `.icon.${name}`
         const isSvg =define.startsWith("<svg") 
         const svgData=isSvg ? compressSvgData(define).replaceAll("<","%3C").replaceAll(">","%3E").replaceAll('"',"'") : define

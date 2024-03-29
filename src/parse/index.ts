@@ -50,7 +50,7 @@ export function parseVars(str:string):LiteTreeVars{
         const key = matched[1].trim()
         let value = matched[4] ||  matched[5]  || matched[6] 
 
-        if(value.startsWith("<svg")){
+        if(value.startsWith("<svg") || value.startsWith('data:image/svg+xml;')){
             icons[key] = value
         }else{
             value = value.trim()
@@ -73,7 +73,7 @@ export function parseTreeObject(strTree:string,vars:LiteTreeVars, options:ParseT
             treeData = jsonParser(strTree,(key,value)=>{
                 if(typeof(value)==='object' && !Array.isArray(value)){
                     if(typeof(options.forEach)==='function'){
-                        options.forEach(value)
+                        return options.forEach(value)
                     }
                 }           
             })
@@ -81,6 +81,7 @@ export function parseTreeObject(strTree:string,vars:LiteTreeVars, options:ParseT
             treeData = parseLiteTree(strTree,vars,options)
         }
     }catch(e:any){
+        console.error(e)
         treeData = [{title:`解析错误:${e.message}`,icon:"error",expand:true,level:0,flag:'',classs:[''],comment:e.message,style:"",tags:[]}]
     }
     return treeData
