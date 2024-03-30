@@ -45,12 +45,12 @@
     "vite": "^5.2.7",
     "vite-plugin-dts": "^3.7.3",
     "vite-plugin-vue-devtools": "^7.0.17",
+    "vite-plugin-vue-style-bundler": "^1.0.6",
     "vitepress": "1.0.0-rc.45",
     "vue-tsc": "^2.0.6"
   },
   "dependencies": {
     "lite-tree": "file://.",
-    "vite-plugin-vue-style-bundler": "file:.yalc/vite-plugin-vue-style-bundler",
     "vue-slide-up-down": "^3.0.0"
   },
   "peerDependencies": {
