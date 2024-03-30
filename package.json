@@ -9,14 +9,13 @@
     "url": "https://github.com/zhangfisher/lite-tree"
   },
   "exports": {
-    ".":"./dist/index.js",
+    ".": "./dist/index.js",
     "./vue": {
       "import": "./dist/vue/index.js",
       "require": "./dist/vue/index.cjs",
       "types": "./dist/vue/index.d.ts"
     }
   },
-
   "scripts": {
     "build": "vite build",
     "docs:dev": "vitepress dev docs",
@@ -43,15 +42,15 @@
     "ts-node": "^10.9.2",
     "tsup": "^8.0.2",
     "typescript": "^5.4.2",
-    "vite": "^5.1.6",
+    "vite": "^5.2.7",
     "vite-plugin-dts": "^3.7.3",
     "vite-plugin-vue-devtools": "^7.0.17",
-    "vite-plugin-vue-style-bundler": "^1.0.5",
     "vitepress": "1.0.0-rc.45",
     "vue-tsc": "^2.0.6"
   },
   "dependencies": {
     "lite-tree": "file://.",
+    "vite-plugin-vue-style-bundler": "file:.yalc/vite-plugin-vue-style-bundler",
     "vue-slide-up-down": "^3.0.0"
   },
   "peerDependencies": {

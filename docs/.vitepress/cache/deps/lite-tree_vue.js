@@ -23,167 +23,266 @@ import {
 } from "./chunk-RVDMA4KA.js";
 
 // node_modules/.pnpm/file+_vue@3.4.21/node_modules/lite-tree/dist/vue/index.js
-var N = Symbol("LiteTreeContext");
-var H = {
+var LiteTreeContextId = Symbol("LiteTreeContext");
+var flagAlias = {
   "+": "diff-add",
   "-": "diff-delete",
   "*": "diff-modify",
   "!": "highlight"
 };
-var Q = new RegExp("(?<!(\\s*\\,\\s*)|([\\[\\{\\}]\\s*))\\n(?!\\s*\\}\\s*)", "gm");
-var Y = new RegExp(`((?<!\\\\)\\"|\\')(.*?)((?<!\\\\)\\1)`, "gm");
-var J = new RegExp('([\\s\\[\\,\\{\\b]{1})(?<!\\"])(\\w+)(?!\\")(\\s*\\:)', "gm");
-function U(i, n) {
+var addLineCommaRegex = new RegExp("(?<!(\\s*\\,\\s*)|([\\[\\{\\}]\\s*))\\n(?!\\s*\\}\\s*)", "gm");
+var strVarRegex = new RegExp(`((?<!\\\\)\\"|\\')(.*?)((?<!\\\\)\\1)`, "gm");
+var badKeyRegex = new RegExp('([\\s\\[\\,\\{\\b]{1})(?<!\\"])(\\w+)(?!\\")(\\s*\\:)', "gm");
+function safeParseJson(str, callback) {
   try {
-    return JSON.parse(i, (s, e) => n ? n(s, e) : e);
+    return JSON.parse(str, (key, value) => {
+      if (callback) {
+        return callback(key, value);
+      }
+      return value;
+    });
   } catch {
   }
-  let t = i.replaceAll(Q, `,
-`);
-  return t = t.replaceAll(Y, (s, e, l, r) => `"${encodeURI(l)}"`), t = t.replaceAll(J, (s, e, l, r) => `${e}"${l}"${r}`), t = t.replaceAll("，", ",").replaceAll("“", '"').replaceAll("”", '"'), JSON.parse(t, (s, e) => (typeof e == "string" && (e = decodeURI(e)), n ? n(s, e) : e));
-}
-function X(i, n) {
-  let t = U(i.trim(), (s, e) => (typeof e == "object" && !Array.isArray(e) && (e.expend = e.expend == null ? true : e.expend, e.diff && (e.flag = e.diff == "add" ? "+" : e.diff == "delete" ? "-" : e.diff == "modify" ? "*" : e.diff, delete e.diff), e.flag || (e.flag = ""), e.classs || (e.classs = []), e.tags || (e.tags = []), e.style || (e.style = ""), e.icon || (e.icon = ""), e.comment || (e.comment = ""), typeof n == "function" && Object.assign(e, n(s, e))), e));
-  return t = Array.isArray(t) ? t : [t], t;
-}
-function F(i, n) {
-  const { id: t, mode: s } = Object.assign({ mode: "replace" }, n);
-  let e = document.head.querySelector(`#${t}`);
-  return e ? (s == "replace" ? e.innerHTML = i : e.innerHTML += i, e) : (e = document.createElement("style"), e.innerHTML = i, e.id = t, document.head.appendChild(e), e);
-}
-function q(i) {
-  return i.replace(/(.*?)(\s*;)/g, (n, t, s) => t.trim().endsWith("!important") ? n : t.trim() + "!important;");
-}
-function _(i, n) {
-  let t = i;
-  if (!t || t.trim().length == 0)
-    return { style: "", classs: [] };
-  const s = [], e = new RegExp("(?<!:)(([#\\.]{1}\\w+))\\s*;(?!:)", "g");
-  return t.trim().endsWith(";") || (t = t.trim() + ";"), t = t.replace(e, (l, r) => {
-    if (r in n) {
-      let c = n[r];
-      return c.endsWith(";") || (c = c + ";"), c;
-    } else {
-      if (r.startsWith("#"))
-        return "";
-      if (l.startsWith("."))
-        return s.push(r), "";
+  let resultStr = str.replaceAll(addLineCommaRegex, ",\n");
+  resultStr = resultStr.replaceAll(strVarRegex, (s, begin, value, end) => {
+    return `"${encodeURI(value)}"`;
+  });
+  resultStr = resultStr.replaceAll(badKeyRegex, (s, p1, value, p2) => {
+    return `${p1}"${value}"${p2}`;
+  });
+  resultStr = resultStr.replaceAll("，", ",").replaceAll("“", '"').replaceAll("”", '"');
+  return JSON.parse(resultStr, (key, value) => {
+    if (typeof value == "string")
+      value = decodeURI(value);
+    if (callback) {
+      return callback(key, value);
     }
-    return l;
-  }), { style: t, classs: s };
+    return value;
+  });
 }
-function K(i, n) {
-  if (typeof i != "string")
-    return { style: "", value: i || "" };
-  const t = /^\{(.*?)\}/g;
-  let s = "", e = [];
-  return { value: i.replace(t, (r, c) => {
-    const m = _(c, n);
-    return s = m.style, e.push(...m.classs), "";
-  }), style: s, classs: e };
-}
-var E = /(\+|\-)?\s*(\[([\w]+?)\])?\s*([^\(\/\\]+)(\((.*?)\))?\s*(\/\/(\S+)?\s*(.*?))?$/gm;
-var v = /([^,]+)\,?/g;
-function ee(i, n, t) {
-  const s = Object.assign({ indent: 4 }, t.ltfOptions), e = i.split(`
-`);
-  function l(I) {
-    if (!I)
-      return [];
-    let a, d = [];
-    for (; (a = v.exec(I)) !== null; ) {
-      a.index === v.lastIndex && v.lastIndex++;
-      let g = a[1];
-      (g.startsWith("'") || g.startsWith('"')) && (g = g.substring(1)), (g.endsWith("'") || g.endsWith('"')) && (g = g.substring(0, g.length - 1)), d.push(g);
-    }
-    return d;
-  }
-  function r(I) {
-    let a = { expand: false, title: "", tags: [], comment: "", style: "", icon: "", level: 0, flag: "", classs: [] };
-    E.lastIndex = 0;
-    const d = E.exec(I.trim());
-    if (d) {
-      a.expand = d[1] != "+", a.icon = d[3] || "", a.title = d[4] || "", a.tags = l(d[6]), a.comment = d[9] || "";
-      const g = /([\w\!\+\*\&\-\=\$\%\@\~\.]+)?(\{[\s\S]*?\})?/g.exec(d[8] || "");
-      if (g) {
-        const M = (g[1] || "").split(".");
-        a.flag = M[0];
-        const j = _(g[2] || "", n.styles);
-        a.style = j.style, a.classs = [...j.classs, ...M.slice(1)];
+function parseJson(content, forEach) {
+  let nodes = safeParseJson(content.trim(), (key, value) => {
+    if (typeof value == "object" && !Array.isArray(value)) {
+      value.expend = value.expend == void 0 ? true : value.expend;
+      if (value.diff) {
+        value.flag = value.diff == "add" ? "+" : value.diff == "delete" ? "-" : value.diff == "modify" ? "*" : value.diff;
+        delete value.diff;
+      }
+      if (!value.flag)
+        value.flag = "";
+      if (!value.classs)
+        value.classs = [];
+      if (!value.tags)
+        value.tags = [];
+      if (!value.style)
+        value.style = "";
+      if (!value.icon)
+        value.icon = "";
+      if (!value.comment)
+        value.comment = "";
+      if (typeof forEach === "function") {
+        Object.assign(value, forEach(key, value));
       }
     }
-    return a;
-  }
-  const c = (e[0].match(/^\s+/) || [""])[0];
-  let m, o, f = { level: 0, children: [] };
-  const h2 = [f];
-  for (let I of e) {
-    if (I.trim() == "")
-      continue;
-    I = I.substring(c.length);
-    const a = r(I);
-    if (a.level = Math.ceil((I.match(/^\s+/) || [""])[0].length / s.indent) + 1, !m)
-      o = f;
-    else if (a.level != m.level) {
-      if (a.level > m.level)
-        h2.push(m), o = m;
-      else if (a.level < m.level)
-        for (let d = h2.length - 1; d >= 0; d--)
-          if (h2[d].level >= a.level)
-            h2.pop();
-          else {
-            o = h2[d];
-            break;
-          }
-    }
-    o && !o.children && (o.children = []), o == null || o.children.push(a), m = a, typeof t.forEach == "function" && t.forEach(a);
-  }
-  return f.children;
+    return value;
+  });
+  nodes = Array.isArray(nodes) ? nodes : [nodes];
+  return nodes;
 }
-var te = /^---\s*$/gm;
-function ie(i) {
-  const n = i.split(te), [t, s] = n.length == 1 ? ["", n[0]] : n;
+function parseStyleString(str, vars) {
+  let style = str;
+  if (!style || style.trim().length == 0)
+    return { style: "", classs: [] };
+  const classList = [];
+  const varRegex = new RegExp("(?<!:)(([#\\.]{1}\\w+))\\s*;(?!:)", "g");
+  if (!style.trim().endsWith(";"))
+    style = style.trim() + ";";
+  style = style.replace(varRegex, (matched, key) => {
+    if (key in vars) {
+      let r = vars[key];
+      if (!r.endsWith(";"))
+        r = r + ";";
+      return r;
+    } else if (key.startsWith("#")) {
+      return "";
+    } else if (matched.startsWith(".")) {
+      classList.push(key);
+      return "";
+    }
+    return matched;
+  });
+  return { style, classs: classList };
+}
+function StyledString(str, styles) {
+  if (typeof str !== "string")
+    return { style: "", value: str || "" };
+  const styleRegex = /^\{(.*?)\}/g;
+  let style = "", classs = [];
+  const value = str.replace(styleRegex, (matched, css) => {
+    const result = parseStyleString(css, styles);
+    style = result.style;
+    classs.push(...result.classs);
+    return "";
+  });
+  return { value, style, classs };
+}
+var nodeRegex = /(\+|\-)?\s*(\[([\w]+?)\])?\s*([^\(\/\\]+)(\((.*?)\))?\s*(\/\/(\S+)?\s*(.*?))?$/gm;
+var nodeTagsRegex = /([^,]+)\,?/g;
+function parseLiteTree(treeData, vars, options) {
+  const opts = Object.assign({ indent: 4 }, options.ltfOptions);
+  const lines = treeData.split("\n");
+  function parseTags(strTags) {
+    if (!strTags)
+      return [];
+    let matched;
+    let tags = [];
+    while ((matched = nodeTagsRegex.exec(strTags)) !== null) {
+      if (matched.index === nodeTagsRegex.lastIndex) {
+        nodeTagsRegex.lastIndex++;
+      }
+      let tag = matched[1];
+      if (tag.startsWith("'") || tag.startsWith('"')) {
+        tag = tag.substring(1);
+      }
+      if (tag.endsWith("'") || tag.endsWith('"')) {
+        tag = tag.substring(0, tag.length - 1);
+      }
+      tags.push(tag);
+    }
+    return tags;
+  }
+  function parseNode(line) {
+    let node = { expand: false, title: "", tags: [], comment: "", style: "", icon: "", level: 0, flag: "", classs: [] };
+    nodeRegex.lastIndex = 0;
+    const match = nodeRegex.exec(line.trim());
+    if (match) {
+      node.expand = match[1] == "+" ? false : true;
+      node.icon = match[3] || "";
+      node.title = match[4] || "";
+      node.tags = parseTags(match[6]);
+      node.comment = match[9] || "";
+      const flagMatch = /([\w\!\+\*\&\-\=\$\%\@\~\.]+)?(\{[\s\S]*?\})?/g.exec(match[8] || "");
+      if (flagMatch) {
+        const f = (flagMatch[1] || "").split(".");
+        node.flag = f[0];
+        const r = parseStyleString(flagMatch[2] || "", vars.styles);
+        node.style = r.style;
+        node.classs = [...r.classs, ...f.slice(1)];
+      }
+    }
+    return node;
+  }
+  const preSpace = (lines[0].match(/^\s+/) || [""])[0];
+  let previousNode = void 0;
+  let parentNode = void 0;
+  let rootNode = { level: 0, children: [] };
+  const stackNodes = [rootNode];
+  for (let line of lines) {
+    if (line.trim() == "")
+      continue;
+    line = line.substring(preSpace.length);
+    const node = parseNode(line);
+    node.level = Math.ceil((line.match(/^\s+/) || [""])[0].length / opts.indent) + 1;
+    if (!previousNode) {
+      parentNode = rootNode;
+    } else if (node.level == previousNode.level)
+      ;
+    else if (node.level > previousNode.level) {
+      stackNodes.push(previousNode);
+      parentNode = previousNode;
+    } else if (node.level < previousNode.level) {
+      for (let i = stackNodes.length - 1; i >= 0; i--) {
+        if (stackNodes[i].level >= node.level) {
+          stackNodes.pop();
+        } else {
+          parentNode = stackNodes[i];
+          break;
+        }
+      }
+    }
+    if (parentNode && !parentNode.children) {
+      parentNode.children = [];
+    }
+    parentNode == null ? void 0 : parentNode.children.push(node);
+    previousNode = node;
+    if (typeof options.forEach == "function") {
+      options.forEach(node);
+    }
+  }
+  return rootNode.children;
+}
+var SplitterRegex = /^---\s*$/gm;
+function splitTreeContent(context) {
+  const results = context.split(SplitterRegex);
+  const [vars, treeData] = results.length == 1 ? ["", results[0]] : results;
   return [
-    t.trim(),
-    s.trim()
+    vars.trim(),
+    treeData.trim()
   ];
 }
-function se(i) {
-  const n = {}, t = {}, s = {}, e = /^\s*([\w\#\.]+)\s*\=\s*((\{([\w\n\S\s]*?)\})|(\<svg[\w\n\S\s]*?<\/svg\>)|(.*$))/gm;
-  let l;
-  for (; (l = e.exec(i)) !== null; ) {
-    l.index === e.lastIndex && e.lastIndex++;
-    const r = l[1].trim();
-    let c = l[4] || l[5] || l[6];
-    c.startsWith("<svg") || c.startsWith("data:image/svg+xml;") ? s[r] = c : (c = c.trim(), c.startsWith("{") && (c = c.substring(1)), c.endsWith("}") && (c = c.substring(0, c.length - 1)), r.startsWith(".") ? t[r] = c.replaceAll(`
-`, ";") : r.startsWith("#") && (n[r] = c.replaceAll(`
-`, ";")));
+function parseVars(str) {
+  const styles = {};
+  const classs = {};
+  const icons2 = {};
+  const varRegex = /^\s*([\w\#\.]+)\s*\=\s*((\{([\w\n\S\s]*?)\})|(\<svg[\w\n\S\s]*?<\/svg\>)|(.*$))/gm;
+  let matched;
+  while ((matched = varRegex.exec(str)) !== null) {
+    if (matched.index === varRegex.lastIndex) {
+      varRegex.lastIndex++;
+    }
+    const key = matched[1].trim();
+    let value = matched[4] || matched[5] || matched[6];
+    if (value.startsWith("<svg") || value.startsWith("data:image/svg+xml;")) {
+      icons2[key] = value;
+    } else {
+      value = value.trim();
+      if (value.startsWith("{"))
+        value = value.substring(1);
+      if (value.endsWith("}"))
+        value = value.substring(0, value.length - 1);
+      if (key.startsWith(".")) {
+        classs[key] = value.replaceAll("\n", ";");
+      } else if (key.startsWith("#")) {
+        styles[key] = value.replaceAll("\n", ";");
+      }
+    }
   }
-  return { styles: n, classs: t, icons: s };
+  return { styles, classs, icons: icons2 };
 }
-function ne(i, n, t) {
-  let s = [];
+function parseTreeObject(strTree, vars, options) {
+  let treeData = [];
   try {
-    t.format == "json" ? s = X(i, (e, l) => {
-      if (typeof l == "object" && !Array.isArray(l) && typeof t.forEach == "function")
-        return t.forEach(l);
-    }) : s = ee(i, n, t);
+    if (options.format == "json") {
+      treeData = parseJson(strTree, (key, value) => {
+        if (typeof value === "object" && !Array.isArray(value)) {
+          if (typeof options.forEach === "function") {
+            return options.forEach(value);
+          }
+        }
+      });
+    } else {
+      treeData = parseLiteTree(strTree, vars, options);
+    }
   } catch (e) {
-    console.error(e), s = [{ title: `解析错误:${e.message}`, icon: "error", expand: true, level: 0, flag: "", classs: [""], comment: e.message, style: "", tags: [] }];
+    console.error(e);
+    treeData = [{ title: `解析错误:${e.message}`, icon: "error", expand: true, level: 0, flag: "", classs: [""], comment: e.message, style: "", tags: [] }];
   }
-  return s;
+  return treeData;
 }
-function re(i, n) {
-  const t = Object.assign({}, n), [s, e] = ie(i), l = se(s), r = ne(e, l, t);
+function parseTree(context, options) {
+  const opts = Object.assign({}, options);
+  const [strVars, strTree] = splitTreeContent(context);
+  const vars = parseVars(strVars);
+  const nodes = parseTreeObject(strTree, vars, opts);
   return {
-    ...l,
-    nodes: r
+    ...vars,
+    nodes
   };
 }
-var le = ["innerHTML"];
-var ae = {};
-var w = defineComponent({
-  ...ae,
+var _hoisted_1$2 = ["innerHTML"];
+var __default__$1 = {};
+var _sfc_main$2 = defineComponent({
+  ...__default__$1,
   __name: "RichLabel",
   props: {
     value: {
@@ -191,19 +290,27 @@ var w = defineComponent({
       default: ""
     }
   },
-  setup(i) {
-    const n = i, t = inject(N), s = K(n.value, t.styles), e = (l) => {
-      const r = /\[([^\[\]]*?)(\:(\w+))?\]\((([^\(\\\s)]+)(\s+[\w\u4e00-\u9fa5\w]+)?)\)/g;
-      return l.replace(r, (m, o, f, h2, I, a, d) => `<a style='display:inline-flex;align-items:center;' ${d ? "title=" + d : ""} class='action' target='_blank' href='${a}'>${h2 ? `<span class='icon ${h2}'></span>` : ""}${o}</a>`);
+  setup(__props) {
+    const props = __props;
+    const treeCtx = inject(LiteTreeContextId);
+    const styled = StyledString(props.value, treeCtx.styles);
+    const parseLinks = (content) => {
+      const regex = /\[([^\[\]]*?)(\:(\w+))?\]\((([^\(\\\s)]+)(\s+[\w\u4e00-\u9fa5\w]+)?)\)/g;
+      const result = content.replace(regex, (matched, label, _1, icon, _2, link, tips) => {
+        return `<a style='display:inline-flex;align-items:center;' ${tips ? "title=" + tips : ""} class='action' target='_blank' href='${link}'>${icon ? `<span class='icon ${icon}'></span>` : ""}${label}</a>`;
+      });
+      return result;
     };
-    return (l, r) => (openBlock(), createElementBlock("span", {
-      style: normalizeStyle(unref(s).style),
-      class: normalizeClass(unref(s).classs),
-      innerHTML: e(unref(s).value)
-    }, null, 14, le));
+    return (_ctx, _cache) => {
+      return openBlock(), createElementBlock("span", {
+        style: normalizeStyle(unref(styled).style),
+        class: normalizeClass(unref(styled).classs),
+        innerHTML: parseLinks(unref(styled).value)
+      }, null, 14, _hoisted_1$2);
+    };
   }
 });
-var oe = {
+var SlideUpDown = {
   name: "SlideUpDown",
   props: {
     active: Boolean,
@@ -243,7 +350,8 @@ var oe = {
     );
   },
   mounted() {
-    this.layout(), this.initial = true;
+    this.layout();
+    this.initial = true;
   },
   created() {
     this.hidden = !this.active;
@@ -253,60 +361,93 @@ var oe = {
       return this.$refs.container;
     },
     attrs() {
-      const i = {
+      const attrs = {
         "aria-hidden": !this.active,
         "aria-expanded": this.active
       };
-      return this.useHidden && (i.hidden = this.hidden), i;
+      if (this.useHidden) {
+        attrs.hidden = this.hidden;
+      }
+      return attrs;
     }
   },
   methods: {
     layout() {
-      this.active ? (this.hidden = false, this.$emit("open-start"), this.initial && this.setHeight("0px", () => this.el.scrollHeight + "px")) : (this.$emit("close-start"), this.setHeight(this.el.scrollHeight + "px", () => "0px"));
+      if (this.active) {
+        this.hidden = false;
+        this.$emit("open-start");
+        if (this.initial) {
+          this.setHeight("0px", () => this.el.scrollHeight + "px");
+        }
+      } else {
+        this.$emit("close-start");
+        this.setHeight(this.el.scrollHeight + "px", () => "0px");
+      }
     },
-    asap(i) {
-      this.initial ? this.$nextTick(i) : i();
+    asap(callback) {
+      if (!this.initial) {
+        callback();
+      } else {
+        this.$nextTick(callback);
+      }
     },
-    setHeight(i, n) {
-      this.style = { height: i }, this.asap(() => {
-        this.__ = this.el.scrollHeight, this.style = {
-          height: n(),
+    setHeight(temp, afterRelayout) {
+      this.style = { height: temp };
+      this.asap(() => {
+        this.__ = this.el.scrollHeight;
+        this.style = {
+          height: afterRelayout(),
           overflow: "hidden",
           "transition-property": "height",
           "transition-duration": this.duration + "ms"
         };
       });
     },
-    onTransitionEnd(i) {
-      i.target === this.el && (this.active ? (this.style = {}, this.$emit("open-end")) : (this.style = {
-        height: "0",
-        overflow: "hidden"
-      }, this.hidden = true, this.$emit("close-end")));
+    onTransitionEnd(event) {
+      if (event.target !== this.el)
+        return;
+      if (this.active) {
+        this.style = {};
+        this.$emit("open-end");
+      } else {
+        this.style = {
+          height: "0",
+          overflow: "hidden"
+        };
+        this.hidden = true;
+        this.$emit("close-end");
+      }
     }
   }
 };
-var ce = {
+var _hoisted_1$1 = {
   class: normalizeClass(["lite-tree-nodes"])
 };
-var de = ["onClick"];
-var ge = {
+var _hoisted_2 = ["onClick"];
+var _hoisted_3 = {
   key: 0,
   class: "flag"
 };
-var me = { class: "title" };
-var he = {};
-var Ie = defineComponent({
-  ...he,
+var _hoisted_4 = { class: "title" };
+var __default__ = {};
+var _sfc_main$1 = defineComponent({
+  ...__default__,
   __name: "LiteTreeNodes",
   props: {
     indent: { default: 0 },
     nodes: { default: () => [] }
   },
-  setup(i) {
-    ((r, c) => {
-      let m = document.getElementById("hom0txe");
-      m || (m = document.createElement("style"), m.id = "hom0txe", document.head.appendChild(m), m.innerHTML = c);
-    })("hom0txe", `
+  setup(__props) {
+    const $insertStylesheet = (id, css) => {
+      let style = document.getElementById("hom0txe");
+      if (!style) {
+        style = document.createElement("style");
+        style.id = "hom0txe";
+        document.head.appendChild(style);
+        style.innerHTML = css;
+      }
+    };
+    $insertStylesheet("hom0txe", `
 .lite-tree-nodes[data-v-hom0txe]{
   color: #555;
   display: flex;
@@ -378,123 +519,175 @@ var Ie = defineComponent({
   border-radius: 4px;
 }
 `);
-    const t = inject(N), s = (r) => {
-      r.expand = r.expand == null ? false : !r.expand;
-    }, e = (r) => Array.isArray(r.children) && r.children.length > 0, l = (r) => r.expand == null ? true : r.expand;
-    return (r, c) => {
-      const m = resolveComponent("LiteTreeNodes", true);
-      return openBlock(), createElementBlock("ul", ce, [
-        (openBlock(true), createElementBlock(Fragment, null, renderList(r.nodes, (o, f) => (openBlock(), createElementBlock("li", { key: f }, [
-          createBaseVNode("span", {
-            class: normalizeClass(["lite-tree-node", o.classs]),
-            onClick: (h2) => s(o),
-            style: normalizeStyle(o.style)
-          }, [
-            unref(t).hasFlag ? (openBlock(), createElementBlock("span", ge, toDisplayString(o.flag), 1)) : createCommentVNode("", true),
+    const treeCtx = inject(LiteTreeContextId);
+    const toggleNode = (node) => {
+      node.expand = node.expand == void 0 ? false : !node.expand;
+    };
+    const hasChildren = (node) => {
+      return Array.isArray(node.children) && node.children.length > 0;
+    };
+    const isExpand = (node) => {
+      return node.expand == void 0 ? true : node.expand;
+    };
+    return (_ctx, _cache) => {
+      const _component_LiteTreeNodes = resolveComponent("LiteTreeNodes", true);
+      return openBlock(), createElementBlock("ul", _hoisted_1$1, [
+        (openBlock(true), createElementBlock(Fragment, null, renderList(_ctx.nodes, (node, index2) => {
+          return openBlock(), createElementBlock("li", { key: index2 }, [
             createBaseVNode("span", {
-              class: "indent",
-              style: normalizeStyle({ width: r.indent + "px" })
-            }, null, 4),
-            e(o) ? (openBlock(), createElementBlock("span", {
-              key: 1,
-              class: normalizeClass([
-                "node-indicator",
-                "icon",
-                "arrow",
-                { expand: l(o) }
-              ])
-            }, null, 2)) : createCommentVNode("", true),
-            createBaseVNode("span", {
-              class: normalizeClass(["icon", o.icon ? o.icon : e(o) ? l(o) ? "folder-open" : "folder" : "file"])
-            }, null, 2),
-            createBaseVNode("span", me, [
-              createVNode(w, {
-                value: o.title
-              }, null, 8, ["value"]),
-              (openBlock(true), createElementBlock(Fragment, null, renderList(o.tags, (h2) => (openBlock(), createBlock(w, {
-                class: "tag",
-                key: h2,
-                value: h2
-              }, null, 8, ["value"]))), 128))
-            ]),
-            createVNode(w, {
-              class: "comment",
-              value: o.comment
-            }, null, 8, ["value"])
-          ], 14, de),
-          createVNode(unref(oe), {
-            active: l(o),
-            duration: 200
-          }, {
-            default: withCtx(() => [
-              e(o) && l(o) ? (openBlock(), createBlock(m, {
-                key: 0,
-                indent: r.indent + 20,
-                class: normalizeClass(l(o) ? "expand" : "close"),
-                nodes: o.children
-              }, null, 8, ["indent", "class", "nodes"])) : createCommentVNode("", true)
-            ]),
-            _: 2
-          }, 1032, ["active"])
-        ]))), 128))
+              class: normalizeClass(["lite-tree-node", node.classs]),
+              onClick: ($event) => toggleNode(node),
+              style: normalizeStyle(node.style)
+            }, [
+              unref(treeCtx).hasFlag ? (openBlock(), createElementBlock("span", _hoisted_3, toDisplayString(node.flag), 1)) : createCommentVNode("", true),
+              createBaseVNode("span", {
+                class: "indent",
+                style: normalizeStyle({ width: _ctx.indent + "px" })
+              }, null, 4),
+              hasChildren(node) ? (openBlock(), createElementBlock("span", {
+                key: 1,
+                class: normalizeClass([
+                  "node-indicator",
+                  "icon",
+                  "arrow",
+                  { expand: isExpand(node) }
+                ])
+              }, null, 2)) : createCommentVNode("", true),
+              createBaseVNode("span", {
+                class: normalizeClass(["icon", node.icon ? node.icon : hasChildren(node) ? isExpand(node) ? "folder-open" : "folder" : "file"])
+              }, null, 2),
+              createBaseVNode("span", _hoisted_4, [
+                createVNode(_sfc_main$2, {
+                  value: node.title
+                }, null, 8, ["value"]),
+                (openBlock(true), createElementBlock(Fragment, null, renderList(node.tags, (tag) => {
+                  return openBlock(), createBlock(_sfc_main$2, {
+                    class: "tag",
+                    key: tag,
+                    value: tag
+                  }, null, 8, ["value"]);
+                }), 128))
+              ]),
+              createVNode(_sfc_main$2, {
+                class: "comment",
+                value: node.comment
+              }, null, 8, ["value"])
+            ], 14, _hoisted_2),
+            createVNode(unref(SlideUpDown), {
+              active: isExpand(node),
+              duration: 200
+            }, {
+              default: withCtx(() => [
+                hasChildren(node) && isExpand(node) ? (openBlock(), createBlock(_component_LiteTreeNodes, {
+                  key: 0,
+                  indent: _ctx.indent + 20,
+                  class: normalizeClass(isExpand(node) ? "expand" : "close"),
+                  nodes: node.children
+                }, null, 8, ["indent", "class", "nodes"])) : createCommentVNode("", true)
+              ]),
+              _: 2
+            }, 1032, ["active"])
+          ]);
+        }), 128))
       ]);
     };
   }
 });
-var P = (i, n) => {
-  const t = i.__vccOpts || i;
-  for (const [s, e] of n)
-    t[s] = e;
-  return t;
+var _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
 };
-var ue = P(Ie, [["__scopeId", "data-v-7b5f0052"]]);
-var fe = {
+var LiteTreeNodes = _export_sfc(_sfc_main$1, [["__scopeId", "data-v-7b5f0052"]]);
+function injectStylesheet(css, options) {
+  const { id, mode } = Object.assign({ mode: "replace" }, options);
+  let style = document.head.querySelector(`#${id}`);
+  if (!style) {
+    style = document.createElement("style");
+    style.innerHTML = css;
+    style.id = id;
+    document.head.appendChild(style);
+    return style;
+  }
+  if (mode == "replace") {
+    style.innerHTML = css;
+  } else {
+    style.innerHTML += css;
+  }
+  return style;
+}
+function enableImportant(css) {
+  return css.replace(/(.*?)(\s*;)/g, (matched, p1, p2) => {
+    if (p1.trim().endsWith("!important"))
+      return matched;
+    return p1.trim() + "!important;";
+  });
+}
+var icons = {
   file: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMzIgMzIiPjxwYXRoIGZpbGw9ImN1cnJlbnRDb2xvciIgZD0ibTI1LjcgOS4zbC03LTdjLS4yLS4yLS40LS4zLS43LS4zSDhjLTEuMSAwLTIgLjktMiAydjI0YzAgMS4xLjkgMiAyIDJoMTZjMS4xIDAgMi0uOSAyLTJWMTBjMC0uMy0uMS0uNS0uMy0uN3pNMTggNC40bDUuNiA1LjZIMThWNC40ek0yNCAyOEg4VjRoOHY2YzAgMS4xLjkgMiAyIDJoNnYxNnoiLz48cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik0xMCAyMmgxMnYySDEwem0wLTZoMTJ2MkgxMHoiLz48L3N2Zz4=",
-  folder: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgZD0iTTUgNGg0bDMgM2g3YTIgMiAwIDAgMSAyIDJ2OGEyIDIgMCAwIDEtMiAySDVhMiAyIDAgMCAxLTItMlY2YTIgMiAwIDAgMSAyLTIiLz48L3N2Zz4=",
-  "folder-open": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgZD0ibTUgMTlsMi43NTctNy4zNTFBMSAxIDAgMCAxIDguNjkzIDExSDIxYTEgMSAwIDAgMSAuOTg2IDEuMTY0bC0uOTk2IDUuMjExQTIgMiAwIDAgMSAxOS4wMjYgMTl6YTIgMiAwIDAgMS0yLTJWNmEyIDIgMCAwIDEgMi0yaDRsMyAzaDdhMiAyIDAgMCAxIDIgMnYyIi8+PC9zdmc+",
-  arrow: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMzIgMzIiPjxwYXRoIGZpbGw9IiNhYmFiYWIiIGQ9Im0xMiA4bDEwIDhsLTEwIDh6Ii8+PC9zdmc+",
+  folder: `data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgZD0iTTUgNGg0bDMgM2g3YTIgMiAwIDAgMSAyIDJ2OGEyIDIgMCAwIDEtMiAySDVhMiAyIDAgMCAxLTItMlY2YTIgMiAwIDAgMSAyLTIiLz48L3N2Zz4=`,
+  "folder-open": `data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgZD0ibTUgMTlsMi43NTctNy4zNTFBMSAxIDAgMCAxIDguNjkzIDExSDIxYTEgMSAwIDAgMSAuOTg2IDEuMTY0bC0uOTk2IDUuMjExQTIgMiAwIDAgMSAxOS4wMjYgMTl6YTIgMiAwIDAgMS0yLTJWNmEyIDIgMCAwIDEgMi0yaDRsMyAzaDdhMiAyIDAgMCAxIDIgMnYyIi8+PC9zdmc+`,
+  arrow: `data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMzIgMzIiPjxwYXRoIGZpbGw9IiNhYmFiYWIiIGQ9Im0xMiA4bDEwIDhsLTEwIDh6Ii8+PC9zdmc+`,
   tag: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMzIgMzIiPjxwYXRoIGZpbGw9ImN1cnJlbnRDb2xvciIgZD0iTTEwIDE0YTQgNCAwIDEgMSA0LTRhNC4wMDUgNC4wMDUgMCAwIDEtNCA0Wm0wLTZhMiAyIDAgMSAwIDEuOTk4IDIuMDA0QTIuMDAyIDIuMDAyIDAgMCAwIDEwIDhaIi8+PHBhdGggZmlsbD0iY3VycmVudENvbG9yIiBkPSJNMTYuNjQ0IDI5LjQxNUwyLjU4NiAxNS4zNTRBMiAyIDAgMCAxIDIgMTMuOTQxVjRhMiAyIDAgMCAxIDItMmg5Ljk0MWEyIDIgMCAwIDEgMS40MTQuNTg2bDE0LjA2IDE0LjA1OGEyIDIgMCAwIDEgMCAyLjgyOGwtOS45NDMgOS45NDNhMiAyIDAgMCAxLTIuODI5IDBaTTQgNHY5Ljk0MkwxOC4wNTggMjhMMjggMTguMDU4TDEzLjk0MiA0WiIvPjwvc3ZnPg==",
   checked: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjEgMjEiPjxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTUuNSAzLjVoMTBhMiAyIDAgMCAxIDIgMnYxMGEyIDIgMCAwIDEtMiAyaC0xMGEyIDIgMCAwIDEtMi0ydi0xMGEyIDIgMCAwIDEgMi0yIi8+PHBhdGggZD0ibTcuNSAxMC41bDIgMmw0LTQiLz48L2c+PC9zdmc+",
   unchecked: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjEgMjEiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Ik01LjUgMy41aDEwYTIgMiAwIDAgMSAyIDJ2MTBhMiAyIDAgMCAxLTIgMmgtMTBhMiAyIDAgMCAxLTItMnYtMTBhMiAyIDAgMCAxIDItMiIvPjwvc3ZnPg==",
   star: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9ImN1cnJlbnRDb2xvciIgZD0ibTIyIDkuMjRsLTcuMTktLjYyTDEyIDJMOS4xOSA4LjYzTDIgOS4yNGw1LjQ2IDQuNzNMNS44MiAyMUwxMiAxNy4yN0wxOC4xOCAyMWwtMS42My03LjAzek0xMiAxNS40bC0zLjc2IDIuMjdsMS00LjI4bC0zLjMyLTIuODhsNC4zOC0uMzhMMTIgNi4xbDEuNzEgNC4wNGw0LjM4LjM4bC0zLjMyIDIuODhsMSA0LjI4eiIvPjwvc3ZnPg=="
 };
-function pe() {
-  let i = document.querySelector("#lite_tree_icons");
-  return i || (i = document.createElement("style"), i.id = "lite_tree_icons", i.innerHTML = `.lite-tree .icon{
+function getSvgIconContainer() {
+  let svgContainer = document.querySelector("#lite_tree_icons");
+  if (!svgContainer) {
+    svgContainer = document.createElement("style");
+    svgContainer.id = "lite_tree_icons";
+    svgContainer.innerHTML = `.lite-tree .icon{
             display:inline-block;
             width:1em;
             height:1em;
             margin:0.2em;
-        }`, document.head.appendChild(i)), i;
-}
-var Me = /(\<\?xml(.*)?\?\>)|(\<\!DOCTYPE.*?\>)|(width\=\"\d+\"\s?)|(height\=\"\d+\"\s?)|(\bxmlns(\:\w+)?\=\".*?\"\s?)|(p\-id\=\"\d+\"\s?)|(t\=\"\d+\"\s?)|(version\=\".*?\"\s?)|(class\=\"\w+\"\s?)/gm;
-function ye(i) {
-  return i.replace(Me, "");
-}
-function xe(i) {
-  const n = pe();
-  for (let [t, s] of Object.entries({ ...i, ...fe })) {
-    const e = `.icon.${t}`, l = s.startsWith("<svg"), r = l ? ye(s).replaceAll("<", "%3C").replaceAll(">", "%3E").replaceAll('"', "'") : s, c = `.lite-tree ${e}{
-            background-color: currentColor;
-            mask-image: url("${l ? `data:image/svg+xml,${r}` : r}");            
         }`;
-    n.innerHTML.includes(`.lite-tree ${e}`) || (n.innerHTML = n.innerHTML + `
-` + c);
+    document.head.appendChild(svgContainer);
+  }
+  return svgContainer;
+}
+var compressRegex = /(\<\?xml(.*)?\?\>)|(\<\!DOCTYPE.*?\>)|(width\=\"\d+\"\s?)|(height\=\"\d+\"\s?)|(\bxmlns(\:\w+)?\=\".*?\"\s?)|(p\-id\=\"\d+\"\s?)|(t\=\"\d+\"\s?)|(version\=\".*?\"\s?)|(class\=\"\w+\"\s?)/gm;
+function compressSvgData(svgData) {
+  return svgData.replace(compressRegex, "");
+}
+function injectSvgIcons(svgIcons) {
+  const svgIconContainer = getSvgIconContainer();
+  for (let [name, define] of Object.entries({ ...svgIcons, ...icons })) {
+    const iconClassName = `.icon.${name}`;
+    const isSvg = define.startsWith("<svg");
+    const svgData = isSvg ? compressSvgData(define).replaceAll("<", "%3C").replaceAll(">", "%3E").replaceAll('"', "'") : define;
+    const iconStyle = `.lite-tree ${iconClassName}{
+            background-color: currentColor;
+            mask-image: url("${isSvg ? `data:image/svg+xml,${svgData}` : svgData}");            
+        }`;
+    if (svgIconContainer.innerHTML.includes(`.lite-tree ${iconClassName}`))
+      continue;
+    svgIconContainer.innerHTML = svgIconContainer.innerHTML + "\n" + iconStyle;
   }
 }
-var De = { class: "lite-tree" };
-var Ae = defineComponent({
+var _hoisted_1 = { class: "lite-tree" };
+var _sfc_main = defineComponent({
   __name: "index",
   props: {
     indent: { default: 4 },
     format: { default: "lite" },
     iconset: { default: () => ["folder", "file"] }
   },
-  setup(i) {
-    ((a, d) => {
-      let g = document.getElementById("hroaqb5");
-      g || (g = document.createElement("style"), g.id = "hroaqb5", document.head.appendChild(g), g.innerHTML = d);
-    })("hroaqb5", `
+  setup(__props) {
+    const $insertStylesheet = (id, css) => {
+      let style = document.getElementById("hroaqb5");
+      if (!style) {
+        style = document.createElement("style");
+        style.id = "hroaqb5";
+        document.head.appendChild(style);
+        style.innerHTML = css;
+      }
+    };
+    $insertStylesheet("hroaqb5", `
 .lite-tree[data-v-hroaqb5]{
   position: relative;
   padding: 8px;
@@ -502,50 +695,67 @@ var Ae = defineComponent({
   text-align: left;
 }
 `);
-    const t = i, s = ref(false), e = ref(false), l = useSlots(), r = () => {
-      var d;
-      const a = (d = l.default) == null ? void 0 : d.call(l)[0];
-      if (a && typeof a.children == "string") {
+    const props = __props;
+    const hasError = ref(false);
+    const hasFlag = ref(false);
+    const slots = useSlots();
+    const parseSlotData = () => {
+      var _a;
+      const slotContent = (_a = slots.default) == null ? void 0 : _a.call(slots)[0];
+      if (slotContent && typeof slotContent.children === "string") {
         try {
-          return re(a.children, {
-            format: t.format,
-            forEach: (g) => {
-              const M = g.flag;
-              M && M.length > 0 && (e.value = true, M in H && g.classs.push(H[M]));
+          return parseTree(slotContent.children, {
+            format: props.format,
+            forEach: (node) => {
+              const flag = node.flag;
+              if (flag && flag.length > 0) {
+                hasFlag.value = true;
+                if (flag in flagAlias) {
+                  node.classs.push(flagAlias[flag]);
+                }
+              }
             }
           });
-        } catch (g) {
-          s.value = true, console.error(g), I = [{
+        } catch (error) {
+          hasError.value = true;
+          console.error(error);
+          nodes = [{
             title: "Invalid data provided to LiteTree",
             style: "color:red",
             // @ts-ignore
-            children: [{ title: g.message, style: "color:red" }]
+            children: [{ title: error.message, style: "color:red" }]
           }];
         }
         return { classs: {}, styles: {}, icons: {}, nodes: [] };
-      } else
+      } else {
         return { classs: {}, styles: {}, icons: {}, nodes: [] };
-    }, c = (a) => {
-      F(`        
-        ${Object.keys(a).map((d) => `.lite-tree ${d} { ${q(a[d])} }`).join(`
-`)} 
+      }
+    };
+    const injectCustomStyles = (classs2) => {
+      injectStylesheet(`        
+        ${Object.keys(classs2).map((k) => `.lite-tree ${k} { ${enableImportant(classs2[k])} }`).join("\n")} 
     `, { id: "lite-tree-custom-styles", mode: "replace" });
-    }, { nodes: m, styles: o, classs: f, icons: h2 } = r();
-    c(f), xe(h2);
-    let I = reactive(m);
-    return provide(N, {
-      hasFlag: e.value,
-      indent: t.indent,
-      styles: o,
-      classs: f,
-      icons: h2
-    }), (a, d) => (openBlock(), createElementBlock("div", De, [
-      createVNode(ue, { nodes: unref(I) }, null, 8, ["nodes"])
-    ]));
+    };
+    const { nodes: rNodes, styles, classs, icons: icons2 } = parseSlotData();
+    injectCustomStyles(classs);
+    injectSvgIcons(icons2);
+    let nodes = reactive(rNodes);
+    provide(LiteTreeContextId, {
+      hasFlag: hasFlag.value,
+      indent: props.indent,
+      styles,
+      classs,
+      icons: icons2
+    });
+    return (_ctx, _cache) => {
+      return openBlock(), createElementBlock("div", _hoisted_1, [
+        createVNode(LiteTreeNodes, { nodes: unref(nodes) }, null, 8, ["nodes"])
+      ]);
+    };
   }
 });
-var ve = P(Ae, [["__scopeId", "data-v-3456b343"]]);
+var index = _export_sfc(_sfc_main, [["__scopeId", "data-v-779d4b92"]]);
 export {
-  ve as default
+  index as default
 };
 //# sourceMappingURL=lite-tree_vue.js.map

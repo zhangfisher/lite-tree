@@ -1,5 +1,5 @@
 <template>
-    <div class="lite-tree">
+    <div class="lite-tree" data-v-123456>
         <LiteTreeNodes :nodes="nodes"></LiteTreeNodes>
     </div>
 </template>
