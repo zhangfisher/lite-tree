@@ -20,7 +20,11 @@ export interface LiteTreeContext {
     icons:Record<string,string>
 
 }
-  
+export interface LiteTreeNodesProps {
+  indent?: number;
+  nodes: LiteTreeNode[];
+}
+
 
 export  interface LiteTreeIconsets{
   file: string

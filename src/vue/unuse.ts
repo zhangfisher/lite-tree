@@ -36,3 +36,32 @@
 //     }  
 // 	return  result;
 //   }
+
+
+// /**
+//  * 替换样式变量
+//  * 将css里面的变量替换为实际的值
+//  * 例如:
+//  * replaceStyleVar("{#aaa;color:red;.bbb;}",{"#aaa":"font-size:9px;",".bbb":"border:none;"})
+//  *    =>  {font-size:9px;color:red;}
+//  * 
+//  * 注意: 类样式会被替换为空字符串
+//  * 
+//  * @param css 
+//  * @param vars 
+//  * @returns 
+//  */
+// export function replaceStyleVar(css:string,styles:Record<string,string>):string{
+// 	const varRegex = /(?<!:)(([#\.]{1}\w+))\s*;\b(?!:)/g
+// 	if(css.trim().endsWith(";")) css=css.trim()+";"
+// 	return css.replace(varRegex,(matched,key)=>{
+// 		if(key in styles){
+// 			let r = styles[key]
+// 			if(!r.endsWith(";")) r = r+";"
+// 			return r
+// 		}else if(matched.startsWith(".")){
+// 			return ''
+// 		}
+// 		return matched
+// 	})
+// }

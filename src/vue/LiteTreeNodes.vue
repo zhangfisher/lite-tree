@@ -37,12 +37,8 @@ import RichLabel from './RichLabel.vue';
 // @ts-ignore
 import SlideUpDown from 'vue-slide-up-down'
 import { LiteTreeContextId } from './consts';
-import type { LiteTreeContext } from './types';
+import type { LiteTreeContext ,LiteTreeNodesProps} from './types';
 
-interface LiteTreeNodesProps {
-  indent?: number;
-  nodes: LiteTreeNode[];
-}
 
 const props = withDefaults(defineProps<LiteTreeNodesProps>(), {
   indent: 0,
@@ -151,26 +147,7 @@ export default {}
         background-color: #f8f8f8;
         border-radius: 4px;
       }
-    }
-  }
-
-  .success {
-    background-color: #f3ffec;
-    color: green;
-  }
-
-  .warning {
-    background-color: #fff6e9;
-    color: orange;
-  }
-
-  .error {
-    background-color: #ffeaea;
-    color: red
-  }
-
-  .info {
-    background-color: #f5f5f5;
+    } 
   }
 }
 </style>

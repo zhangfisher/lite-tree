@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   lite-tree:
-    specifier: latest
-    version: 1.0.1(typescript@5.4.2)
+    specifier: file://.
+    version: file:(vue@3.4.21)
   vue:
     specifier: ^3.4.21
     version: 3.4.21(typescript@5.4.2)
@@ -53,8 +53,8 @@ devDependencies:
     specifier: ^7.0.17
     version: 7.0.17(rollup@4.13.0)(vite@5.1.6)(vue@3.4.21)
   vite-plugin-vue-style-bundler:
-    specifier: ^1.0.4
-    version: 1.0.4(@types/less@3.0.6)(less@4.2.0)(sass@1.72.0)(vite@5.1.6)(vue@3.4.21)
+    specifier: ^1.0.5
+    version: 1.0.5(@types/less@3.0.6)(less@4.2.0)(sass@1.72.0)(vite@5.1.6)(vue@3.4.21)
   vitepress:
     specifier: 1.0.0-rc.45
     version: 1.0.0-rc.45(@algolia/client-search@4.22.1)(@types/node@20.11.28)(less@4.2.0)(sass@1.72.0)(search-insights@2.13.0)(typescript@5.4.2)
@@ -2249,15 +2249,6 @@ packages:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
     dev: true
 
-  /lite-tree@1.0.1(typescript@5.4.2):
-    resolution: {integrity: sha512-HE+/pBP5kREbo44cO9I2Iju18IkhWcmCBsrUkJojFsiRJbI3ApKXhggKoqYv2/AsW0BvReLYTzG6tP2on/MBbA==}
-    dependencies:
-      vue: 3.4.21(typescript@5.4.2)
-      vue-slide-up-down: 3.0.0(vue@3.4.21)
-    transitivePeerDependencies:
-      - typescript
-    dev: false
-
   /load-tsconfig@0.2.5:
     resolution: {integrity: sha512-IXO6OCs9yg8tMKzfPZ1YmheJbZCiEsnBdcB03l0OcfK9prKnJb96siuHCr5Fl37/yo9DnKU+TLpxzTUspw9shg==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
@@ -3158,8 +3149,8 @@ packages:
       - supports-color
     dev: true
 
-  /vite-plugin-vue-style-bundler@1.0.4(@types/less@3.0.6)(less@4.2.0)(sass@1.72.0)(vite@5.1.6)(vue@3.4.21):
-    resolution: {integrity: sha512-tpzuUVfWWfNNv02dmmG4+H63u73paPCZRT7EgAtNLqkj2iAuJflKxLA1NWiVUvuzbLoqVdwcTkV3bl/77J1vvA==}
+  /vite-plugin-vue-style-bundler@1.0.5(@types/less@3.0.6)(less@4.2.0)(sass@1.72.0)(vite@5.1.6)(vue@3.4.21):
+    resolution: {integrity: sha512-bKhu2blc9BYE3g3Z9T4DnRksm8GACy3JIbkPgu6HtFUu5RjzX/SN0e9YQZZDGyez41gExRNqbbOXvreueuR0LQ==}
     peerDependencies:
       '@types/less': ^3.0.6
       less: ^4.2.0
@@ -3406,3 +3397,14 @@ packages:
     optionalDependencies:
       commander: 9.5.0
     dev: true
+
+  file:(vue@3.4.21):
+    resolution: {directory: '', type: directory}
+    id: 'file:'
+    name: lite-tree
+    peerDependencies:
+      vue: ^3.4.21
+    dependencies:
+      vue: 3.4.21(typescript@5.4.2)
+      vue-slide-up-down: 3.0.0(vue@3.4.21)
+    dev: false

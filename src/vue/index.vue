@@ -5,13 +5,13 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref, useSlots, withDefaults, provide, reactive } from 'vue';
+import { ref, useSlots, withDefaults, provide, reactive } from 'vue';
 import type { LiteTreeNode } from './types';
 import { LiteTreeContextId,flagAlias} from './consts';
 import { parseTree } from '../parse';
 import type { LiteTreeContext } from './types';
 import LiteTreeNodes from "./LiteTreeNodes.vue";
-import { injectStylesheet,enableImportant } from '../utils';
+import { injectStylesheet,enableImportant } from '../common';
 import { injectSvgIcons } from '../icons';
 
 interface LiteTreeProps {
@@ -78,7 +78,7 @@ injectCustomStyles(classs)
 injectSvgIcons(icons)
 
 
-const nodes=reactive(rNodes)
+let nodes=reactive(rNodes)
 
 provide<LiteTreeContext>(LiteTreeContextId, {
     hasFlag: hasFlag.value,

@@ -1,5 +1,5 @@
 <template>
-    <span :style="styled.style" :class="styled.classs" v-html="parseLinks(styled.value)"> </span>
+    <span :style="styled.style" :class="styled.classs">{{styled.value}}</span>
 </template>
 <script setup lang="ts">
 /**
@@ -30,10 +30,16 @@ const styled = StyledString(props.value,treeCtx.styles);
  * @param content 
  */
 const parseLinks =(content:string)=>{
-    const regex = /\[([^\[\]]*?)(\:(\w+))?\]\((([^\(\\\s)]+)(\s+[\w\u4e00-\u9fa5\w]+)?)\)/g
-    const result = content.replace(regex,(matched,label,_1,icon,_2,link,tips)=>{
-        return `<a style='display:inline-flex;align-items:center;' ${tips ? 'title='+tips : ''} class='action' target='_blank' href='${link}'>${icon ? `<span class='icon ${icon}'></span>`:''}${label}</a>`
-    })       
+    const regex = /\[(.*?)\]\((.*?)\)/g;
+    const result = content.split(regex).map((s)=>{
+        if(s.startsWith("[") && s.endsWith("]")){
+            const link = s.match(/\((.*?)\)/)![1]
+            const text = s.match(/\[(.*?)\]/)![1]
+            return {link,text}
+        }else{
+            return s
+        }
+    })
     return result  
 }
 

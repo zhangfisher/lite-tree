@@ -83,7 +83,7 @@ import Tree from 'lite-tree'
 最终的渲染效果如下：
 
 
-<Tree>
+<Tree format="json">
   {
         title: "A公司",
         open: true,

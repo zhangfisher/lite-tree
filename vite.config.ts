@@ -6,6 +6,7 @@ import VueDevTools from 'vite-plugin-vue-devtools'
 import { resolve } from 'node:path'
 import StyleBundler from "vite-plugin-vue-style-bundler"
 import dts from 'vite-plugin-dts'
+import { ModuleFormat } from 'node:module'
 
 
 // https://vitejs.dev/config/
@@ -23,12 +24,14 @@ export default defineConfig({
     
   },   
   build:{    
+    outDir: 'dist/vue',
+    sourcemap: true,
+    minify: false,
     lib: {
-      entry: resolve(__dirname, 'src/vue/index.vue'),
-      name: 'litetree',
-      // the proper extensions will be added
-      fileName: 'litetree'
-
+      formats: ['es','cjs'],
+      entry: [
+        resolve(__dirname, 'src/vue/index.vue') 
+      ],
     },    
     rollupOptions: {
       // 确保外部化处理那些你不想打包进库的依赖

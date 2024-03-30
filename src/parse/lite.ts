@@ -1,4 +1,4 @@
-import { parseStyleString } from "../utils";
+import { parseStyleString } from "../common/styledString";
 import type { LiteTreeVars, ParseTreeOptions } from ".";
 import type { LiteTreeNode } from "../vue/types"; 
 
