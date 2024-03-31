@@ -8,8 +8,8 @@
 import { ref, useSlots, withDefaults, provide, reactive } from 'vue';
 import type { LiteTreeNode } from '../types';
 import { LiteTreeContextId,flagAlias} from './consts';
-import { parseTree } from '../parse';
-import type { LiteTreeContext } from '../types';
+import { parseTree } from '@lite-tree/parse';
+import type { LiteTreeContext } from '@lite-tree/types';
 import LiteTreeNodes from "./LiteTreeNodes.vue";
 import { injectStylesheet,enableImportant } from '../common';
 import { injectSvgIcons } from '../icons';

@@ -5,17 +5,14 @@ import vue from '@vitejs/plugin-vue'
 import VueDevTools from 'vite-plugin-vue-devtools'
 import { resolve } from 'node:path'
 import StyleBundler from "vite-plugin-vue-style-bundler"
-import dts from 'vite-plugin-dts'
-import { ModuleFormat } from 'node:module'
-
+ 
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
     StyleBundler(),
-    VueDevTools(),
-    dts({ rollupTypes: true })
+    VueDevTools()
   ],
   resolve: {
     alias: {

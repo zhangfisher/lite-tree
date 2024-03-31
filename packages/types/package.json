@@ -1,12 +1,19 @@
 {
   "name": "@lite-tree/types",
-  "version": "1.0.0",
-  "description": "",
-  "main": "src/index.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "lite-tree common types",
+  "main": "index.d.ts",
+  "types": "index.d.ts",
+  "homepage": "https://github.com/zhangfisher/lite-tree",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhangfisher/lite-tree"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "scripts": {
+    
+  },
+  "keywords": [
+    "lite-tree"
+  ],
+  "author": "zhangfisher",
+  "license": "MIT"
 }

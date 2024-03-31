@@ -8,5 +8,9 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@lite-tree/types": "workspace:^",
+    "@lite-tree/utils": "workspace:^"
+  }
 }
