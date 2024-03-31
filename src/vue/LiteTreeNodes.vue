@@ -73,6 +73,7 @@ export default {}
   flex-direction: column;
   list-style: none !important;
   padding: 0px;
+  margin:0px;
 
   &>li {
     &>span.lite-tree-node {
