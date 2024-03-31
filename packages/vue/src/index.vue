@@ -6,10 +6,10 @@
 
 <script setup lang="ts">
 import { ref, useSlots, withDefaults, provide, reactive } from 'vue';
-import type { LiteTreeNode } from './types';
+import type { LiteTreeNode } from '../types';
 import { LiteTreeContextId,flagAlias} from './consts';
 import { parseTree } from '../parse';
-import type { LiteTreeContext } from './types';
+import type { LiteTreeContext } from '../types';
 import LiteTreeNodes from "./LiteTreeNodes.vue";
 import { injectStylesheet,enableImportant } from '../common';
 import { injectSvgIcons } from '../icons';
@@ -98,4 +98,4 @@ provide<LiteTreeContext>(LiteTreeContextId, {
     border: 1px solid #eee;
     text-align: left;
 }
-</style> 
+</style> ../types../types

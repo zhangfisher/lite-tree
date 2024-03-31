@@ -1,6 +1,6 @@
-import { parseStyleString } from "../common/styledString";
+import { parseStyleString } from "../../utils/src/styledString";
 import type { LiteTreeVars, ParseTreeOptions } from ".";
-import type { LiteTreeNode } from "../vue/types"; 
+import type { LiteTreeNode } from "../../../src/types"; 
 
 export interface LiteTreeParseOptions{
     indent?:number;                     // 缩进空格数 

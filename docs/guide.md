@@ -47,7 +47,7 @@ import Tree from 'lite-tree'
                 {title: "行政部"},
                 {title: "法务部",mark:"warning"},
                 {title: "审计部",style:"font-size:16px;font-style:italic"},
-                {title: "信息中心",comment:"备用",diff:"add"},
+                {title: "信息中心1",comment:"备用",diff:"add"},
                 {title: "安全保卫部",comment:"{color:red}+"}
             ]
         },
@@ -97,7 +97,7 @@ import Tree from 'lite-tree'
               {title: "行政部"},
               {title: "法务部",mark:"warning"},
               {title: "审计部",style:"font-size:16px;font-style:italic"},
-              {title: "信息中心",comment:"备用"},
+              {title: "信息中心",comment:"备用",diff:"+"},
               {title: "安全保卫部",comment:"{color:red}+"}
             ]
           },

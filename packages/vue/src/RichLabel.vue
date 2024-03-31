@@ -10,7 +10,7 @@
 
  */
 import { defineProps,inject } from 'vue';
-import type { LiteTreeContext } from './types';
+import type { LiteTreeContext } from '../types';
 import { LiteTreeContextId } from './consts';
 import { StyledString } from '../common/styledString';
 
@@ -44,3 +44,4 @@ export default {
 
 }
 </script>
+../types

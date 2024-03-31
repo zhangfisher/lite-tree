@@ -1,6 +1,6 @@
 import jsonParser from "./json";
 import parseLiteTree, { type LiteTreeParseOptions } from "./lite";
-import type { LiteTreeNode } from "../vue/types";
+import type { LiteTreeNode } from "../../../src/types";
 
 
 const SplitterRegex = /^---\s*$/gm;

@@ -1,4 +1,3 @@
-
 export interface LiteTreeNode {
     title: string;
     icon: string;

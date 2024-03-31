@@ -32,12 +32,12 @@
 
 <script setup lang="ts">
 import { defineProps, withDefaults, inject } from 'vue';
-import type { LiteTreeNode } from './types';
+import type { LiteTreeNode } from '../types';
 import RichLabel from './RichLabel.vue';
 // @ts-ignore
 import SlideUpDown from 'vue-slide-up-down'
 import { LiteTreeContextId } from './consts';
-import type { LiteTreeContext ,LiteTreeNodesProps} from './types';
+import type { LiteTreeContext ,LiteTreeNodesProps} from '../types';
 
 
 const props = withDefaults(defineProps<LiteTreeNodesProps>(), {
@@ -151,4 +151,4 @@ export default {}
     } 
   }
 }
-</style>
+</style>../types../types
