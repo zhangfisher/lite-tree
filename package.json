@@ -35,30 +35,9 @@
   "devDependencies": {
     "@tsconfig/node20": "^20.1.2",
     "@types/node": "^20.11.28",
-    "@types/react": "^18.2.73",
-    "@vitejs/plugin-vue": "^5.0.4",
-    "@vue/tsconfig": "^0.5.1",
-    "less": "^4.2.0",
-    "react": "^18.2.0",
-    "rollup-plugin-dts": "^6.1.0",
-    "ts-node": "^10.9.2",
-    "tsup": "^8.0.2",
-    "typescript": "^5.4.2",
-    "vite": "^5.2.7",
-    "vite-plugin-dts": "^3.7.3",
-    "vite-plugin-vue-devtools": "^7.0.17",
-    "vite-plugin-vue-style-bundler": "^1.0.7",
-    "vitepress": "1.0.0-rc.45",
-    "vue-tsc": "^2.0.6"
-  },
-  "dependencies": {
-    "lite-tree": "file://.",
-    "styledfc": "^1.0.9",
-    "vue-slide-up-down": "^3.0.0"
-  },
-  "peerDependencies": {
-    "@types/react": "^18.2.73",
-    "react": "^18.2.0",
-    "vue": "^3.4.21"
-  }
+    "@types/react": "^18.2.73", 
+    "ts-node": "^10.9.2", 
+    "typescript": "^5.4.2", 
+    "vitepress": "1.0.0-rc.45"
+  } 
 }

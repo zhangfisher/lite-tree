@@ -9,10 +9,10 @@
 <Styled value="{css}I am a string with {css}style."/>
 
  */
-import { defineProps,inject } from 'vue';
-import type { LiteTreeContext } from '../types';
-import { LiteTreeContextId } from './consts';
-import { StyledString } from '../common/styledString';
+import { inject } from 'vue';
+import type { LiteTreeContext } from '@common/types';
+import { LiteTreeContextId } from '@common/consts';
+import { StyledString } from '@common/utils/styledString';
 
 const props = defineProps({
   value: {
@@ -43,5 +43,4 @@ const parseLinks =(content:string)=>{
 export default {
 
 }
-</script>
-../types
+</script>../../common/consts

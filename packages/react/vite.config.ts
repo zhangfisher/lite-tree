@@ -1,20 +1,20 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import VueDevTools from 'vite-plugin-vue-devtools'
+import react from '@vitejs/plugin-react'
 import { resolve } from 'node:path'
-import StyleBundler from "vite-plugin-vue-style-bundler"
 import dts from 'vite-plugin-dts';
- 
+import fs from "node:fs" 
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue(),
-    StyleBundler(),
-    VueDevTools(),
+    react(),
     dts({rollupTypes: true})
   ],
+  define:{
+    "LITE_TREE_ROOT_STYLE":`\`${fs.readFileSync("../../packages/common/styles/root.css")}\``,
+    "LITE_TREE_NODES_STYLE":`\`${fs.readFileSync("../../packages/common/styles/nodes.css")}\``
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
@@ -34,11 +34,11 @@ export default defineConfig({
     },    
     rollupOptions: {
       // 确保外部化处理那些你不想打包进库的依赖
-      external: ['vue'],
+      external: ['react'],
       output: {
         // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
         globals: {
-          vue: 'Vue'
+          react: 'react'
         }
       }
     } 

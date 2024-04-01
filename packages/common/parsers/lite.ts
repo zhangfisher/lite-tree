@@ -1,6 +1,6 @@
-import { parseStyleString } from "@lite-tree/utils/styledString";
+import { parseStyleString } from "../utils/styledString";
 import type { LiteTreeVars, ParseTreeOptions } from ".";
-import type { LiteTreeNode } from "@lite-tree/types";
+import type { LiteTreeNode } from "../types";
 
 export interface LiteTreeParseOptions{
     indent?:number;                     // 缩进空格数 

@@ -85,7 +85,7 @@ ts=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmc
   </main>
 </template>
 <script setup lang="ts">  
-import LiteTree from '../../../src/vue/index.vue' 
+import LiteTree from '@lite-tree/vue' 
 import { ref } from "vue";
 
 const isShowTree = ref<boolean>(true)

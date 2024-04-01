@@ -1,18 +1,16 @@
 <template>
-    <div class="lite-tree" data-v-123456>
+    <div class="lite-tree">
         <LiteTreeNodes :nodes="nodes"></LiteTreeNodes>
     </div>
 </template>
 
 <script setup lang="ts">
 import { ref, useSlots, withDefaults, provide, reactive } from 'vue';
-import type { LiteTreeNode } from '../types';
-import { LiteTreeContextId,flagAlias} from './consts';
-import { parseTree } from '@lite-tree/parse';
-import type { LiteTreeContext } from '@lite-tree/types';
+import { LiteTreeContextId,flagAlias} from '@common/consts';
+import { parseTree } from '@common/parsers';
+import type { LiteTreeContext,LiteTreeNode } from '@common/types';
 import LiteTreeNodes from "./LiteTreeNodes.vue";
-import { injectStylesheet,enableImportant } from '../common';
-import { injectSvgIcons } from '../icons';
+import {injectStylesheet,enableImportant , injectSvgIcons } from '@common/utils';
 
 interface LiteTreeProps {
     indent?: number;                // 启用lite格式时的缩进空格数量       
@@ -91,11 +89,6 @@ provide<LiteTreeContext>(LiteTreeContextId, {
 </script>
 
 
-<style bundle lang="less" scope="false">
-.lite-tree {
-    position: relative;
-    padding: 8px; 
-    border: 1px solid #eee;
-    text-align: left;
-}
-</style> ../types../types
+<style bundle lang="less" scoped="false">
+@import "../../common/styles/root.less"; 
+</style> 

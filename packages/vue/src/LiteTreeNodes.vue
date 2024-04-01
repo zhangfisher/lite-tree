@@ -31,14 +31,12 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, withDefaults, inject } from 'vue';
-import type { LiteTreeNode } from '../types';
+import { withDefaults, inject } from 'vue';
+import type { LiteTreeNode,LiteTreeContext ,LiteTreeNodesProps } from '@common/types';
 import RichLabel from './RichLabel.vue';
+import { LiteTreeContextId } from '@common/consts'; 
 // @ts-ignore
 import SlideUpDown from 'vue-slide-up-down'
-import { LiteTreeContextId } from './consts';
-import type { LiteTreeContext ,LiteTreeNodesProps} from '../types';
-
 
 const props = withDefaults(defineProps<LiteTreeNodesProps>(), {
   indent: 0,
@@ -66,89 +64,6 @@ const isExpand = (node: LiteTreeNode): boolean => {
 <script lang="ts">
 export default {}
 </script>
-<style bundle lang="less">
-.lite-tree-nodes {
-  color: #555;
-  display: flex;
-  flex-direction: column;
-  list-style: none !important;
-  padding: 0px;
-  margin:0px;
-
-  &>li {
-    &>span.lite-tree-node {
-      cursor: pointer;
-      display: flex;
-      width: 100%;
-      padding: 4px;
-      margin: 0px;
-      align-items: center;
-      position: relative;
-
-      &.diff-add {
-        background-color: #f3ffec;
-        color: green;
-      }
-
-      &.diff-modify {
-        background-color: #fff6e9;
-        color: orange;
-      }
-
-      &.diff-delete {
-        background-color: #ffeaea;
-        color: red
-      }
-
-      &.highlight { 
-        background-color: #eee;
-        color: black;
-        font-weight: bold;
-      }
-
-      &>span.flag {
-        width: 24px;
-        text-align: center;
-      }
-
-      &>span.title {
-        flex-grow: 1;
-        padding-right: 4px;
-
-        &>span.tag {
-          background-color: #eee;
-          color: #333;
-          padding: 2px 4px;
-          border-radius: 4px;
-          border: 1px solid #ddd;
-          margin-left: 2px;
-          margin-right: 2px;
-          font-size: 12px;
-        }
-      }
-
-      &>span.comment {
-        color: #bbb;
-      }
-
-      &>span.node-indicator {
-        width: 1em;
-        height: 1em;
-        transform-origin: 10px center;
-        transform: rotate(0deg);
-        transition: all 0.2s; 
-        &.expand {
-          transform-origin: 10px center;
-          transform: rotate(90deg);
-          transition: all 0.2s;
-        }
-      }
-
-      &:hover {
-        background-color: #f8f8f8;
-        border-radius: 4px;
-      }
-    } 
-  }
-}
-</style>../types../types
+<style bundle="lite-tree-nodes" lite lang="less">
+@import '../../common/styles/nodes.less';
+</style>
