@@ -25,8 +25,20 @@ export interface LiteTreeNodesProps {
 }
 
 
-export  interface LiteTreeIconsets{
-  file: string
-  folder: string
-  folderExpand: string  
+export interface LiteTreeProps {
+  format?: 'json' | 'lite'
+  json?:boolean
+  lite?:boolean
+  // lite格式解析参数indent
+  indent?: number;             
+  // 图标集名称
+  iconset?:string
+}
+
+
+export type LiteTreeParseResults = {
+  classs:Record<string,string>,
+  styles:Record<string,string>,
+  icons:Record<string,string>,
+  nodes: LiteTreeNode[]
 }

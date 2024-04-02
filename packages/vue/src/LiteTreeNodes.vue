@@ -14,7 +14,7 @@
             'icon',
             'arrow',
             { expand: isExpand(node) }]"/>
-        <span class="icon" :class="node.icon ? node.icon : (hasChildren(node) ? isExpand(node) ? 'folder-open':'folder' : 'file')"/>
+        <span class="icon" :class="node.icon ? node.icon : (hasChildren(node) ? isExpand(node) ? 'folder-expand':'folder' : 'file')"/>
         <span class="title">
           <RichLabel :value="node.title" />
           <RichLabel class="tag" v-for="tag in node.tags" :key="tag" :value="tag" />

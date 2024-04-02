@@ -8,23 +8,25 @@
 import { ref, useSlots, withDefaults, provide, reactive } from 'vue';
 import { LiteTreeContextId,flagAlias} from '@common/consts';
 import { parseTree } from '@common/parsers';
-import type { LiteTreeContext,LiteTreeNode } from '@common/types';
+import type { LiteTreeContext,LiteTreeNode,LiteTreeProps } from '@common/types';
 import LiteTreeNodes from "./LiteTreeNodes.vue";
 import {injectStylesheet,enableImportant , injectSvgIcons } from '@common/utils';
 
-interface LiteTreeProps {
-    indent?: number;                // 启用lite格式时的缩进空格数量       
-    format?: 'lite' | 'json'
-    iconset?: string[]              // 图标集,如[file,folder,arrow]
-}
 
 
 // 默认使用Lite格式
 const props = withDefaults(defineProps<LiteTreeProps>(), {
     indent: 4,
     format: "lite",
-    iconset:()=>['folder','file']
+    iconset:'default'
 });
+
+let format = ref(props.format)
+
+if(!props.format){
+    if(props.json) format.value="json"
+    if(props.lite) format.value="lite"
+}
 
 const hasError = ref<boolean>(false);
 const hasFlag = ref<boolean>(false);

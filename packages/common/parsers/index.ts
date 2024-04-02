@@ -1,6 +1,6 @@
 import jsonParser from "./json";
 import parseLiteTree, { type LiteTreeParseOptions } from "./lite";
-import type { LiteTreeNode } from "../types";
+import type { LiteTreeNode,LiteTreeParseResults } from "../types";
 
 
 const SplitterRegex = /^---\s*$/gm;
@@ -95,15 +95,8 @@ export interface ParseTreeOptions{
 } 
 
 
-export type ParseTreeResults = {
-    classs:Record<string,string>,
-    styles:Record<string,string>,
-    icons:Record<string,string>,
-    nodes: LiteTreeNode[]
-}
 
-
-export function parseTree(context:string,options?:ParseTreeOptions):ParseTreeResults{
+export function parseTree(context:string,options?:ParseTreeOptions):LiteTreeParseResults{
     const opts = Object.assign({},options)
     const [strVars,strTree] = splitTreeContent(context)
     const vars = parseVars(strVars)

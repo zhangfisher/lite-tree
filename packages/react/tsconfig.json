@@ -34,5 +34,6 @@
     "src/**/*/*.ts", 
     "../common/**/*",
     "../common/**/*/*.ts"
-  ]
+  ],
+  "exclude": ["node_modules", "dist"]
 }

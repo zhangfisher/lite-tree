@@ -2,9 +2,9 @@
   "name": "@lite-tree/react",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.tsx",  
   "scripts": {
-    "build:css": ""
+    "build": "vite build"
   },
   "publishConfig": {
     "access": "public",
@@ -21,11 +21,22 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "react": "18.0.0",
+    "react-dom": "18.0.0",
     "tsup": "^8.0.2",
-    "typescript": "^5.4.3"
+    "typescript": "^5.4.3",
+    "vite": "^5.2.7",
+    "vite-plugin-dts": "^3.7.3"
   },
   "dependencies": {
+    "classnames": "^2.5.1",
+    "react-slidedown": "^2.4.7",
     "style-to-object": "^1.0.6",
     "styledfc": "^1.0.9"
+  },
+  "peerDependencies": {
+    "react": "18.0.0",
+    "react-dom": "18.0.0"
   }
 }

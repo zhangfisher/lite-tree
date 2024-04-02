@@ -1,17 +1,24 @@
 import React,{useContext }from "react"
-import { context } from "./context"
+import { Context } from "./context"
+import { StyledString } from "@common/utils/styledString"
+import { toStyleObject } from "@common/utils/toStyleObject"
+
 export  interface RichLabelProps{
-    value?:string
+    value:string
+    className?:string
+    style?:React.CSSProperties
 }
 
-const RichLabel = ({ children }) => {
-    const treeCtx = useContext(context)
+const RichLabel:React.FC<RichLabelProps> = (props:RichLabelProps) => {
+    const { className='', style:inlineStyle={} } = props
+    const treeCtx = useContext(Context)
+    const {style,classs=[],value} = StyledString(props.value,treeCtx.styles);
     return <span
-
-    >
-
-    </span>
-
+        data-lite-tree-nodes
+        className={className + " " +classs.join(" ")}
+        style={{...inlineStyle,...toStyleObject(style)!}}
+        dangerouslySetInnerHTML={{__html: value}}    
+    />
 }
 
 
