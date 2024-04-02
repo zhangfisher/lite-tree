@@ -10,6 +10,7 @@
   cursor: pointer;
   display: flex;
   width: 100%;
+  box-sizing: border-box;
   padding: 4px;
   margin: 0px;
   align-items: center;
@@ -42,6 +43,7 @@
 }
 .lite-tree-nodes > li > span.lite-tree-node > span.title > span.tag {
   background-color: #eee;
+  box-sizing: border-box;
   color: #333;
   padding: 2px 4px;
   border-radius: 4px;

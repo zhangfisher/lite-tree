@@ -6,11 +6,11 @@
 
 <script setup lang="ts">
 import { ref, useSlots, withDefaults, provide, reactive } from 'vue';
-import { LiteTreeContextId,flagAlias} from '@common/consts';
+import { LiteTreeContextId} from '@common/consts';
 import { parseTree } from '@common/parsers';
-import type { LiteTreeContext,LiteTreeNode,LiteTreeProps } from '@common/types';
+import type { LiteTreeContext,LiteTreeNode,LiteTreeProps,LiteTreeParseResults } from '@common/types';
 import LiteTreeNodes from "./LiteTreeNodes.vue";
-import {injectStylesheet,enableImportant , injectSvgIcons } from '@common/utils';
+import {injectStylesheet,enableImportant , injectSvgIcons ,injectCustomStyles} from '@common/utils';
 
 
 
@@ -34,43 +34,16 @@ const hasFlag = ref<boolean>(false);
 const slots = useSlots();
 
 // 返回默认插槽的内容字符串
-const parseSlotData = () => {
+const parseSlotData = ():LiteTreeParseResults => {
     const slotContent = slots.default?.()[0];
     if (slotContent && typeof slotContent.children === 'string') {
-        try {
-            return parseTree(slotContent.children, {
-                format: props.format,
-                forEach: (node: LiteTreeNode) => {
-                    const flag = node.flag
-                    if (flag && flag.length>0) {
-                        hasFlag.value = true     // 通过遍历确认是否显示diff列
-                        if(flag in flagAlias){
-                            node.classs.push(flagAlias[flag])
-                        }
-                    }                    
-                }
-            })
-        } catch (error) {
-            hasError.value = true;
-            console.error(error)
-            // @ts-ignore
-            nodes = [{
-                title: "Invalid data provided to LiteTree", style: 'color:red',
-                // @ts-ignore
-                children: [{ title: error.message, style: 'color:red' },]
-            }]
-        }
-        return { classs: {}, styles: {}, icons: {}, nodes: [] }
+        return parseTree(slotContent.children, {format: props.format}) 
     } else {
-        return { classs: {}, styles: {}, icons: {}, nodes: [] }
+        return { classs: {}, styles: {}, icons: {}, nodes: [] ,hasFlag:false }
     }
 }
 
-const injectCustomStyles =(classs:Record<string,string>)=>{
-    injectStylesheet(`        
-        ${Object.keys(classs).map(k=>`.lite-tree ${k} { ${enableImportant(classs[k])} }`).join('\n')} 
-    `,{id:'lite-tree-custom-styles',mode:'replace'})   
-}
+ 
  
 const { nodes:rNodes, styles, classs, icons } = parseSlotData();
 

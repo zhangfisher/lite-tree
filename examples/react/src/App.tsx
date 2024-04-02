@@ -7,7 +7,6 @@ function App() {
     <>
       <div className="card">
       <h1>LiteTree</h1>      
-      <p className="read-the-docs">
         <LiteTree data={` 
 #error=color:red;border: 1px solid red;background:#ffd2d2;padding:2px;
 #blue=color:red;border: 1px solid blue;background:#e6e6ff;padding:2px;
@@ -40,8 +39,7 @@ ts=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmc
       设计部            //*
       项目管理部        //*
 `}/>
-      </p>
-      </div>
+       </div>
     </>
   )
 }

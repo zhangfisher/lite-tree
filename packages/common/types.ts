@@ -37,6 +37,7 @@ export interface LiteTreeProps {
 
 
 export type LiteTreeParseResults = {
+  hasFlag:boolean,              // 是否有标志列
   classs:Record<string,string>,
   styles:Record<string,string>,
   icons:Record<string,string>,

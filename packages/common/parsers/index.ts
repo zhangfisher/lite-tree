@@ -1,6 +1,7 @@
 import jsonParser from "./json";
 import parseLiteTree, { type LiteTreeParseOptions } from "./lite";
 import type { LiteTreeNode,LiteTreeParseResults } from "../types";
+import { flagAlias } from "../consts";
 
 
 const SplitterRegex = /^---\s*$/gm;
@@ -100,9 +101,35 @@ export function parseTree(context:string,options?:ParseTreeOptions):LiteTreePars
     const opts = Object.assign({},options)
     const [strVars,strTree] = splitTreeContent(context)
     const vars = parseVars(strVars)
-    const nodes = parseTreeObject(strTree,vars,opts)
-    return {
-        ...vars,
-        nodes
-    }
+    let hasFlag:boolean = false 
+    try{
+        const nodes = parseTreeObject(strTree,vars,{
+            ...opts,
+            forEach: (node: LiteTreeNode) => {
+                const flag = node.flag
+                if (flag && flag.length>0) {
+                    hasFlag = true     // 通过遍历确认是否显示diff列
+                    if(flag in flagAlias){
+                        node.classs.push(flagAlias[flag])
+                    }
+                }                   
+                if(typeof(opts.forEach)==='function'){
+                    opts.forEach(node)
+                }
+            }
+        })
+        return {
+            ...vars,
+            hasFlag,
+            nodes
+        }
+    }catch(e:any){
+        console.error(e)
+        // @ts-ignore
+        nodes = [{
+            title: "Invalid data provided to LiteTree", style: 'color:red',
+            // @ts-ignore
+            children: [{ title: e.message, style: 'color:red' },]
+        }]
+    }    
 }

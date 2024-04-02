@@ -12,11 +12,11 @@
         cursor: pointer;
         display: flex;
         width: 100%;
+        box-sizing: border-box;
         padding: 4px;
         margin: 0px;
         align-items: center;
-        position: relative;
-  
+        position: relative;  
         &.diff-add {
           background-color: #f3ffec;
           color: green;
@@ -48,7 +48,8 @@
           padding-right: 4px;
   
           &>span.tag {
-            background-color: #eee;
+            background-color: #eee;            
+            box-sizing: border-box;
             color: #333;
             padding: 2px 4px;
             border-radius: 4px;

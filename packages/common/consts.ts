@@ -6,3 +6,4 @@ export const flagAlias:Record<string,string> = {
     "!": "highlight" 
 }
 
+export const LiteTreeScopeId="data-lite-tree"

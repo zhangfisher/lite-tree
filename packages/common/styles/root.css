@@ -3,4 +3,6 @@
   padding: 8px;
   border: 1px solid #eee;
   text-align: left;
+  width: 100%;
+  box-sizing: border-box;
 }
