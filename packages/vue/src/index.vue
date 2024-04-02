@@ -8,9 +8,9 @@
 import { ref, useSlots, withDefaults, provide, reactive } from 'vue';
 import { LiteTreeContextId} from '@common/consts';
 import { parseTree } from '@common/parsers';
-import type { LiteTreeContext,LiteTreeNode,LiteTreeProps,LiteTreeParseResults } from '@common/types';
+import type { LiteTreeContext,LiteTreeProps,LiteTreeParseResults } from '@common/types';
 import LiteTreeNodes from "./LiteTreeNodes.vue";
-import {injectStylesheet,enableImportant , injectSvgIcons ,injectCustomStyles} from '@common/utils';
+import { injectSvgIcons ,injectCustomStyles} from '@common/utils';
 
 
 
