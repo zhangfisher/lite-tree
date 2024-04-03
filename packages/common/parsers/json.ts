@@ -59,7 +59,7 @@ export function safeParseJson(str: string, callback?: (key: string, value: any) 
 export default function parseJson(content:string,forEach:(key:string,value:any)=>void){
     let nodes =  safeParseJson(content.trim(),(key,value)=>{        
         if(typeof(value)=='object' && !Array.isArray(value)){
-            value.expend = value.expend==undefined ? true : value.expend;
+            value.open = value.open==undefined ? true : value.open;
             if(value.diff) {
                 value.flag = value.diff=='add' ? "+" : value.diff=='delete' ? "-" : value.diff=='modify' ? "*" : value.diff
                 delete value.diff

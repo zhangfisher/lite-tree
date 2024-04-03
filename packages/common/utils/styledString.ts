@@ -14,9 +14,11 @@
  */
 export function parseStyleString(str:string | undefined,vars:Record<string,string>){
 	let style = str
-	if(!style || style.trim().length==0) return {style:"",classs:[]}
+	if(!style || style.trim().length==0) return {style:"",classs:[]}	
 	const classList:string[] = []
 	const varRegex = /(?<!:)(([#\.]{1}\w+))\s*;(?!:)/g
+	if(style.startsWith("{")) style = style.substring(1)
+	if(style.endsWith("}")) style = style.substring(0,style.length-1)
 	if(!style.trim().endsWith(";")) style=style.trim()+";"
 	style = style.replace(varRegex,(matched,key)=>{
 		if(key in vars){
@@ -36,11 +38,17 @@ export function parseStyleString(str:string | undefined,vars:Record<string,strin
 
  
 /**
- * 一个简单的形式如
  * 
- * "{css样式}xxxx"的字符串，字符串开头的{xxxx}会被解析为css样式
+ * 解析带样式和图标的字符串
  * 
- * 如：  withStyleString("{color:red;}hello world")  ==  {style:"color:red",valute:'hello world'}
+ * 
+ * - "{css样式}xxxx"的字符串，字符串开头的{xxxx}会被解析为css样式
+ * - 字符串中的[xxx]会被解析为图标
+ * 
+ * 如：  
+ *  - StyledString("{color:red;}hello world")  ==  {style:"color:red",value:'hello world'}
+ * - StyledString("{color:red;}hello [world]")  ==  {style:"color:red",value:'hello world<span 'icon world'></span>'}
+ *  
  * 
  * 
  * @param str 
@@ -49,11 +57,16 @@ export function StyledString(str:string,styles:Record<string,string>){
     if(typeof(str)!=="string") return {style:"",value:str||''}
 	const styleRegex =/^\{(.*?)\}/g
     let style:string='',classs:string[]=[]
-	const value = str.replace(styleRegex,(matched,css)=>{
+	let value = str.replace(styleRegex,(matched,css)=>{
 		const result = parseStyleString(css,styles)
 		style = result.style
 		classs.push(...result.classs)
 		return ''
+	})
+	// 解析图标
+	const iconRegex = /\[([\w\.\-\_]+)\]/g
+	value = value.replace(iconRegex,(matched,iconName)=>{
+		return `<span class="icon ${iconName}"></span>`
 	})
     return {value,style,classs}
 }

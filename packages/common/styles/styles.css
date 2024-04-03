@@ -1,0 +1,146 @@
+.lite-tree {
+  position: relative;
+  padding: 8px;
+  border: 1px solid #eee;
+  text-align: left;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.lite-tree::-webkit-scrollbar {
+  width: 4px;
+  height: 1px;
+}
+.lite-tree::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #b1b1b1;
+}
+.lite-tree::-webkit-scrollbar-track {
+  background: #ededed;
+  border-radius: 10px;
+}
+.lite-tree .lite-tree-nodes {
+  color: #555;
+  display: flex;
+  flex-direction: column;
+  list-style: none !important;
+  padding: 0px;
+  margin: 0px;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node {
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 4px;
+  margin: 0px;
+  align-items: center;
+  position: relative;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node.diff-add {
+  background-color: #f3ffec;
+  color: green;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node.diff-modify {
+  background-color: #fff6e9;
+  color: orange;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node.diff-delete {
+  background-color: #ffeaea;
+  color: red;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node.important {
+  background-color: #d7f0ff;
+  color: #037be5;
+  font-weight: bold;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node.correct {
+  background-color: #f3ffec;
+  color: green;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node.error {
+  background-color: #ffeaea;
+  color: red;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.flag {
+  width: 24px;
+  text-align: center;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.title {
+  flex-grow: 1;
+  padding-right: 4px;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.title > span.tag {
+  background-color: #eee;
+  box-sizing: border-box;
+  color: #333;
+  padding: 2px 4px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  margin-left: 2px;
+  margin-right: 2px;
+  font-size: 12px;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.comment {
+  color: #bbb;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.opener {
+  width: 1em;
+  height: 1em;
+  transform-origin: 8px center;
+  transform: rotate(0deg);
+  transition: all 0.2s;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.opener.open {
+  transform-origin: 8px center;
+  transform: rotate(90deg);
+  transition: all 0.2s;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node:hover {
+  background-color: #f8f8f8;
+  border-radius: 4px;
+}
+.lite-tree.dark {
+  border: 1px solid #1a1a1a;
+}
+.lite-tree.dark::-webkit-scrollbar-thumb {
+  background-color: #555;
+}
+.lite-tree.dark::-webkit-scrollbar-track {
+  background: black;
+}
+.lite-tree.dark .lite-tree-nodes {
+  color: #999;
+}
+.lite-tree.dark .lite-tree-nodes > li > span.lite-tree-node.diff-add {
+  background-color: #212121;
+  color: #00d500;
+}
+.lite-tree.dark .lite-tree-nodes > li > span.lite-tree-node.diff-modify {
+  background-color: #212121;
+}
+.lite-tree.dark .lite-tree-nodes > li > span.lite-tree-node.diff-delete {
+  background-color: #212121;
+}
+.lite-tree.dark .lite-tree-nodes > li > span.lite-tree-node.important {
+  background-color: #212121;
+}
+.lite-tree.dark .lite-tree-nodes > li > span.lite-tree-node.correct {
+  background-color: #212121;
+  color: #00d500;
+}
+.lite-tree.dark .lite-tree-nodes > li > span.lite-tree-node.error {
+  background-color: #212121;
+}
+.lite-tree.dark .lite-tree-nodes > li > span.lite-tree-node > span.title > span.tag {
+  background-color: #212121;
+  color: #aaa;
+  border: 1px solid #333;
+}
+.lite-tree.dark .lite-tree-nodes > li > span.lite-tree-node > span.comment {
+  color: #bbb;
+}
+.lite-tree.dark .lite-tree-nodes > li > span.lite-tree-node:hover {
+  background-color: #333;
+}

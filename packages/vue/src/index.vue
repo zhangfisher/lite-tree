@@ -1,5 +1,5 @@
 <template>
-    <div class="lite-tree">
+    <div data-lite-tree class="lite-tree" :class="{dark}">
         <LiteTreeNodes :nodes="nodes"></LiteTreeNodes>
     </div>
 </template>
@@ -11,14 +11,15 @@ import { parseTree } from '@common/parsers';
 import type { LiteTreeContext,LiteTreeProps,LiteTreeParseResults } from '@common/types';
 import LiteTreeNodes from "./LiteTreeNodes.vue";
 import { injectSvgIcons ,injectCustomStyles} from '@common/utils';
-
+import '@common/styles';
 
 
 // 默认使用Lite格式
 const props = withDefaults(defineProps<LiteTreeProps>(), {
     indent: 4,
     format: "lite",
-    iconset:'default'
+    iconset:'default',
+    dark:false
 });
 
 let format = ref(props.format)
@@ -27,9 +28,6 @@ if(!props.format){
     if(props.json) format.value="json"
     if(props.lite) format.value="lite"
 }
-
-const hasError = ref<boolean>(false);
-const hasFlag = ref<boolean>(false);
 
 const slots = useSlots();
 
@@ -42,19 +40,17 @@ const parseSlotData = ():LiteTreeParseResults => {
         return { classs: {}, styles: {}, icons: {}, nodes: [] ,hasFlag:false }
     }
 }
-
  
  
-const { nodes:rNodes, styles, classs, icons } = parseSlotData();
+const { nodes:rNodes, styles, classs, icons,hasFlag:isShowFlag } = parseSlotData();
 
 injectCustomStyles(classs)
 injectSvgIcons(icons)
 
-
 let nodes=reactive(rNodes)
 
 provide<LiteTreeContext>(LiteTreeContextId, {
-    hasFlag: hasFlag.value,
+    hasFlag: isShowFlag,
     indent: props.indent,
     styles,
     classs,
@@ -62,8 +58,4 @@ provide<LiteTreeContext>(LiteTreeContextId, {
 })
 
 </script>
-
-
-<style bundle lang="less" scoped="false">
-@import "../../common/styles/root.less"; 
-</style> 
+ 

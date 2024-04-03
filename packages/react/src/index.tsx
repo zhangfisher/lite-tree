@@ -1,42 +1,40 @@
 import { Context } from "./context"
 import type { LiteTreeProps,LiteTreeNode } from '@common/types'
-import React,{ useState,useEffect, useRef} from "react"
+import React,{ useState} from "react"
 import LiteTreeNodes from "./LiteTreeNodes"
 import { parseTree } from "@common/parsers";
-import { injectStyles } from "./styles"
 import {LiteTreeReactContext} from "./context"
 import { injectCustomStyles, injectSvgIcons } from "@common/utils";
+import classnames from 'classnames'; 
+import "@common/styles"
 
-let scopeId = injectStyles()!
 
-export type LiteTreeReactProps = React.PropsWithChildren<LiteTreeProps> & {data:string}
+export type LiteTreeReactProps = React.PropsWithChildren<LiteTreeProps & {
+    style?:React.CSSProperties
+    className?:string
+}>
 
 export const LiteTree = React.forwardRef<any,LiteTreeReactProps>((props:LiteTreeReactProps,ref) => {
-    const { indent=4,data=''} = props
+    const { indent=4,data='',dark=false,style,className} = props
     let format = props.format ? props.format : props.json ? "json" : "lite"
-    const [nodes,setNodes] = useState<LiteTreeNode[]>([])
     const [ctx,setCtx] = useState<LiteTreeReactContext>({
         hasFlag: false,
         indent: 4,
         styles: {},
         classs: {},
-        icons: {},
-        scopeId
+        icons: {} 
     });
-
-    useEffect(() => {
-        let hasFlag = false
-        const {styles,classs,icons,nodes=[]} = parseTree(data,{
-            format
-        })
-        setCtx({indent,hasFlag,styles,classs,icons,scopeId});            
+    const [nodes] = useState<LiteTreeNode[]>(()=>{
+        const {styles,classs,icons,nodes=[],hasFlag} = parseTree(data,{format})
+        setCtx({indent,hasFlag,styles,classs,icons});            
         injectCustomStyles(classs)
         injectSvgIcons(icons)
-        setNodes(nodes)         
-    }, [data]);
+        return nodes        
+    })    
+
     return (
         <Context.Provider value={ctx}> 
-            <div className="lite-tree" ref={ref}>
+            <div data-lite-tree style={style} className={classnames("lite-tree",{dark},className)} ref={ref}>
                 <LiteTreeNodes nodes={nodes} indent={0}/>
             </div>
         </Context.Provider>

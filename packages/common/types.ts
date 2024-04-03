@@ -1,7 +1,8 @@
 export interface LiteTreeNode {
+    id: string;
     title: string;
     icon: string;
-    expand: boolean;    
+    open: boolean;    
     level:number
     flag: string;
     comment:string
@@ -16,8 +17,7 @@ export interface LiteTreeContext {
     indent:number
     styles:Record<string,string>
     classs:Record<string,string>
-    icons:Record<string,string>
-
+    icons:Record<string,string> 
 }
 export interface LiteTreeNodesProps {
   indent?: number;
@@ -29,10 +29,15 @@ export interface LiteTreeProps {
   format?: 'json' | 'lite'
   json?:boolean
   lite?:boolean
+  data?:string
   // lite格式解析参数indent
   indent?: number;             
   // 图标集名称
   iconset?:string
+  // 暗色模式
+  dark?:boolean
+  //根据节点数据动态解析图标名称
+  getIcon?: (node:LiteTreeNode)=>string
 }
 
 

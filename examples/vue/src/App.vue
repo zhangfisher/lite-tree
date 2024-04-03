@@ -1,10 +1,11 @@
  
 <template> 
-  <main> 
-    <LiteTree format="json">
+<div class="app" :class="isDark ? 'dark' : ''">
+  <main > 
+    <LiteTree format="json" :dark="isDark">
       {
         title: "A公司([官网](https://github.com/zhangfisher 点击访问))",   
-        expend: true,
+        open: true,
         comment:"[主页](https://github.com/zhangfisher)",
         children:[          
           {
@@ -50,7 +51,8 @@
     </LiteTree> 
     
     <button @click="toggleTree">显示/隐藏树</button>
-    <LiteTree v-if="isShowTree">
+    <button @click="toggleDark">切换暗色模式</button>
+    <LiteTree v-if="isShowTree"  :dark="isDark">
 #error=color:red;border: 1px solid red;background:#ffd2d2;padding:2px;
 #blue=color:red;border: 1px solid blue;background:#e6e6ff;padding:2px;
 airplane=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjU2IDI1NiI+PHBhdGggZmlsbD0iY3VycmVudENvbG9yIiBkPSJNMjM1LjU4IDEyOC44NEwxNjAgOTEuMDZWNDhhMzIgMzIgMCAwIDAtNjQgMHY0My4wNmwtNzUuNTggMzcuNzhBOCA4IDAgMCAwIDE2IDEzNnYzMmE4IDggMCAwIDAgOS41NyA3Ljg0TDk2IDE2MS43NnYxOC45M2wtMTMuNjYgMTMuNjVBOCA4IDAgMCAwIDgwIDIwMHYzMmE4IDggMCAwIDAgMTEgNy40M2wzNy0xNC44MWwzNyAxNC44MWE4IDggMCAwIDAgMTEtNy40M3YtMzJhOCA4IDAgMCAwLTIuMzQtNS42NkwxNjAgMTgwLjY5di0xOC45M2w3MC40MyAxNC4wOEE4IDggMCAwIDAgMjQwIDE2OHYtMzJhOCA4IDAgMCAwLTQuNDItNy4xNk0yMjQgMTU4LjI0bC03MC40My0xNC4wOEE4IDggMCAwIDAgMTQ0IDE1MnYzMmE4IDggMCAwIDAgMi4zNCA1LjY2TDE2MCAyMDMuMzF2MTYuODdsLTI5LTExLjYxYTggOCAwIDAgMC01Ljk0IDBMOTYgMjIwLjE4di0xNi44N2wxMy42Ni0xMy42NUE4IDggMCAwIDAgMTEyIDE4NHYtMzJhOCA4IDAgMCAwLTkuNTctNy44NEwzMiAxNTguMjR2LTE3LjNsNzUuNTgtMzcuNzhBOCA4IDAgMCAwIDExMiA5NlY0OGExNiAxNiAwIDAgMSAzMiAwdjQ4YTggOCAwIDAgMCA0LjQyIDcuMTZMMjI0IDE0MC45NFoiLz48L3N2Zz4=
@@ -83,13 +85,16 @@ ts=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmc
         项目管理部        //*
     </LiteTree>     
   </main>
+</div>
 </template>
 <script setup lang="ts">  
 import LiteTree from '@lite-tree/vue' 
 import { ref } from "vue";
 
 const isShowTree = ref<boolean>(true)
+const isDark = ref<boolean>(false)
 const toggleTree = ()=>isShowTree.value=!isShowTree.value
+const toggleDark = ()=>isDark.value=!isDark.value
 
 
 </script>
@@ -99,5 +104,16 @@ main{
   width:800px;
   text-align: center;
   margin: 0 auto;
+}
+.app{
+  position: fixed;
+  top:0px;
+  left:0px;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+}
+.app.dark{
+  background-color: #1a1a1a;
 }
 </style>

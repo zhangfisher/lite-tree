@@ -2,6 +2,7 @@ import jsonParser from "./json";
 import parseLiteTree, { type LiteTreeParseOptions } from "./lite";
 import type { LiteTreeNode,LiteTreeParseResults } from "../types";
 import { flagAlias } from "../consts";
+import { setObjectDefaultValue } from "../utils/setObjectDefaultValue";
 
 
 const SplitterRegex = /^---\s*$/gm;
@@ -83,7 +84,7 @@ export function parseTreeObject(strTree:string,vars:LiteTreeVars, options:ParseT
         }
     }catch(e:any){
         console.error(e)
-        treeData = [{title:`解析错误:${e.message}`,icon:"error",expand:true,level:0,flag:'',classs:[''],comment:e.message,style:"",tags:[]}]
+        treeData = [{id:"",title:`解析错误:${e.message}`,icon:"error",open:true,level:0,flag:'',classs:[''],comment:e.message,style:"",tags:[]}]
     }
     return treeData
 }
@@ -95,7 +96,7 @@ export interface ParseTreeOptions{
     forEach?: (node:LiteTreeNode)=>void
 } 
 
-
+let NodeIndex = 0
 
 export function parseTree(context:string,options?:ParseTreeOptions):LiteTreeParseResults{
     const opts = Object.assign({},options)
@@ -110,9 +111,27 @@ export function parseTree(context:string,options?:ParseTreeOptions):LiteTreePars
                 if (flag && flag.length>0) {
                     hasFlag = true     // 通过遍历确认是否显示diff列
                     if(flag in flagAlias){
-                        node.classs.push(flagAlias[flag])
+                        const f = flagAlias[flag]
+                        if(typeof(f)==='string'){
+                            node.classs.push(f)
+                        }else if(Array.isArray(f)){
+                            node.classs.push(f[0])
+                            node.flag = f[1]
+                        }
                     }
-                }                   
+                }                
+                setObjectDefaultValue(node,{
+                    id:String(++NodeIndex),
+                    title: 'Node',
+                    icon: '',
+                    open: true,
+                    level: 0,
+                    flag: '',
+                    comment: '',
+                    style: '',
+                    classs: [],
+                    tags: [],
+                })
                 if(typeof(opts.forEach)==='function'){
                     opts.forEach(node)
                 }

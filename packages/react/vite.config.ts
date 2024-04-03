@@ -12,10 +12,6 @@ export default defineConfig({
     react(),
     dts({rollupTypes: true})
   ],
-  define:{
-    "LITE_TREE_ROOT_STYLE":`"${fs.readFileSync("../../packages/common/styles/root.css").toString().replace(/\n/g,'')}"`,
-    "LITE_TREE_NODES_STYLE":`"${fs.readFileSync("../../packages/common/styles/nodes.css").toString().replace(/\n/g,'')}"`
-  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

@@ -23,7 +23,5 @@ const props = defineProps({
 });
 const treeCtx = inject<LiteTreeContext>(LiteTreeContextId)!
 const styled = StyledString(props.value,treeCtx.styles);
-
-
 </script>
  

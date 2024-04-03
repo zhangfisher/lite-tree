@@ -74,17 +74,17 @@ export default function parseLiteTree(treeData:string,vars:LiteTreeVars,options:
         return tags
     }
     function parseNode(line:string):LiteTreeNode{
-        let node:LiteTreeNode = {expand:false,title:'',tags:[],comment:'',style:'',icon:'',level:0,flag:'',classs:[]}
+        let node:LiteTreeNode = {id:undefined,open:false,title:'',tags:[],comment:'',style:'',icon:'',level:0,flag:'',classs:[]}
         nodeRegex.lastIndex = 0
         const match =nodeRegex.exec(line.trim())
         if(match){
-            node.expand    = match[1]=='+'  ?  false : true
+            node.open    = match[1]=='+'  ?  false : true
             node.icon    = match[3] || ''
             node.title   = match[4] || ''
             node.tags    = parseTags(match[6])              
             node.comment = match[9] || ''
             // 紧随//符合的内容样式==  //flag.class.class{.class;style}
-            const flagMatch= /([\w\!\+\*\&\-\=\$\%\@\~\.]+)?(\{[\s\S]*?\})?/g.exec(match[8] || '')            
+            const flagMatch= /([\[\]\w\!\+\*\&\-\=\$\%\@\~\.]+)?(\{[\s\S]*?\})?/g.exec(match[8] || '')            
             if(flagMatch){
                 const f = (flagMatch[1] || '').split(".")
                 node.flag  = f[0]            

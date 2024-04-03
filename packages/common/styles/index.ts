@@ -1,21 +1,20 @@
-import { LiteTreeScopeId } from "@common/consts"
-import { injectStylesheet } from "@common/utils"
+import { LiteTreeScopeId } from "../consts"
+import { injectStylesheet } from "../utils"
 // @ts-ignore
-import styles from '@common/styles/styles.css?raw'
+import styles from './styles.css?raw'
 // @ts-ignore
-import icons from '@common/styles/icons.css?raw'
+import icons from './icons.css?raw'
 
 export function injectStyles(){
     // 1. 注入样式文件
     let scopedId = injectStylesheet(styles,{
         id:"lite-tree-styles",
-        mode:"replace",
         scoped:LiteTreeScopeId
     })
     // 2. 注入图标文件
     injectStylesheet(icons,{
         id:"lite-tree-icons",
-        mode:"replace"
+        scoped:false
     })
     // 3. 注入react-slidedown组件样式
     injectStylesheet(`.react-slidedown {
@@ -34,7 +33,7 @@ export function injectStyles(){
     }
     .react-slidedown.closed {
         display: none;
-    }`,{id:"react-slidedown",scoped:false})
+    }`,{id:"lite-tree-react-slidedown",scoped:false})
     return scopedId
 }
 

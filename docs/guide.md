@@ -36,7 +36,7 @@ import Tree from 'lite-tree'
 <Tree>
     {
         title: "A公司",
-        expend: true,
+        open: true,
         children:[          
         {
             title: "行政中心",

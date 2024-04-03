@@ -12,28 +12,31 @@ export type LiteTreeNodesProps =React.PropsWithRef<{
 }>
 
 const LiteTreeNodes:React.FC<LiteTreeNodesProps> =(props) => {
-    const {nodes=[],indent=0} = props    
-
-    const [nodeStatus,setNodeStatus] = useState(nodes.map(node=>node.expand))
-
+    const {indent=0} = props    
+    const [nodes,setNodes] = useState<LiteTreeNode[]>(()=>props.nodes)
+    const toggleNode = useCallback((node:LiteTreeNode)=>{ 
+        setNodes(nodes.map(n=>n.id===node.id ? {...n,open:!n.open} : n))
+    },[nodes])
     const treeCtx = useContext(Context)        
     return  (<ul data-lite-tree className="lite-tree-nodes">
         { nodes.map((node,index)=>{
             const hasChildren = node.children && node.children.length > 0
             return (<li data-lite-tree key={index}>
                 <span data-lite-tree className={"lite-tree-node "+node.classs.join(" ")} 
-                    onClick={()=>setNodeStatus([...nodeStatus.slice(0,index),!nodeStatus[index],...nodeStatus.slice(index+1)])}
+                    onClick={()=>toggleNode(node)}
                     style={toStyleObject(node.style)}>
                     {/* 显示标识 */}
-                    { treeCtx.hasFlag ? <span data-lite-tree className ="flag">{ node.flag }</span> : null } 
+                    { treeCtx.hasFlag ? <span data-lite-tree className ="flag">                        
+                        <RichLabel value={node.flag}/>
+                    </span> : null } 
                     {/* 缩进距离 */}
-                    <span data-lite-tree className="indent" style={ {width: indent + 'px'} }></span>
+                    <span data-lite-tree className="indent" style={ {width: indent + 'em'} }></span>
                     {/* 展开折叠指示符 */}
-                    { hasChildren ? <span data-lite-tree className={classnames('node-indicator','icon','arrow',{ expand: nodeStatus[index]})} /> : null}
+                    { hasChildren ? <span data-lite-tree className={classnames('opener','icon','arrow',{ open: node.open})} /> : null}
                     {/* 图标 */}
                     <span data-lite-tree className={classnames("icon",node.icon ? node.icon :{
-                        'folder-expand': hasChildren && nodeStatus[index],
-                        'folder': hasChildren && !nodeStatus[index],
+                        'folder-open': hasChildren && node.open,
+                        'folder': hasChildren && !node.open,
                         'file': !hasChildren})
                     }/>
                     {/* 标题 */}
@@ -46,9 +49,9 @@ const LiteTreeNodes:React.FC<LiteTreeNodesProps> =(props) => {
                     <RichLabel className="comment" value={node.comment} />
                 </span>
                 {/* 子节点 */}
-                { node.children && node.children.length>0  && nodeStatus[index]?                         (
-                        <SlideDown>
-                            <LiteTreeNodes nodes={node.children} indent={indent+20}/>
+                { node.children && node.children.length>0 ?                         (
+                        <SlideDown closed={!node.open}>
+                            <LiteTreeNodes nodes={node.children} indent={indent+2}/>
                         </SlideDown>
                     ) : null
                 }   
