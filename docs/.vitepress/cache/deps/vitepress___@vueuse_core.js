@@ -35,7 +35,7 @@ import {
   watchEffect
 } from "./chunk-RVDMA4KA.js";
 
-// node_modules/.pnpm/vue-demi@0.14.7_vue@3.4.21/node_modules/vue-demi/lib/index.mjs
+// node_modules/.pnpm/vitepress@1.0.2_@algolia+client-search@4.23.2_@types+node@20.11.28_@types+react@18.2.73_searc_gwsubgwkiddq42aej75zj3dqgy/node_modules/vitepress/lib/vue-demi.mjs
 var isVue2 = false;
 var isVue3 = true;
 function set(target, key, val) {
@@ -9088,4 +9088,13 @@ export {
   watchWithFilter,
   whenever
 };
+/*! Bundled license information:
+
+vitepress/lib/vue-demi.mjs:
+  (**
+   * vue-demi v0.14.7
+   * Copyright (c) 2020-present, Anthony Fu
+   * @license MIT
+   *)
+*/
 //# sourceMappingURL=vitepress___@vueuse_core.js.map

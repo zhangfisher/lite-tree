@@ -101,46 +101,46 @@
   background-color: #f8f8f8;
   border-radius: 4px;
 }
-.lite-tree.dark {
+.dark .lite-tree {
   border: 1px solid #1a1a1a;
 }
-.lite-tree.dark::-webkit-scrollbar-thumb {
+.dark .lite-tree::-webkit-scrollbar-thumb {
   background-color: #555;
 }
-.lite-tree.dark::-webkit-scrollbar-track {
+.dark .lite-tree::-webkit-scrollbar-track {
   background: black;
 }
-.lite-tree.dark .lite-tree-nodes {
+.dark .lite-tree .lite-tree-nodes {
   color: #999;
 }
-.lite-tree.dark .lite-tree-nodes > li > span.lite-tree-node.diff-add {
+.dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node.diff-add {
   background-color: #212121;
   color: #00d500;
 }
-.lite-tree.dark .lite-tree-nodes > li > span.lite-tree-node.diff-modify {
+.dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node.diff-modify {
   background-color: #212121;
 }
-.lite-tree.dark .lite-tree-nodes > li > span.lite-tree-node.diff-delete {
+.dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node.diff-delete {
   background-color: #212121;
 }
-.lite-tree.dark .lite-tree-nodes > li > span.lite-tree-node.important {
+.dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node.important {
   background-color: #212121;
 }
-.lite-tree.dark .lite-tree-nodes > li > span.lite-tree-node.correct {
+.dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node.correct {
   background-color: #212121;
   color: #00d500;
 }
-.lite-tree.dark .lite-tree-nodes > li > span.lite-tree-node.error {
+.dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node.error {
   background-color: #212121;
 }
-.lite-tree.dark .lite-tree-nodes > li > span.lite-tree-node > span.title > span.tag {
+.dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.title > span.tag {
   background-color: #212121;
   color: #aaa;
   border: 1px solid #333;
 }
-.lite-tree.dark .lite-tree-nodes > li > span.lite-tree-node > span.comment {
+.dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.comment {
   color: #bbb;
 }
-.lite-tree.dark .lite-tree-nodes > li > span.lite-tree-node:hover {
+.dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node:hover {
   background-color: #333;
 }

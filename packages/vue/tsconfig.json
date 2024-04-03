@@ -19,10 +19,10 @@
     "src/*.ts", 
     "src/**/*.ts", 
     "src/**/*/*.ts", 
-    "src/**/*.vue",
-    "src/**/*/*.vue",
+    "src/**/*.vue", 
+    "src/**/*/*.vue", 
     "../common/**/*",
-    "../common/**/*/*.ts",
+    "../common/**/*/*.ts"
   ],
   "exclude": ["src/**/__tests__/*"],
 }

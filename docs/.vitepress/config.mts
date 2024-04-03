@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress'
-
+import { resolve } from "path"
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "LiteTree",
@@ -22,5 +22,12 @@ export default defineConfig({
     socialLinks: [
       { icon: 'github', link: 'https://github.com/zhangfisher' }
     ]
+  },
+  vite:{
+    resolve:{
+      alias:{
+        "@common": resolve(__dirname,'../../packages/common')
+      }
+    }
   }
 })
