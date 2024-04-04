@@ -1,0 +1,23 @@
+{
+  "name": "@lite-tree/dumi-plugin",
+  "version": "1.0.0",
+  "description": "dumi plugin for lite-tree",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "vite build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "dumi": "^2.2.13"
+  },
+  "peerDependencies": {
+    "dumi": "^2.2.13"
+  },
+  "dependencies": {
+    "@lite-tree/react": "workspace:^"
+  }
+}

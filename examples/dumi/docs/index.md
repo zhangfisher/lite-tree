@@ -20,3 +20,5 @@ features:
 ---
 
 lite-tree-dumi-demo
+
+<LiteTree></LiteTree>
