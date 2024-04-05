@@ -14,6 +14,6 @@ export default {
   },
   enhanceApp({ app, router, siteData }) {
     // ...
-    app.component('Tree',LiteTree ) 
+    app.component('LiteTree',LiteTree ) 
   }
 } satisfies Theme

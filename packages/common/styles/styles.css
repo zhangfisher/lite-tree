@@ -28,6 +28,9 @@
   padding: 0px;
   margin: 0px;
 }
+.lite-tree .lite-tree-nodes > li {
+  margin: 0px;
+}
 .lite-tree .lite-tree-nodes > li > span.lite-tree-node {
   cursor: pointer;
   display: flex;
@@ -112,6 +115,9 @@
 }
 .dark .lite-tree .lite-tree-nodes {
   color: #999;
+}
+.dark .lite-tree .lite-tree-nodes > li {
+  margin: 0px;
 }
 .dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node.diff-add {
   background-color: #212121;

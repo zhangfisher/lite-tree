@@ -4,8 +4,8 @@ layout: home
 
 hero:
   name: "LiteTree"
-  text: "Simple vue tree component "
-  tagline: 适合vitepress场景中使用
+  text: "Tree component "
+  tagline: 适合Markdown文档编辑场景
   actions:
     - theme: brand
       text: Github
@@ -40,4 +40,4 @@ features:
 - [前端link调试辅助工具 - yald](https://github.com/zhangfisher/yald)
 - [异步信号 - asyncsignal](https://github.com/zhangfisher/asyncsignal)
 - [捆绑Vue组件CSS到JS的插件 - vite-plugin-vue-style-bundler ](https://github.com/zhangfisher/vite-plugin-vue-style-bundler)
-- [Vue树组件 - LiteTree](https://github.com/zhangfisher/lite-tree)
+- [React/Vue树组件 - LiteTree](https://github.com/zhangfisher/lite-tree)

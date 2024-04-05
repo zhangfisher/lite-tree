@@ -16,7 +16,7 @@
             'opener',
             'icon',
             'arrow',
-            { expand: isNodeOpen(node) }]"/>
+            { open: isNodeOpen(node) }]"/>
         <span data-lite-tree class="icon" :class="node.icon ? node.icon : (hasChildren(node) ? isNodeOpen(node) ? 'folder-open':'folder' : 'file')"/>
         <span  data-lite-tree class="title">
           <RichLabel :value="node.title" />
@@ -26,7 +26,7 @@
       </span>
       <SlideUpDown :active="isNodeOpen(node)" :duration="200">
         <LiteTreeNodes v-if="hasChildren(node) && isNodeOpen(node)" :indent="indent + 20"
-          :class="isNodeOpen(node) ? 'expand' : 'close'" :nodes="node.children">
+          :class="isNodeOpen(node) ? 'open' : 'close'" :nodes="node.children">
         </LiteTreeNodes>
       </SlideUpDown>
     </li>
