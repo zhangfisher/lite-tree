@@ -72,13 +72,14 @@
                     color: red
                 }  
                 &>span.flag {
-                    width: 24px;
+                    width: 1.2em;
                     text-align: center;
                 }
         
                 &>span.title {
                     flex-grow: 1;
-                    padding-right: 4px;        
+                    padding-right: 4px;     
+                    display: inline-flex;    
                     &>span.tag {
                         background-color: #eee;            
                         box-sizing: border-box;
@@ -88,12 +89,17 @@
                         border: 1px solid #ddd;
                         margin-left: 2px;
                         margin-right: 2px;
-                        font-size: 12px;
-                    }
+                        font-size: 0.8em;
+                        align-items: center;
+                        &>.icon{
+                            color:Red;                            
+                        }
+                    } 
                 }
         
                 &>span.comment {
                     color: #bbb;
+                    display: inline-flex;
                 }  
         
                 &>span.opener {

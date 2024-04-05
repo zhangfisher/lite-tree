@@ -1,5 +1,5 @@
 <template>
-    <span  data-lite-tree  :style="styled.style" :class="styled.classs" v-html="parseLinks(styled.value)"> </span>
+    <span  data-lite-tree style="display:inline-flex" :style="styled.style" :class="styled.classs" v-html="parseLinks(styled.value)"> </span>
 </template>
 <script setup lang="ts">
 /**

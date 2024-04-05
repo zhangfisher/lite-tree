@@ -6,7 +6,7 @@
  * 2. 返回样式字符串里面的类名称列表
  * 
  * parseStyleString("#aaa;border:1px solid red;.bbb", {aaa:"color:red;"}) 
- * ==> {style:{color:red;border:"1px solid red;"},classs:[".bbb"]}
+ * ==> {style:{color:red;border:"1px solid red;"},classs:["bbb"]}
  * 
  * 
  * @param str 
@@ -28,7 +28,7 @@ export function parseStyleString(str:string | undefined,vars:Record<string,strin
 		}else if(key.startsWith("#")){
 			return ""
 		}else if(matched.startsWith(".")){
-			classList.push(key)
+			classList.push(key.substring(1))
             return ""
 		}
 		return matched

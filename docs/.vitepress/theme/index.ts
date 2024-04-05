@@ -4,7 +4,8 @@ import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import './style.css'
 import LiteTree from "../../../packages/vue"
- 
+// import LiteTreeDemo from "./litetree-demo.vue"
+
 export default {
   extends: DefaultTheme,
   Layout: () => {
@@ -15,5 +16,6 @@ export default {
   enhanceApp({ app, router, siteData }) {
     // ...
     app.component('LiteTree',LiteTree ) 
+    // app.component('LiteTreeDemo',LiteTreeDemo ) 
   }
 } satisfies Theme

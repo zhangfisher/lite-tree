@@ -9,7 +9,8 @@ export interface LiteTreeParseOptions{
 
 // 节点正则表达式 
 //const nodeRegex= /(\+|\-)?\s*(\[([\w]+?)\])?\s*([^\(\/\\]+)(\((.*?)\))?\s*(\/\/(\S+)?\s*(.*?))?$/gm
-const nodeRegex= /(\+|\-)?\s*(\[([\w]+?)\])?\s*([^\(\/\\]+)(\((.*?)\))?\s*(\/\/(\S+)?\s*(.*?))?$/gm
+//const nodeRegex= /(\+|\-)?\s*(\[([\w]+?)\])?\s*([^\(\/\\]+)(\((.*?)\))?\s*(\/\/(\S+)?\s*(.*?))?$/gm
+const nodeRegex= /(\+|\-)?\s*(\[([^\[\]]+?)\])?\s*([^\(\/\\]+)(\((.*?)\))?\s*(\/\/(\S+)?\s*(.*?))?$/gm
 const nodeTagsRegex  = /([^,]+)\,?/g
 /**
    解析LiteTreeFormat格式的树，简称LTF
@@ -109,7 +110,8 @@ export default function parseLiteTree(treeData:string,vars:LiteTreeVars,options:
 
 
     for(let line of lines){
-        if(line.trim() == '') continue
+        const trimLine = line.trim()
+        if(trimLine == '' || trimLine.startsWith("//")) continue        
         line = line.substring(preSpace.length)        
         // 前置1个Tab替换为 opts.indent个空格
         line = line.replace(/\t/g,' '.repeat(opts.indent))

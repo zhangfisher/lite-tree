@@ -67,12 +67,13 @@
   color: red;
 }
 .lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.flag {
-  width: 24px;
+  width: 1.2em;
   text-align: center;
 }
 .lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.title {
   flex-grow: 1;
   padding-right: 4px;
+  display: inline-flex;
 }
 .lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.title > span.tag {
   background-color: #eee;
@@ -83,10 +84,15 @@
   border: 1px solid #ddd;
   margin-left: 2px;
   margin-right: 2px;
-  font-size: 12px;
+  font-size: 0.8em;
+  align-items: center;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.title > span.tag > .icon {
+  color: Red;
 }
 .lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.comment {
   color: #bbb;
+  display: inline-flex;
 }
 .lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.opener {
   width: 1em;
