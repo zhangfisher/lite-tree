@@ -85,11 +85,12 @@
   border: 1px solid #ddd;
   margin-left: 2px;
   margin-right: 2px;
-  font-size: 0.8em;
+  font-size: 1em;
+  height: 1.5em;
   align-items: center;
 }
-.lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.title > span.tag > .icon {
-  color: Red;
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.title > span.tag span.icon {
+  font-size: 1em;
 }
 .lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.comment {
   color: #bbb;

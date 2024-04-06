@@ -1,6 +1,6 @@
 # 快速使用
 
-下面以`VitePress`为例进行说明。
+`LiteTree`包含`@lite-tree/react`和`@lite-tree/vue`两个版本，分别在`React`和`Vue`中使用,两者的使用方式基本相同。下面以`VitePress`为例进行说明。
 
 ## 第1步：安装
 
@@ -52,8 +52,8 @@ export default defineConfig({
 })
 ```
 
-::: tip
-`whitespace: 'preserve'`是为了保留`Markdown`中的空格，以便`LiteTree`可以正确解析`lite`格式的树数据。
+:::warning 重点
+设置`whitespace: 'preserve'`是为了保留`Markdown`中的空格，以便`LiteTree`可以正确解析`lite`格式的树数据。
 :::
 
 

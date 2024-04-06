@@ -66,7 +66,7 @@ export function StyledString(str:string,styles:Record<string,string>){
 	// 解析图标
 	const iconRegex = /\[([\w\.\-\_]+)\]/g
 	value = value.replace(iconRegex,(matched,iconName)=>{
-		return `<span class="icon ${iconName}"></span>`
+		return `<span data-lite-tree class="icon ${iconName}"></span>`
 	})
     return {value,style,classs}
 }

@@ -25,7 +25,8 @@ export default defineConfig({
         text: '指南', link: '/guide',
         items:[
           { text: '节点', link: '/guide/node' },
-          { text: '节点标识', link: '/guide/node-flags' },
+          { text: '展开折叠', link: '/guide/node-open-close' },
+          { text: '标识', link: '/guide/node-flags' },
         ]    
       },
       

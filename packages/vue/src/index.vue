@@ -24,10 +24,9 @@ const props = withDefaults(defineProps<LiteTreeProps>(), {
 
 let format = ref(props.format)
 
-if(!props.format){
-    if(props.json) format.value="json"
-    if(props.lite) format.value="lite"
-}
+if(props.json) format.value="json"
+if(props.lite) format.value="lite"
+
 
 const slots = useSlots();
 
@@ -35,7 +34,7 @@ const slots = useSlots();
 const parseSlotData = ():LiteTreeParseResults => {
     const slotContent = slots.default?.()[0];
     if (slotContent && typeof slotContent.children === 'string') {
-        return parseTree(slotContent.children, {format: props.format}) 
+        return parseTree(slotContent.children, {format:format.value}) 
     } else {
         return { classs: {}, styles: {}, icons: {}, nodes: [] ,hasFlag:false }
     }
