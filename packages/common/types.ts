@@ -4,7 +4,8 @@ export interface LiteTreeNode {
     icon: string;
     open: boolean;    
     level:number
-    flag: string;
+    flag: '+' | '-' | '*' | '!' | 'x' | 'v'  | string;
+    diff?: '+' | '-' | '*' 
     comment:string
     style:string
     classs:string[]

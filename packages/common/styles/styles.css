@@ -74,6 +74,7 @@
   flex-grow: 1;
   padding-right: 4px;
   display: inline-flex;
+  align-items: center;
 }
 .lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.title > span.tag {
   background-color: #eee;

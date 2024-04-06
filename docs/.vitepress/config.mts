@@ -7,7 +7,10 @@ export default defineConfig({
   description: "A simple vue tree component for vitepress",
   base: '/lite-tree/',
   themeConfig: {
-    outline:[2,5],
+    outline:{
+      label:"目录",  
+      level:[2,5]
+    },
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: '首页', link: '/' }, 
@@ -17,11 +20,12 @@ export default defineConfig({
     sidebar: [ 
       { text: '关于', link: '/about' },
       { text: '安装', link: '/install' },
+      { text: '快速入门', link: '/get-starts' },
       { 
         text: '指南', link: '/guide',
         items:[
-          { text: 'Vue', link: '/vue' },
-          { text: 'React', link: '/react' },
+          { text: '节点', link: '/guide/node' },
+          { text: '节点标识', link: '/guide/node-flags' },
         ]    
       },
       
