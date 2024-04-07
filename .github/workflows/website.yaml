@@ -40,11 +40,11 @@ jobs:
           node-version: 18
       - name: Setup Pages
         uses: actions/configure-pages@v3
-      - name: Install pnpm
+      - name: Install pnpm 
         run:
           npm install -g pnpm
       - name: Install dependencies
-        run: pnpm install # or npm ci / yarn install / bun install /
+        run: pnpm install --no-frozen-lockfile # or npm ci / yarn install / bun install /
       - name: Build with VitePress
         run: |
           pnpm docs:build # or  npm run docs:build / yarn docs:build / bun run docs:build
