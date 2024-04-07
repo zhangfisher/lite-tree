@@ -8,13 +8,17 @@ export default defineConfig({
   },
   alias:{
     "@common": resolve(__dirname,'../../packages/common'),
-    "@lite-tree/react": resolve(__dirname,'../../packages/react')
+    "@lite-tree/react": resolve(__dirname,'../../packages/react/dist')
   },
-  chainWebpack(memo){
-    memo.module.rule('raw')
-    .test(/\?raw$/)
-    .use('raw-loader')
-    .loader('raw-loader')
-    .end();
-  }
+  // chainWebpack(memo){
+  //   memo.module.rule('raw')
+  //   .test(/\?raw$/i)
+  //   .use('raw-loader')
+  //   .loader('raw-loader')
+  //   .options({
+  //     esModule: false
+  //   })
+  //   .end();
+  //   return memo
+  // }
 });
