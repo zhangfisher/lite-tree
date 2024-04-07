@@ -1,5 +1,9 @@
 
 /**
+ * 链接格式
+ * 
+ * [label:icon](link tips)
+ * 
  * 解析字符串里面的链接,如"I am a string with [link](www.baidu.com),is cool"
  * 返回
  * ["I am a string with ",{link:"www.baidu.com",text:"link"},"is cool"]

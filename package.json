@@ -33,6 +33,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@changesets/cli": "^2.27.1",
     "@tsconfig/node20": "^20.1.2",
     "@types/node": "^20.11.28",
     "@types/react": "^18.2.73",

@@ -21,6 +21,7 @@ export default defineConfig({
       { text: '关于', link: '/about' },
       { text: '安装', link: '/install' },
       { text: '快速入门', link: '/get-starts' },
+      { text: '示例', link: '/examples' },
       { 
         text: '指南', link: '/guide',
         items:[
@@ -31,6 +32,7 @@ export default defineConfig({
           { text: '注释', link: '/guide/node-comments' },
           { text: '标签', link: '/guide/node-tags' },
           { text: '图标', link: '/guide/node-icons' },
+          { text: '链接', link: '/guide/node-links' },
           { text: '定制变量', link: '/guide/vars' },
         ]    
       },

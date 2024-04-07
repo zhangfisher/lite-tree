@@ -43,18 +43,17 @@ ithub=data:image/svg+xml;base64,<...图标数据...>
 
 ```ts
 interface LiteTreeNode {
-    id: string;
-    title: string;
-    icon: string;
-    open: boolean;    
-    level:number
-    flag: '+' | '-' | '*' | '!' | 'x' | 'v'  | string;
-    diff: '+' | '-' | '*' 
-    comment:string
-    style:string
-    classs:string[]
-    tags:string[]
-    children?: LiteTreeNode[];
+    id: string;                         // 节点ID
+    title: string;                      // 节点标题
+    icon: string;                       // 图标名称
+    open: boolean;                      // 是否展开
+    flag: '+' | '-' | '*' | '!' | 'x' | 'v'  | string;  // 标识
+    diff: '+' | '-' | '*'               // 差异标识
+    comment:string                      // 注释
+    style:string                        // 样式
+    classs:string[]                     // 类样式
+    tags:string[]                       // 标签
+    children?: LiteTreeNode[];          // 子节点
   }  
 ```
 **注意**
@@ -100,6 +99,8 @@ interface LiteTreeNode {
   ]
 }
 </LiteTree>
+
+
 
 
 

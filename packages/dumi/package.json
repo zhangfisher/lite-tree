@@ -1,7 +1,7 @@
 {
-  "name": "@lite-tree/dumi-plugin",
+  "name": "dumi-theme-lite-tree",
   "version": "1.0.0",
-  "description": "dumi plugin for lite-tree",
+  "description": "dumi theme with lite-tree",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",

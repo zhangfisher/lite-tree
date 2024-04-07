@@ -38,7 +38,7 @@ export interface LiteTreeProps {
   // 暗色模式
   dark?:boolean
   //根据节点数据动态解析图标名称
-  getIcon?: (node:LiteTreeNode)=>string
+  getIcon?: (node:LiteTreeNode)=>string  
 }
 
 

@@ -4,26 +4,29 @@ layout: home
 
 hero:
   name: "LiteTree"
-  text: "Tree component "
-  tagline: 适合Markdown文档编辑场景
+  text: "轻量树组件"
+  tagline: 适合React/Vue/Markdown
   actions:
     - theme: brand
+      text: 指南
+      link: /guide
+    - theme: alt
       text: Github
       link: https://github.com/zhangfisher/lite-tree
-    - theme: alt
-      text: 文档
-      link: docs
+
 
 features:
-  - title: 简单小巧
-    details: 组件小巧，无第三方依赖，使用简单
-  - title: 支持非标JSON数据
-    details: 支持非标JSON数据，具备一定的容错性，便于使用
-  - title: 样式灵活
-    details: 支持自定义节点样式，支持节点标记、标签、备注等
+  - title: React/Vue
+    details: 支持React/Vue组件，轻松嵌入到项目中
+  - title: 简洁易用
+    details: 采用Lite缩进格式描述树结构，简洁友好
+  - title: 样式丰富
+    details: 支持节点标识、标签、备注、图标等丰富样式
 
 ---
- 
+<script setup>
+import RepoList from 'components/RepoList.vue'
+</script>
 ## 开源推荐
 
 - [全流程一健化React/Vue/Nodejs国际化方案 - VoerkaI18n](https://zhangfisher.github.io/voerka-i18n/)
@@ -40,4 +43,4 @@ features:
 - [前端link调试辅助工具 - yald](https://github.com/zhangfisher/yald)
 - [异步信号 - asyncsignal](https://github.com/zhangfisher/asyncsignal)
 - [捆绑Vue组件CSS到JS的插件 - vite-plugin-vue-style-bundler ](https://github.com/zhangfisher/vite-plugin-vue-style-bundler)
-- [React/Vue树组件 - LiteTree](https://github.com/zhangfisher/lite-tree)
+- [React/Vue轻量树组件 - LiteTree](https://github.com/zhangfisher/lite-tree)
