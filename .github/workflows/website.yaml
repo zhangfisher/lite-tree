@@ -44,7 +44,7 @@ jobs:
         run:
           npm install -g pnpm
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile # or npm ci / yarn install / bun install /
+        run: pnpm install # or npm ci / yarn install / bun install /
       - name: Build with VitePress
         run: |
           pnpm docs:build # or  npm run docs:build / yarn docs:build / bun run docs:build
