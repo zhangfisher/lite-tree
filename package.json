@@ -1,21 +1,14 @@
 {
   "name": "lite-tree",
   "version": "1.0.1",
-  "description": "simple vue tree component for vitepress",
+  "description": "tree component for react/vue",
   "homepage": "https://zhangfisher.github.io/lite-tree/",
   "type": "module",
+  "private":true,
   "repository": {
     "type": "git",
     "url": "https://github.com/zhangfisher/lite-tree"
-  },
-  "exports": {
-    ".": "./dist/index.js",
-    "./vue": {
-      "import": "./dist/vue/index.js",
-      "require": "./dist/vue/index.cjs",
-      "types": "./dist/vue/index.d.ts"
-    }
-  },
+  }, 
   "scripts": {
     "build": "vite build",
     "docs:dev": "vitepress dev docs",

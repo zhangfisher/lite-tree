@@ -1,6 +1,7 @@
 {
   "name": "@lite-tree/vue",
-  "description": "",
+  "version": "1.0.0",
+  "description": "lite tree component for vue",
   "main": "src/index.vue",
   "homepage": "https://zhangfisher.github.io/lite-tree/",
   "repository": {
@@ -16,6 +17,10 @@
   "scripts": {
     "build": "vite build"
   },
+  "files": [
+    "dist",
+    "readme.md"
+  ],
   "keywords": [
     "lite-tree"
   ],
@@ -34,10 +39,10 @@
     "vite-plugin-dts": "^3.7.3",
     "vite-plugin-vue-devtools": "^7.0.17",
     "vite-plugin-vue-style-bundler": "^1.0.9",
-    "vue": "^3.4.21",
+    "vue": "^3.0.0",
     "vue-tsc": "^2.0.6"
   },
   "peerDependencies": {
-    "vue": "^3.4.21"
+    "vue": "^3.0.0"
   }
 }

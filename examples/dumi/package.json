@@ -71,6 +71,5 @@
     "stylelint": "^14.9.1"
   },
   "dependencies": {
-    "@lite-tree/react":"file:../../packages/react/dist"
   }
 }
