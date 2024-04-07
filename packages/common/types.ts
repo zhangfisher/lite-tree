@@ -35,8 +35,6 @@ export interface LiteTreeProps {
   indent?: number;             
   // 图标集名称
   iconset?:string
-  // 暗色模式
-  dark?:boolean
   //根据节点数据动态解析图标名称
   getIcon?: (node:LiteTreeNode)=>string  
 }

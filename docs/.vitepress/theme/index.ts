@@ -3,7 +3,7 @@ import { h } from 'vue'
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import './style.css'
-import LiteTree from "../../../packages/vue"
+import LiteTree from "@lite-tree/vue"
 // import LiteTreeDemo from "./litetree-demo.vue"
 
 export default {

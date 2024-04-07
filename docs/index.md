@@ -24,9 +24,7 @@ features:
     details: 支持节点标识、标签、备注、图标等丰富样式
 
 ---
-<script setup>
-import RepoList from 'components/RepoList.vue'
-</script>
+
 ## 开源推荐
 
 - [全流程一健化React/Vue/Nodejs国际化方案 - VoerkaI18n](https://zhangfisher.github.io/voerka-i18n/)

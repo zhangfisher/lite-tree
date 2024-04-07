@@ -2,7 +2,7 @@
   "name": "@lite-tree/vue",
   "description": "",
   "main": "src/index.vue",
-  "homepage": "https://github.com/zhangfisher/lite-tree",
+  "homepage": "https://zhangfisher.github.io/lite-tree/",
   "repository": {
     "type": "git",
     "url": "https://github.com/zhangfisher/lite-tree"

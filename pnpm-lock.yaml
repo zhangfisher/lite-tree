@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      vue:
+        specifier: ^3.4.21
+        version: 3.4.21(typescript@5.4.2)
     devDependencies:
       '@changesets/cli':
         specifier: ^2.27.1
@@ -31,10 +35,6 @@ importers:
         version: 1.0.2(@algolia/client-search@4.23.2)(@types/node@20.11.28)(@types/react@18.2.73)(search-insights@2.13.0)(typescript@5.4.2)
 
   examples/dumi:
-    dependencies:
-      '@lite-tree/dumi-plugin':
-        specifier: workspace:^
-        version: link:../../packages/dumi
     devDependencies:
       '@commitlint/cli':
         specifier: ^17.1.2
@@ -75,6 +75,9 @@ importers:
       prettier-plugin-packagejson:
         specifier: ^2.2.18
         version: 2.4.14(prettier@2.8.8)
+      raw-loader:
+        specifier: ^4.0.2
+        version: 4.0.2(webpack@5.91.0)
       react:
         specifier: ^18.0.0
         version: 18.2.0
@@ -15057,7 +15060,6 @@ packages:
     resolution: {integrity: sha512-+2/g0Fds1ERlP6JsakQQDXjZdZMM+rqpamFZJEKh4kwTIn3iDkgKtby0CeNd5ATNZ4Ry1ax15TMx0W2V+miizQ==}
     engines: {node: '>=14.17'}
     hasBin: true
-    dev: true
 
   /typescript@5.4.3:
     resolution: {integrity: sha512-KrPd3PKaCLr78MalgiwJnA25Nm8HAmdwN3mYUYZgG/wizIo9EainNVQI9/yDavtVFRN2h3k8uf3GLHuhDMgEHg==}
@@ -15809,7 +15811,6 @@ packages:
       '@vue/server-renderer': 3.4.21(vue@3.4.21)
       '@vue/shared': 3.4.21
       typescript: 5.4.2
-    dev: true
 
   /vue@3.4.21(typescript@5.4.3):
     resolution: {integrity: sha512-5hjyV/jLEIKD/jYl4cavMcnzKwjMKohureP8ejn3hhEjwhWIhWeuzL2kJAjzl/WyVsgPY56Sy4Z40C3lVshxXA==}

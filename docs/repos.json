@@ -1,11 +1,5 @@
 [
-    {
-        "name":"malagu",
-        "author":"cellbang",
-        "repo":"malagu",        
-        "title":"Serverless优先/组件化/平台无关的渐进式应用框架",        
-        "tags":[]
-    },{
+   {
         "name":"VoerkaI18n",
         "author":"zhangfisher",
         "repo":"voerka-i18n",        

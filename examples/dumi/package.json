@@ -4,6 +4,7 @@
   "description": "A react library developed with dumi",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "private": true,
   "scripts": {
     "start": "npm run dev",
     "dev": "dumi dev",
@@ -64,11 +65,9 @@
     "prettier": "^2.7.1",
     "prettier-plugin-organize-imports": "^3.0.0",
     "prettier-plugin-packagejson": "^2.2.18",
+    "raw-loader": "^4.0.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "stylelint": "^14.9.1"
-  },
-  "dependencies": {
-    "@lite-tree/dumi-plugin":"workspace:^"
   }
 }

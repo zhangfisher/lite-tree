@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed,withDefault } from 'vue'
+import { computed,withDefaults } from 'vue'
 import { Repo } from './types';
 import RepoCard from './RepoCard.vue'
 
@@ -8,7 +8,7 @@ interface RepoListProps {
   signalLine: boolean
 }
 
-const props = withDefault(defineProps<RepoListProps>(),{
+const props = withDefaults(defineProps<RepoListProps>(),{
   signalLine:false,
   repos:[]
 })

@@ -15,7 +15,7 @@ export type LiteTreeReactProps = React.PropsWithChildren<LiteTreeProps & {
 }>
 
 export const LiteTree = React.forwardRef<any,LiteTreeReactProps>((props:LiteTreeReactProps,ref) => {
-    const { indent=4,data='',dark=false,style,className} = props
+    const { indent=4,data,style,className} = props
     let format = props.format ? props.format : props.json ? "json" : "lite"
     const [ctx,setCtx] = useState<LiteTreeReactContext>({
         hasFlag: false,
@@ -24,8 +24,14 @@ export const LiteTree = React.forwardRef<any,LiteTreeReactProps>((props:LiteTree
         classs: {},
         icons: {} 
     });
+    const [treeData] = useState(()=>{
+        return data || props.children && Array.isArray(props.children) ? 
+        (props.children as any[]).map(n=>String(n)).join("\n") : String(props.children)    
+    })
+    
+    
     const [nodes] = useState<LiteTreeNode[]>(()=>{
-        const {styles,classs,icons,nodes=[],hasFlag} = parseTree(data,{format})
+        const {styles,classs,icons,nodes=[],hasFlag} = parseTree(treeData,{format})
         setCtx({indent,hasFlag,styles,classs,icons});            
         injectCustomStyles(classs)
         injectSvgIcons(icons)
@@ -34,7 +40,7 @@ export const LiteTree = React.forwardRef<any,LiteTreeReactProps>((props:LiteTree
 
     return (
         <Context.Provider value={ctx}> 
-            <div data-lite-tree style={style} className={classnames("lite-tree",{dark},className)} ref={ref}>
+            <div data-lite-tree style={style} className={classnames("lite-tree",className)} ref={ref}>
                 <LiteTreeNodes nodes={nodes} indent={0}/>
             </div>
         </Context.Provider>

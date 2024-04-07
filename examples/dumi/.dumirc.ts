@@ -1,6 +1,5 @@
 import { defineConfig } from 'dumi';
 import {resolve } from "path"
-import LiteTreePlugin from "@lite-tree/dumi-plugin"
 
 export default defineConfig({
   outputPath: 'docs-dist',
@@ -11,7 +10,11 @@ export default defineConfig({
     "@common": resolve(__dirname,'../../packages/common'),
     "@lite-tree/react": resolve(__dirname,'../../packages/react')
   },
-  plugins:[
-    "@lite-tree/dumi-plugin"
-  ]
+  chainWebpack(memo){
+    memo.module.rule('raw')
+    .test(/\?raw$/)
+    .use('raw-loader')
+    .loader('raw-loader')
+    .end();
+  }
 });

@@ -20,7 +20,11 @@
     "build": "vite build",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:preview": "vitepress preview docs",
+    "changeset":"changeset",
+    "release":"changeset version && changeset publish",
+    "build:all":"turbo build --filter=@lite-tree/*"
+
   },
   "files": [
     "dist",
@@ -40,5 +44,8 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.4.2",
     "vitepress": "1.0.2"
+  },
+  "dependencies": {
+    "vue": "^3.4.21"
   }
 }

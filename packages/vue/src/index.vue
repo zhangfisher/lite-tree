@@ -1,5 +1,5 @@
 <template>
-    <div data-lite-tree class="lite-tree" :class="{dark}">
+    <div data-lite-tree class="lite-tree" >
         <LiteTreeNodes :nodes="nodes"></LiteTreeNodes>
     </div>
 </template>
@@ -18,8 +18,7 @@ import '@common/styles';
 const props = withDefaults(defineProps<LiteTreeProps>(), {
     indent: 4,
     format: "lite",
-    iconset:'default',
-    dark:false
+    iconset:'default'
 });
 
 let format = ref(props.format)
