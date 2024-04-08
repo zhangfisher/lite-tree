@@ -47,7 +47,7 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/zhangfisher' }
+      { icon: 'github', link: 'https://github.com/zhangfisher/lite-tree' }
     ]
   },
   vite:{
