@@ -46,7 +46,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install # or npm ci / yarn install / bun install /
       - name: Install turbo        
-        run: pnpm add turbo --global
+        run: pnpm add turbo 
       - name: Build packages
         run: pnpm build:all 
       - name: pnpm docs:build
