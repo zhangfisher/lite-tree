@@ -2,149 +2,128 @@
 
 [中文](./readme_CN.md) |  [English](./readme.md)
 
+[Document](https://zhangfisher.github.io/lite-tree/)
+
 `LiteTree`是一款轻量小巧的树组件，包含`@lite-tree/react`和`@lite-tree/vue`两个包，它的设计初衷是为了在`vitepress/dumi`等静态网站更加方便地显示树。
 
-我们知道，`Vue`树组件非常多，一般情况下，但是在`vitepress`上使用这些组件时，会有一些问题，比如样式冲突、体积过大、功能太多等问题，这与`VitePress`这种以展示为主的场景显示格格不入。
-特别是传递树数据时，一般是通过`props`传入的，这样在`vitepress`上使用时，就会显得非常麻烦。
+我们知道，树组件非常多，一般情况下，均采用`JSON`来描述树，因为`JSON`格式在`Markdown`中不太友好，而`LiteTree`采用了一种类似`YAML`的缩进格式，非常适合在`Markdown`中使用。
 
-特性点：
+**特性：**
 
 - 体积小，不依赖任何第三方库
-- 样式简单，功能小巧
-- 默认使用`slot/children`传递树数据，非常方便
-- 专门设计的类似`YAML`的采用缩进的树结构
-- 丰富的样式支持
-
+- 包含`React/Vue`两个版本
+- 支持`lite`格式，非常适合在`Markdown`中使用
+- 默认通过`slot/children`传递树数据，非常方便
+- 支持自定义节点样式、标签、备注、图标等
+- 支持非标`JSON`数据，具备良好的容错性
 
 ## 安装
 
+- **React**
+
+
 ```bash
-npm install @lite-tree/vue
 npm install @lite-tree/react
 // or
-yarn add lite-tree
+yarn add @lite-tree/react
 // or
-pnpm add lite-tree
+pnpm add @lite-tree/react
 ```
+
+- **Vue**
+
+```bash
+npm install @lite-tree/vue
+// or
+yarn add @lite-tree/vue
+// or
+pnpm add @lite-tree/vue
+```
+
 
 ## 使用
 
-在`vitepress`中使用
+以在`vitepress`中使用为例.
+
+- **第1步: 配置**
+
+在`.vitepress/config.mts`中配置`Vue`参数，如下：
+
+```ts {5-9}
+// .vitepress/config.mts
+export default defineConfig({
+ // ...
+  vue:{
+    template: {                      
+      compilerOptions: {
+        whitespace: 'preserve'      // [!code ++]
+      }
+    }
+  }
+})
+```
+
+- **第2步: 注册组件**
+
+将`LiteTree`注册为全局组件，以便在任何地方都可以使用。
+
+```ts
+// .vitepress/theme/index.js
+import DefaultTheme from 'vitepress/theme'
+import { LiteTree } from '@lite-tree/vue'
+
+/** @type {import('vitepress').Theme} */
+export default {
+  extends: DefaultTheme,
+  enhanceApp({ app }) {
+    // 注册自定义全局组件
+    app.component('LiteTree'，LiteTree)
+  }
+}
+``` 
+
+- **第3步: 使用**
 
 ```md
-<script setup>
-import LiteTree from '@lite-tree/vue'
-</script>
+<LiteTree>
+#error=color:red;border: 1px solid red;background:#ffd2d2;padding:2px;
+#blue=color:red;border: 1px solid blue;background:#e6e6ff;padding:2px;
+airplane=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjU2IDI1NiI+PHBhdGggZmlsbD0iY3VycmVudENvbG9yIiBkPSJNMjM1LjU4IDEyOC44NEwxNjAgOTEuMDZWNDhhMzIgMzIgMCAwIDAtNjQgMHY0My4wNmwtNzUuNTggMzcuNzhBOCA4IDAgMCAwIDE2IDEzNnYzMmE4IDggMCAwIDAgOS41NyA3Ljg0TDk2IDE2MS43NnYxOC45M2wtMTMuNjYgMTMuNjVBOCA4IDAgMCAwIDgwIDIwMHYzMmE4IDggMCAwIDAgMTEgNy40M2wzNy0xNC44MWwzNyAxNC44MWE4IDggMCAwIDAgMTEtNy40M3YtMzJhOCA4IDAgMCAwLTIuMzQtNS42NkwxNjAgMTgwLjY5di0xOC45M2w3MC40MyAxNC4wOEE4IDggMCAwIDAgMjQwIDE2OHYtMzJhOCA4IDAgMCAwLTQuNDItNy4xNk0yMjQgMTU4LjI0bC03MC40My0xNC4wOEE4IDggMCAwIDAgMTQ0IDE1MnYzMmE4IDggMCAwIDAgMi4zNCA1LjY2TDE2MCAyMDMuMzF2MTYuODdsLTI5LTExLjYxYTggOCAwIDAgMC01Ljk0IDBMOTYgMjIwLjE4di0xNi44N2wxMy42Ni0xMy42NUE4IDggMCAwIDAgMTEyIDE4NHYtMzJhOCA4IDAgMCAwLTkuNTctNy44NEwzMiAxNTguMjR2LTE3LjNsNzUuNTgtMzcuNzhBOCA4IDAgMCAwIDExMiA5NlY0OGExNiAxNiAwIDAgMSAzMiAwdjQ4YTggOCAwIDAgMCA0LjQyIDcuMTZMMjI0IDE0MC45NFoiLz48L3N2Zz4=
+ts=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMTUgMTUiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBkPSJNMTIuNSA4di0uMTY3YzAtLjczNi0uNTk3LTEuMzMzLTEuMzMzLTEuMzMzSDEwYTEuNSAxLjUgMCAxIDAgMCAzaDFhMS41IDEuNSAwIDAgMSAwIDNoLTFBMS41IDEuNSAwIDAgMSA4LjUgMTFNOCA2LjVIM20yLjUgMFYxM00uNS41aDE0djE0SC41eiIvPjwvc3ZnPg==
+---
+- [airplane]A公司({color:red;}重点,{#blue}紧急)          //   企业名称
+    行政中心
+        {color:red;font-weight:bold;background:#ffeaea}总裁办
+        [checked]人力资源部
+        [unchecked]{.blue}财务部
+        行政部        //+  负责行政管理
+        法务部        //+  打官司等
+        [airplane]审计部        //+  审计财务[保存:tag](sss) [连接](sss)
+        信息中心      // 重点[保存](www.baidu.com)[tag][连接:tag](www.baidu.com)
+        [star]安[star]全[star]保[star]卫[star]部[star]    //{color:red}   保密工作
+    + 市场中心    
+        市场部({#error}出错,"{#warning}警告")
+        销售部            //-
+        客服部            //-
+        {#blue}品牌部            //   this is cool
+        市场策划部    //!  重点
+        市场营销部        // {.blue}this is cool
+    研发中心
+        移动研发部      //!
+        平台研发部({success}Java,{error}Go)
+        {.success}测试部
+        运维部
+        产品部            //*
+        设计部            //*
+        项目管理部        //*
+</LiteTree>     
 
-<Tree>
-          {
-        title: "A公司",
-        open: true,
-        children:[          
-          {
-            title: "行政中心",
-            children:[
-              {title: "{color:red;font-weight:bold;}总裁办",mark:"success"},
-              {title: "人力资源部",tags:['{color:red;}重点','{success}紧急']},
-              {title: "财务部"},
-              {title: "行政部",diff:'add'},
-              {title: "法务部",diff:'add'},
-              {title: "审计部",diff:'add'},
-              {title: "信息中心",comment:"备用"},
-              {title: "安全保卫部",comment:"{color:red}+",style:"font-size:16px;font-style:italic"} 
-            ]
-          },
-          { 
-            title: "市场中心",
-            open:false,
-            children:[
-              {title: "市场部",mark:"info",tags:['{error}出错','{warning}警告']},
-              {title: "销售部",diff:'delete'},
-              {title: "客服部",diff:'delete'},
-              {title: "品牌部",diff:"delete"},
-              {title: "市场策划部"},
-              {title: "市场营销部",comment:"好",tags:["{info}ddddd"]}
-            ]
-          },
-          {
-            title: "研发中心",
-            children:[
-              {title: "移动研发部",mark:"warning"},
-              {title: "平台研发部",tags:["{success}Java","{error}Go"]},
-              {title: "测试部"},
-              {title: "运维部",prefix:"{color:red;}+"},
-              {title: "产品部",mark:"success"},
-              {title: "设计部",diff:"modify"},
-              {title: "项目管理部",comment:"{color:red;}+",diff:"modify"}
-            ]
-
-          }
-        ]
-      }    
-</Tree>
 
 ```
 
-最终的渲染效果如下：
+**渲染效果如下：**
 
 ![](./docs/tree.png)
-
-## 属性
-
-- prefix:Boolean - 是否显示前缀
-- diff:'add' | 'delete' | 'modify' - 是否显示差异
-
-## 特性
-
-### 树数据
-
- 树数据直接声明在组件`Slot`，一般是`JSON`格式，但具备良好的容错性，如下：
- 
-```js
-{
-    title  : "A公司",         // 节点标题，显示用
-    open   : true,            // 是否展开
-    style  : "color:red",     // 节点CSS
-    mark   : "success",       // 节点标记，取值为`success`、`info`、`warning`、`error`
-    tags   : ["",...,""],     // 节点标签
-    comment: "...",           // 节点注释
-    prefix : "...",           // 节点前缀
-    diff   : "add",           // 是否显示差异
-    children:[
-        // 子节点
-    ]
-}
-```
-
- 
-### 数据容错性
-
-标准`JSON`格式对格式要求比较严格，而`LiteTree`对数据格式进行了预处理，具有一定的容错性：
-
-- 节点`Key`可以使用`"..."`或`'...'`包裹，也可以省略。
-- 字符串`Value`可以使用`"..."`或`'...'`包裹
-- 如果不小心漏掉了,号，也是可以补全的。
-
-### 节点特征
-
-每个节点具有以下特征：
-
-- `comment`:  节点注释，显示在节点最后面
-- `tags`:     节点标签，显示在节点最后面
-- `prefix`:   节点前缀，显示在节点最前面
-- `diff`:     节点差异，显示在节点最前面的+、-、*号
-- `mark`:     节点标记，取值为`success`、`info`、`warning`、`error`，分别代表`成功`、`信息`、`警告`、`错误`。分别用不同的颜色渲染。
-
-
-### 节点样式
-
-节点的`style`可以用来为节点指定`css style`。
-节点的`title`,`comment`,`prefix`,`mark`或`tags`也支持在字符串前置`{...}`包裹来声明`css`样式。
-如`tags:["{color:red;font-weight:bold;}OK","{color:blue}+"]`代表`OK`为红色加粗，`+`为蓝色。
-
-### 事件
-
-暂不支持，因为本组件主要是用在`vitepress`静态页面中进行静态显示，所以目前不支持事件。
 
 
 ## 推荐
@@ -163,4 +142,4 @@ import LiteTree from '@lite-tree/vue'
 - [前端link调试辅助工具 - yald](https://github.com/zhangfisher/yald)
 - [异步信号 - asyncsignal](https://github.com/zhangfisher/asyncsignal)
 - [捆绑Vue组件CSS到JS的插件 - vite-plugin-vue-style-bundler ](https://github.com/zhangfisher/vite-plugin-vue-style-bundler)
-- [Vue树组件 - LiteTree](https://github.com/zhangfisher/lite-tree)
+- [轻量树组件 - LiteTree](https://github.com/zhangfisher/lite-tree)

@@ -1,5 +1,5 @@
 {
-  "name": "lite-tree-dumi-demo",
+  "name": "@lite-tree-examples/dumi",
   "version": "0.0.1",
   "description": "A react library developed with dumi",
   "module": "dist/index.js",
