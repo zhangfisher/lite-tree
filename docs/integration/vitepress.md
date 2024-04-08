@@ -14,11 +14,11 @@ pnpm add @lite-tree/vue
 
 ## 配置
 
-如果通过默认`slot`传入数据，需要在`vite.config.ts`中配置：
+如果通过默认`slot`传入数据，需要在`./vitepress/config.mts`中配置：
 
 ```ts {5-9}
-// vite.config.ts
-import { defineConfig } from 'vite'
+// ./vitepress/config.mts
+import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   vue:{
@@ -54,7 +54,7 @@ import { LiteTree } from '@lite-tree/vue'
 
 - **全局引入**
 
-在`.vitepress/client.ts`中引入。
+在`.vitepress/theme/index.ts`中引入。
 
 ```ts
 // .vitepress/theme/index.js
