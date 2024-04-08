@@ -4,20 +4,19 @@
   "description": "tree component for react/vue",
   "homepage": "https://zhangfisher.github.io/lite-tree/",
   "type": "module",
-  "private":true,
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/zhangfisher/lite-tree"
-  }, 
+  },
   "scripts": {
-    "build": "vite build",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
-    "changeset":"changeset",
-    "release":"changeset version && changeset publish",
-    "build:all":"turbo build --filter=@lite-tree/*"
-
+    "changeset": "changeset",
+    "release": "changeset version && changeset publish",
+    "build:all": "turbo build --filter=@lite-tree/*",
+    "build": "turbo build --filter "
   },
   "files": [
     "dist",
@@ -31,6 +30,7 @@
   "license": "ISC",
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
+    "@lite-tree/vue": "workspace:^",
     "@tsconfig/node20": "^20.1.2",
     "@types/node": "^20.11.28",
     "@types/react": "^18.2.73",
@@ -39,6 +39,7 @@
     "vitepress": "1.0.2"
   },
   "dependencies": {
+    "@lite-tree/react": "workspace:^",
     "vue": "^3.4.21"
   }
 }

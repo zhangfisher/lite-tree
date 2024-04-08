@@ -3,13 +3,12 @@
  * 用于注入Svg图标到页面中
  * 
  */
-
-
 /**
  * 创建一个容器来保存所有Svg图标
  * @returns 
  */
 export function getSvgIconContainer(callback?:(ele:HTMLElement)=>void){
+    if(globalThis.document==undefined) return
     let svgContainer = document.querySelector("#lite_tree_icons") as HTMLElement
     if(!svgContainer){
         svgContainer = document.createElement("style")
@@ -39,6 +38,7 @@ function compressSvgData(svgData:string){
  * 注入所有icons文件夹中的图标
  */
 export function injectSvgIcons(svgIcons:Record<string,string>){
+    if(globalThis.document==undefined) return
     const svgIconContainer = getSvgIconContainer()
     for(let [name,define] of Object.entries(svgIcons)){
         const iconClassName = `.icon.${name}`

@@ -17,7 +17,6 @@ import '@common/styles';
 // 默认使用Lite格式
 const props = withDefaults(defineProps<LiteTreeProps>(), {
     indent: 4,
-    format: "lite",
     iconset:'default'
 });
 
@@ -26,22 +25,26 @@ let format = ref(props.format)
 if(props.json) format.value="json"
 if(props.lite) format.value="lite"
 
-
 const slots = useSlots();
 
-// 返回默认插槽的内容字符串
-const parseSlotData = ():LiteTreeParseResults => {
+const getSlotData = ()=>{
     const slotContent = slots.default?.()[0];
     if (slotContent && typeof slotContent.children === 'string') {
-        return parseTree(slotContent.children, {format:format.value}) 
+        return slotContent.children
+    }
+}
+    
+
+// 返回默认插槽的内容字符串
+const parseTreeData = ():LiteTreeParseResults => {
+    const treeData = props.data || getSlotData();
+    if (treeData) {
+        return parseTree(treeData, {format:format.value}) 
     } else {
         return { classs: {}, styles: {}, icons: {}, nodes: [] ,hasFlag:false }
     }
 }
- 
- 
-const { nodes:rNodes, styles, classs, icons,hasFlag:isShowFlag } = parseSlotData();
-
+const { nodes:rNodes, styles, classs, icons,hasFlag:isShowFlag } = parseTreeData();
 injectCustomStyles(classs)
 injectSvgIcons(icons)
 

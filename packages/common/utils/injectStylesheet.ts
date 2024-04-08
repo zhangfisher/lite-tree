@@ -10,6 +10,7 @@ export interface InjectStylesheetOptions{
 }
 
 export function injectStylesheet(css:string,options?:InjectStylesheetOptions){
+	if(globalThis.document==undefined) return
 	const {id,mode,scoped=true} = Object.assign({mode:'default'},options)
 	let style = document.head.querySelector(`#${id}`) as HTMLStyleElement
 	let scopeId:string | undefined

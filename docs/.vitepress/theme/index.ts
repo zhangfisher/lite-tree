@@ -1,10 +1,9 @@
 // https://vitepress.dev/guide/custom-theme
 import { h } from 'vue'
-import type { Theme } from 'vitepress'
+import type { Theme, } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import './style.css'
-import LiteTree from "@lite-tree/vue"
-// import LiteTreeDemo from "./litetree-demo.vue"
+import { LiteTree } from "@lite-tree/vue"
 
 export default {
   extends: DefaultTheme,
@@ -13,9 +12,9 @@ export default {
       // https://vitepress.dev/guide/extending-default-theme#layout-slots
     })
   },
-  enhanceApp({ app, router, siteData }) {
+  enhanceApp({ app }) {
     // ...
-    app.component('LiteTree',LiteTree ) 
-    // app.component('LiteTreeDemo',LiteTreeDemo ) 
+    app.component('LiteTree',LiteTree )  
+    
   }
 } satisfies Theme

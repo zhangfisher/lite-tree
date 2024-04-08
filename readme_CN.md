@@ -1,39 +1,39 @@
 # LiteTree
 
-[中文](./readme_CN.md)
-[English](./readme.md)
+[中文](./readme_CN.md) |  [English](./readme.md)
 
-`LiteTree`是一款非常简单的`vue`树组件，它的设计初衷是为了在`vitepress`上使用时可以比较方便地显示树形结构。
+`LiteTree`是一款轻量小巧的树组件，包含`@lite-tree/react`和`@lite-tree/vue`两个包，它的设计初衷是为了在`vitepress/dumi`等静态网站更加方便地显示树。
 
 我们知道，`Vue`树组件非常多，一般情况下，但是在`vitepress`上使用这些组件时，会有一些问题，比如样式冲突、体积过大、功能太多等问题，这与`VitePress`这种以展示为主的场景显示格格不入。
 特别是传递树数据时，一般是通过`props`传入的，这样在`vitepress`上使用时，就会显得非常麻烦。
 
-所以，我开发了这款非常简单的`vue`树组件，它的特点是：
+特性点：
 
 - 体积小，不依赖任何第三方库
 - 样式简单，功能小巧
-- 通过默认`slot`传递树数据，非常方便
-- 树数据具备良好的容错性
-- 支持自定义节点样式、标签、备注等
+- 默认使用`slot/children`传递树数据，非常方便
+- 专门设计的类似`YAML`的采用缩进的树结构
+- 丰富的样式支持
 
 
 ## 安装
 
 ```bash
-npm install lite-tree
+npm install @lite-tree/vue
+npm install @lite-tree/react
 // or
 yarn add lite-tree
 // or
 pnpm add lite-tree
 ```
 
-## 使用方法
+## 使用
 
 在`vitepress`中使用
 
 ```md
 <script setup>
-import Tree from 'lite-tree'
+import LiteTree from '@lite-tree/vue'
 </script>
 
 <Tree>

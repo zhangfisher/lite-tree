@@ -40,9 +40,7 @@
   },
   "dependencies": {
     "classnames": "^2.5.1",
-    "react-slidedown": "^2.4.7",
-    "style-to-object": "^1.0.6",
-    "styledfc": "^1.0.9"
+    "react-slidedown": "^2.4.7"
   },
   "peerDependencies": {
     "react": "18.0.0",

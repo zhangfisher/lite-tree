@@ -25,9 +25,9 @@ export interface LiteTreeNodesProps {
   nodes: LiteTreeNode[];
 }
 
-
+export type LiteTreeDataFormat  = 'json' | 'lite'
 export interface LiteTreeProps {
-  format?: 'json' | 'lite'
+  format?: LiteTreeDataFormat
   json?:boolean
   lite?:boolean
   data?:string

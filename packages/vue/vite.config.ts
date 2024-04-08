@@ -19,17 +19,19 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
       "@common": resolve(__dirname,'../common')
-    }
-    
-  },   
+    }    
+  }, 
+  define: {  
+    'import.meta.env.SSR': process.env.VITE_SSR || false  
+  },    
   build:{    
     outDir: 'dist',
     sourcemap: true,
-    minify: false,
+    minify: true,
     lib: {
       formats: ['es','cjs'],
       entry: [
-        resolve(__dirname, 'src/index.vue') 
+        resolve(__dirname, 'src/index.ts') 
       ],
     },    
     rollupOptions: {

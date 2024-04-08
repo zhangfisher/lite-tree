@@ -3,6 +3,7 @@ import parseLiteTree, { type LiteTreeParseOptions } from "./lite";
 import type { LiteTreeNode,LiteTreeParseResults } from "../types";
 import { flagAlias } from "../consts";
 import { setObjectDefaultValue } from "../utils/setObjectDefaultValue";
+import { getTreeFormat } from "../utils/getTreeFormat";
 
 
 const SplitterRegex = /^---\s*$/gm;
@@ -101,6 +102,7 @@ let NodeIndex = 0
 export function parseTree(context:string,options?:ParseTreeOptions):LiteTreeParseResults{
     const opts = Object.assign({},options)
     const [strVars,strTree] = splitTreeContent(context)
+    if(!opts.format) opts.format = getTreeFormat(strTree)
     const vars = parseVars(strVars)
     let hasFlag:boolean = false 
     try{

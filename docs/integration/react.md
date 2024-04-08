@@ -21,6 +21,10 @@ import { LiteTree } from "@lite-tree/react";
 
 export ()=>{
   return <LiteTree data={`
+#blud=color:blue;
+.bg=background:#e6e6ff;
+save=data:image/svg+xml;base64,...图标数据...
+---
 根节点
     子节点
     子节点

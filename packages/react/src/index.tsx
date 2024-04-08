@@ -16,7 +16,7 @@ export type LiteTreeReactProps = React.PropsWithChildren<LiteTreeProps & {
 
 export const LiteTree = React.forwardRef<any,LiteTreeReactProps>((props:LiteTreeReactProps,ref) => {
     const { indent=4,data,style,className} = props
-    let format = props.format ? props.format : props.json ? "json" : "lite"
+    let format = props.format ? props.format : props.json ? "json" :props.lite ? "lite" : undefined 
     const [ctx,setCtx] = useState<LiteTreeReactContext>({
         hasFlag: false,
         indent: 4,
