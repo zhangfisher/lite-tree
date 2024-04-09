@@ -1,5 +1,11 @@
 # @lite-tree/vue
 
+## 1.0.3
+
+### Patch Changes
+
+- 089bc8c: 修复在喑黑模式下 x 显示异常的问题
+
 ## 1.0.2
 
 ### Patch Changes
