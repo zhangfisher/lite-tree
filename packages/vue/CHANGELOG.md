@@ -1,5 +1,11 @@
 # @lite-tree/vue
 
+## 1.0.2
+
+### Patch Changes
+
+- 55c7649: fix folder-open is invalid
+
 ## 1.0.1
 
 ### Patch Changes
