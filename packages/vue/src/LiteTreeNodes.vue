@@ -18,7 +18,7 @@
             'arrow',
             { open: isNodeOpen(node) }]"/>
         <!-- <span data-lite-tree class="icon" :class="node.icon ? node.icon : (hasChildren(node) ? isNodeOpen(node) ? 'folder-open':'folder' : 'file')"/> -->
-        <RichIcon :value="node.icon ? node.icon : (hasChildren(node) ? isNodeOpen(node) ? 'folder-open':'folder' : 'file')"/>
+        <RichIcon :value="node.icon ? node.icon : (hasChildren(node) ? (isNodeOpen(node) ? 'folder-open':'folder') : 'file')"/>
         <span  data-lite-tree class="title">
           <RichLabel :value="node.title" />
           <RichLabel class="tag" v-for="tag in node.tags" :key="tag" :value="tag" />
@@ -59,7 +59,7 @@ const hasChildren = (node: LiteTreeNode): boolean => {
   return Array.isArray(node.children) && node.children.length > 0;
 };
 // 节点是否已打开
-const isNodeOpen = (node: LiteTreeNode): boolean => {
+const isNodeOpen = (node: LiteTreeNode): boolean => { 
   return node.open == undefined ? true : node.open;
 }; 
  

@@ -3,20 +3,25 @@
 </template>
 <script setup lang="ts">
  
-import { inject } from 'vue';
-import type { LiteTreeContext } from '@common/types';
-import { LiteTreeContextId } from '@common/consts';
-import { StyledString } from '@common/utils/styledString';
+ import { inject, ref, watch, toRefs } from 'vue';  
+import type { LiteTreeContext } from '@common/types';  
+import { LiteTreeContextId } from '@common/consts';  
+import { StyledString } from '@common/utils/styledString';  
 
-const props = defineProps({
-  value: {
-    type: String,
-    default: ''
-  } 
-});
-const treeCtx = inject<LiteTreeContext>(LiteTreeContextId)!
-const icon = StyledString(props.value,treeCtx.styles);
+const treeCtx = inject<LiteTreeContext>(LiteTreeContextId)!;  
 
+const props = defineProps({  
+  value: {  
+    type: String,  
+    default: ''  
+  }   
+})
+  
+const icon = ref(StyledString(props.value, treeCtx.styles));  
+  
+watch(props, (newVal) => {  
+  icon.value = StyledString(newVal.value, treeCtx.styles);  
+}, { immediate: true });  
 
 </script>
 
