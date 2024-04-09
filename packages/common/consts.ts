@@ -4,8 +4,8 @@ export const flagAlias:Record<string,string | string[]> = {
     "-": "diff-delete", 
     "*": "diff-modify", 
     "!": ["important","[important]"],
-    "x": ["error","{color:red;background-color:#ffeaea}[no]"],
-    "v": ["correct","{color:green;background-color: #f3ffec}[yes]"]
+    "x": ["error","[no]"],
+    "v": ["correct","[yes]"]
 }
 
 export const LiteTreeScopeId="data-lite-tree"

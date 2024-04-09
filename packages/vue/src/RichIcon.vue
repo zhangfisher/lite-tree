@@ -3,7 +3,7 @@
 </template>
 <script setup lang="ts">
  
- import { inject, ref, watch, toRefs } from 'vue';  
+ import { inject, ref, watch } from 'vue';  
 import type { LiteTreeContext } from '@common/types';  
 import { LiteTreeContextId } from '@common/consts';  
 import { StyledString } from '@common/utils/styledString';  
