@@ -4,7 +4,7 @@ import type { Theme, } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import './style.css'
 import { LiteTree } from "@lite-tree/vue"
-
+import "@lite-tree/icons/filetypes.css"
 export default {
   extends: DefaultTheme,
   Layout: () => {

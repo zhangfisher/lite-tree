@@ -10,14 +10,16 @@ import { LiteTreeContextId} from '@common/consts';
 import { parseTree } from '@common/parsers';
 import type { LiteTreeContext,LiteTreeProps,LiteTreeParseResults } from '@common/types';
 import LiteTreeNodes from "./LiteTreeNodes.vue";
-import { injectSvgIcons ,injectCustomStyles} from '@common/utils';
+import { injectSvgIcons ,injectCustomStyles,getIcon} from '@common/utils';
 import '@common/styles';
 
 
 // 默认使用Lite格式
 const props = withDefaults(defineProps<LiteTreeProps>(), {
     indent: 4,
-    iconset:'default'
+    iconset:'default',
+    iconSource:``,
+    getIcon,
 });
 
 let format = ref(props.format)
@@ -55,7 +57,8 @@ provide<LiteTreeContext>(LiteTreeContextId, {
     indent: props.indent,
     styles,
     classs,
-    icons
+    icons,
+    getIcon:props.getIcon
 })
 
 </script>

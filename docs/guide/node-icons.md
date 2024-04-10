@@ -75,3 +75,52 @@ github=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9
 访问https://icones.js.org/ ,选取图标，点击`Data URL`复制图标数据即可。
 :::
 
+
+## 扩展图标
+
+`@lite-tree/icons`提供了一个图标集，可以作为`css`直接引入使用。
+
+以在`vitepress`中为例：
+
+```ts
+// .vitepress/theme/index.ts
+import '@lite-tree/icons/filetypes.css'    // 引入图标样式
+```
+
+
+<LiteTree>
+我的项目
+    .vitepress
+        config.ts
+        theme
+            index.ts
+    CHANGELOG.md
+    dist/
+    node_modules/
+    package.json
+    readme.md
+    src
+        index.ts
+        List.vue
+        Tree.tsx
+        utils.js
+        history.txt
+        user.java
+        logo.png
+        style.css
+        demo.avi
+        help.pdf
+        test.doc
+        about.ppt
+    tsconfig.json
+    vite.config.ts
+    log.jpg
+    index.html
+    .git
+    .vscode
+    .github
+    .gitignore
+</LiteTree>
+
+
+

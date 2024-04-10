@@ -1,3 +1,4 @@
+import { getIcon } from './utils/getIcon';
 export interface LiteTreeNode {
     id: string;
     title: string;
@@ -18,7 +19,8 @@ export interface LiteTreeContext {
     indent:number
     styles:Record<string,string>
     classs:Record<string,string>
-    icons:Record<string,string> 
+    icons:Record<string,string>
+    getIcon:(node:LiteTreeNode)=>string
 }
 export interface LiteTreeNodesProps {
   indent?: number;
@@ -37,6 +39,8 @@ export interface LiteTreeProps {
   iconset?:string
   //根据节点数据动态解析图标名称
   getIcon?: (node:LiteTreeNode)=>string  
+  // 在线图标库地址
+  iconSource?:string
 }
 
 

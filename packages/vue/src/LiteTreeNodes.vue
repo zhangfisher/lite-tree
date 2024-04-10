@@ -17,8 +17,8 @@
             'icon',
             'arrow',
             { open: isNodeOpen(node) }]"/>
-        <!-- <span data-lite-tree class="icon" :class="node.icon ? node.icon : (hasChildren(node) ? isNodeOpen(node) ? 'folder-open':'folder' : 'file')"/> -->
-        <RichIcon :value="node.icon ? node.icon : (hasChildren(node) ? (isNodeOpen(node) ? 'folder-open':'folder') : 'file')"/>
+        <!-- <RichIcon :value="node.icon ? node.icon : (hasChildren(node) ? (isNodeOpen(node) ? 'folder-open':'folder') : 'file')"/> -->
+        <RichIcon :value="treeCtx.getIcon(node)"/>
         <span  data-lite-tree class="title">
           <RichLabel :value="node.title" />
           <RichLabel class="tag" v-for="tag in node.tags" :key="tag" :value="tag" />

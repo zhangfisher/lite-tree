@@ -18,6 +18,9 @@ importers:
       '@changesets/cli':
         specifier: ^2.27.1
         version: 2.27.1
+      '@lite-tree/icons':
+        specifier: workspace:^
+        version: link:packages/icons
       '@lite-tree/vue':
         specifier: workspace:^
         version: link:packages/vue
@@ -183,15 +186,7 @@ importers:
         specifier: ^2.0.6
         version: 2.0.6(typescript@5.4.3)
 
-  packages/dumi:
-    dependencies:
-      '@lite-tree/react':
-        specifier: workspace:^
-        version: link:../react
-    devDependencies:
-      dumi:
-        specifier: ^2.2.13
-        version: 2.2.17(@babel/core@7.24.0)(@types/node@20.11.28)(@types/react@18.2.73)(eslint@8.57.0)(prettier@2.8.8)(react-dom@18.2.0)(react@18.2.0)(stylelint@14.16.1)(typescript@5.4.3)(webpack@5.91.0)
+  packages/icons: {}
 
   packages/react:
     dependencies:
@@ -223,46 +218,6 @@ importers:
       vite-plugin-dts:
         specifier: ^3.7.3
         version: 3.7.3(@types/node@20.11.28)(rollup@4.13.2)(typescript@5.4.3)(vite@5.2.7)
-
-  packages/vitepress:
-    dependencies:
-      vue-slide-up-down:
-        specifier: ^3.0.0
-        version: 3.0.0(vue@3.4.21)
-    devDependencies:
-      '@vitejs/plugin-vue':
-        specifier: ^5.0.4
-        version: 5.0.4(vite@5.2.7)(vue@3.4.21)
-      '@vue/tsconfig':
-        specifier: ^0.5.1
-        version: 0.5.1
-      less:
-        specifier: ^4.2.0
-        version: 4.2.0
-      rollup-plugin-dts:
-        specifier: ^6.1.0
-        version: 6.1.0(rollup@4.13.2)(typescript@5.4.3)
-      typescript:
-        specifier: ^5.4.3
-        version: 5.4.3
-      vite:
-        specifier: ^5.2.7
-        version: 5.2.7(@types/node@20.11.28)(less@4.2.0)(sass@1.72.0)
-      vite-plugin-dts:
-        specifier: ^3.7.3
-        version: 3.7.3(@types/node@20.11.28)(rollup@4.13.2)(typescript@5.4.3)(vite@5.2.7)
-      vite-plugin-vue-devtools:
-        specifier: ^7.0.17
-        version: 7.0.17(rollup@4.13.2)(vite@5.2.7)(vue@3.4.21)
-      vite-plugin-vue-style-bundler:
-        specifier: ^1.0.9
-        version: 1.0.9(@types/less@3.0.6)(@vitejs/plugin-vue@5.0.4)(less@4.2.0)(sass@1.72.0)(vite@5.2.7)(vue@3.4.21)
-      vue:
-        specifier: ^3.0.0
-        version: 3.4.21(typescript@5.4.3)
-      vue-tsc:
-        specifier: ^2.0.6
-        version: 2.0.6(typescript@5.4.3)
 
   packages/vue:
     dependencies:
@@ -4209,32 +4164,6 @@ packages:
       - supports-color
     dev: true
 
-  /@umijs/bundler-vite@4.1.8(@types/node@20.11.28)(postcss@8.4.38)(sass@1.72.0):
-    resolution: {integrity: sha512-uZEIlyh5aTtkbdbr2Gbv3C9NC4VMYOG3bsLNKjBzNbnUC4IMkpfcqpP/OZPzDySpvKCpHXkcOAo3x1U3G5zTng==}
-    hasBin: true
-    dependencies:
-      '@svgr/core': 6.5.1
-      '@umijs/bundler-utils': 4.1.8
-      '@umijs/utils': 4.1.8
-      '@vitejs/plugin-react': 4.0.0(vite@4.5.2)
-      core-js: 3.34.0
-      less: 4.1.3
-      postcss-preset-env: 7.5.0(postcss@8.4.38)
-      rollup-plugin-visualizer: 5.9.0
-      systemjs: 6.14.3
-      vite: 4.5.2(@types/node@20.11.28)(less@4.1.3)(sass@1.72.0)
-    transitivePeerDependencies:
-      - '@types/node'
-      - lightningcss
-      - postcss
-      - rollup
-      - sass
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-    dev: true
-
   /@umijs/bundler-vite@4.1.8(@types/node@20.5.1)(postcss@8.4.38)(sass@1.72.0):
     resolution: {integrity: sha512-uZEIlyh5aTtkbdbr2Gbv3C9NC4VMYOG3bsLNKjBzNbnUC4IMkpfcqpP/OZPzDySpvKCpHXkcOAo3x1U3G5zTng==}
     hasBin: true
@@ -4503,64 +4432,6 @@ packages:
     resolution: {integrity: sha512-sbHvAgXJJ3DUpPw/T7za9K9ROLXXMV24vZwCJSl9RkPoU8AF4nqiaJYYoItN6upCEf0c//Bqm/ZMd7EN8XZX2Q==}
     dependencies:
       tsx: 3.12.2
-    dev: true
-
-  /@umijs/preset-umi@4.1.8(@types/node@20.11.28)(@types/react@18.2.73)(sass@1.72.0)(typescript@5.4.3)(webpack@5.91.0):
-    resolution: {integrity: sha512-YZxHggqsZgl0cYiAifYAv2fVWMOzAyKQx1u00IXDJF5JfS0mcq2lnX2ZTBXXdoG7jYSlqRsqAo+AnR+BWHKu3A==}
-    dependencies:
-      '@iconify/utils': 2.1.1
-      '@svgr/core': 6.5.1
-      '@umijs/ast': 4.1.8
-      '@umijs/babel-preset-umi': 4.1.8
-      '@umijs/bundler-esbuild': 4.1.8
-      '@umijs/bundler-utils': 4.1.8
-      '@umijs/bundler-vite': 4.1.8(@types/node@20.11.28)(postcss@8.4.38)(sass@1.72.0)
-      '@umijs/bundler-webpack': 4.1.8(typescript@5.4.3)(webpack@5.91.0)
-      '@umijs/core': 4.1.8
-      '@umijs/did-you-know': 1.0.3
-      '@umijs/es-module-parser': 0.0.7
-      '@umijs/history': 5.3.1
-      '@umijs/mfsu': 4.1.8
-      '@umijs/plugin-run': 4.1.8
-      '@umijs/renderer-react': 4.1.8(react-dom@18.1.0)(react@18.1.0)
-      '@umijs/server': 4.1.8
-      '@umijs/ui': 3.0.1
-      '@umijs/utils': 4.1.8
-      '@umijs/zod2ts': 4.1.8
-      babel-plugin-dynamic-import-node: 2.3.3
-      click-to-react-component: 1.1.0(@types/react@18.2.73)(react-dom@18.1.0)(react@18.1.0)
-      core-js: 3.34.0
-      current-script-polyfill: 1.0.0
-      enhanced-resolve: 5.9.3
-      fast-glob: 3.2.12
-      html-webpack-plugin: 5.5.0(webpack@5.91.0)
-      less-plugin-resolve: 1.0.2
-      path-to-regexp: 1.7.0
-      postcss: 8.4.38
-      postcss-prefix-selector: 1.16.0(postcss@8.4.38)
-      react: 18.1.0
-      react-dom: 18.1.0(react@18.1.0)
-      react-router: 6.3.0(react@18.1.0)
-      react-router-dom: 6.3.0(react-dom@18.1.0)(react@18.1.0)
-      regenerator-runtime: 0.13.11
-    transitivePeerDependencies:
-      - '@types/node'
-      - '@types/react'
-      - '@types/webpack'
-      - lightningcss
-      - rollup
-      - sass
-      - sockjs-client
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-      - type-fest
-      - typescript
-      - webpack
-      - webpack-dev-server
-      - webpack-hot-middleware
-      - webpack-plugin-serve
     dev: true
 
   /@umijs/preset-umi@4.1.8(@types/node@20.5.1)(@types/react@18.2.73)(sass@1.72.0)(typescript@5.4.3)(webpack@5.91.0):
@@ -5012,7 +4883,7 @@ packages:
     dependencies:
       '@vue/compiler-ssr': 3.4.21
       '@vue/shared': 3.4.21
-      vue: 3.4.21(typescript@5.4.2)
+      vue: 3.4.21(typescript@5.4.3)
 
   /@vue/shared@3.4.21:
     resolution: {integrity: sha512-PuJe7vDIi6VYSinuEbUIQgMIRZGgM8e4R+G+/dQTk0X1NEdvgvvgv7m+rfmDH1gZzyA1OjjoWskvHlfRNfQf3g==}
@@ -7136,109 +7007,6 @@ packages:
 
   /dumi-assets-types@2.0.0-alpha.0:
     resolution: {integrity: sha512-a/Y5lf0G6gwsEQ9hop/n03CcjmHsGBk384Cz/AEX6mRYrfSpUx/lQvP9HLoXkCzScl9PL1sSmLPnMkgaXDCZLA==}
-    dev: true
-
-  /dumi@2.2.17(@babel/core@7.24.0)(@types/node@20.11.28)(@types/react@18.2.73)(eslint@8.57.0)(prettier@2.8.8)(react-dom@18.2.0)(react@18.2.0)(stylelint@14.16.1)(typescript@5.4.3)(webpack@5.91.0):
-    resolution: {integrity: sha512-oI2OVlkkVORy0ud64YlhrBF+rsAda9rGFxMLrOLepTjC96mLOrgUz/geKkckWA5LemEuFVsaTYE/5HDpAPTkvQ==}
-    hasBin: true
-    peerDependencies:
-      react: '>=16.8'
-      react-dom: '>=16.8'
-    dependencies:
-      '@ant-design/icons-svg': 4.4.2
-      '@makotot/ghostui': 2.0.0(react@18.2.0)
-      '@stackblitz/sdk': 1.9.0
-      '@swc/core': 1.3.72
-      '@types/hast': 2.3.10
-      '@types/mdast': 3.0.15
-      '@umijs/bundler-utils': 4.1.8
-      '@umijs/core': 4.1.8
-      '@umijs/utils': 4.1.8
-      animated-scroll-to: 2.3.0
-      classnames: 2.3.2
-      codesandbox: 2.2.3
-      copy-to-clipboard: 3.3.3
-      deepmerge: 4.3.1
-      dumi-afx-deps: 1.0.0-alpha.20
-      dumi-assets-types: 2.0.0-alpha.0
-      enhanced-resolve: 5.16.0
-      estree-util-to-js: 1.2.0
-      estree-util-visit: 1.2.1
-      file-system-cache: 2.4.4
-      github-slugger: 1.5.0
-      hast-util-is-element: 2.1.3
-      hast-util-raw: 8.0.0
-      hast-util-to-estree: 2.3.3
-      hast-util-to-string: 2.0.0
-      heti: 0.9.4
-      hosted-git-info: 6.1.1
-      html-to-text: 9.0.5
-      html2sketch: 1.0.2
-      js-yaml: 4.1.0
-      lodash.throttle: 4.1.1
-      mdast-util-find-and-replace: 2.2.2
-      mdast-util-to-string: 3.2.0
-      nprogress: 0.2.0
-      pluralize: 8.0.0
-      prism-react-renderer: 1.3.5(react@18.2.0)
-      prism-themes: 1.9.0
-      prismjs: 1.29.0
-      raw-loader: 4.0.2(webpack@5.91.0)
-      rc-motion: 2.9.0(react-dom@18.2.0)(react@18.2.0)
-      rc-tabs: 12.15.0(react-dom@18.2.0)(react@18.2.0)
-      rc-tree: 5.8.5(react-dom@18.2.0)(react@18.2.0)
-      react: 18.2.0
-      react-copy-to-clipboard: 5.1.0(react@18.2.0)
-      react-dom: 18.2.0(react@18.2.0)
-      react-error-boundary: 4.0.13(react@18.2.0)
-      react-intl: 6.6.4(react@18.2.0)(typescript@5.4.3)
-      rehype-autolink-headings: 6.1.1
-      rehype-remove-comments: 5.0.0
-      rehype-stringify: 9.0.4
-      remark-directive: 2.0.1
-      remark-frontmatter: 4.0.1
-      remark-gfm: 3.0.1
-      remark-parse: 10.0.2
-      remark-rehype: 10.1.0
-      sass: 1.72.0
-      sitemap: 7.1.1
-      umi: 4.1.8(@babel/core@7.24.0)(@types/node@20.11.28)(@types/react@18.2.73)(eslint@8.57.0)(prettier@2.8.8)(react-dom@18.2.0)(react@18.2.0)(sass@1.72.0)(stylelint@14.16.1)(typescript@5.4.3)(webpack@5.91.0)
-      unified: 10.1.2
-      unist-util-visit: 4.1.2
-      unist-util-visit-parents: 5.1.3
-      url: 0.11.3
-      v8-compile-cache: 2.3.0
-      vfile: 5.3.7
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@swc/helpers'
-      - '@types/node'
-      - '@types/react'
-      - '@types/webpack'
-      - '@volar/vue-language-plugin-pug'
-      - '@volar/vue-typescript'
-      - eslint
-      - jest
-      - lightningcss
-      - postcss-html
-      - postcss-jsx
-      - postcss-less
-      - postcss-markdown
-      - postcss-scss
-      - prettier
-      - rollup
-      - sockjs-client
-      - stylelint
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-      - type-fest
-      - typescript
-      - webpack
-      - webpack-dev-server
-      - webpack-hot-middleware
-      - webpack-plugin-serve
     dev: true
 
   /dumi@2.2.17(@babel/core@7.24.0)(@types/node@20.5.1)(@types/react@18.2.73)(eslint@8.57.0)(prettier@2.8.8)(react-dom@18.2.0)(react@18.2.0)(stylelint@14.16.1)(typescript@5.4.3)(webpack@5.91.0):
@@ -15085,57 +14853,6 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  /umi@4.1.8(@babel/core@7.24.0)(@types/node@20.11.28)(@types/react@18.2.73)(eslint@8.57.0)(prettier@2.8.8)(react-dom@18.2.0)(react@18.2.0)(sass@1.72.0)(stylelint@14.16.1)(typescript@5.4.3)(webpack@5.91.0):
-    resolution: {integrity: sha512-XQ7SpvU2upXE8DSsfxms963izeagHX431jOi4wpZvBYaOQGVg39MnyUAhyCBqVHJbyfOahDRWDLWMWTQzY8Q7Q==}
-    engines: {node: '>=14'}
-    hasBin: true
-    dependencies:
-      '@babel/runtime': 7.23.6
-      '@umijs/bundler-utils': 4.1.8
-      '@umijs/bundler-webpack': 4.1.8(typescript@5.4.3)(webpack@5.91.0)
-      '@umijs/core': 4.1.8
-      '@umijs/lint': 4.1.8(eslint@8.57.0)(stylelint@14.16.1)(typescript@5.4.3)
-      '@umijs/preset-umi': 4.1.8(@types/node@20.11.28)(@types/react@18.2.73)(sass@1.72.0)(typescript@5.4.3)(webpack@5.91.0)
-      '@umijs/renderer-react': 4.1.8(react-dom@18.2.0)(react@18.2.0)
-      '@umijs/server': 4.1.8
-      '@umijs/test': 4.1.8(@babel/core@7.24.0)
-      '@umijs/utils': 4.1.8
-      prettier-plugin-organize-imports: 3.2.4(prettier@2.8.8)(typescript@5.4.3)
-      prettier-plugin-packagejson: 2.4.3(prettier@2.8.8)
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@types/node'
-      - '@types/react'
-      - '@types/webpack'
-      - '@volar/vue-language-plugin-pug'
-      - '@volar/vue-typescript'
-      - eslint
-      - jest
-      - lightningcss
-      - postcss-html
-      - postcss-jsx
-      - postcss-less
-      - postcss-markdown
-      - postcss-scss
-      - prettier
-      - react
-      - react-dom
-      - rollup
-      - sass
-      - sockjs-client
-      - stylelint
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-      - type-fest
-      - typescript
-      - webpack
-      - webpack-dev-server
-      - webpack-hot-middleware
-      - webpack-plugin-serve
-    dev: true
-
   /umi@4.1.8(@babel/core@7.24.0)(@types/node@20.5.1)(@types/react@18.2.73)(eslint@8.57.0)(prettier@2.8.8)(react-dom@18.2.0)(react@18.2.0)(sass@1.72.0)(stylelint@14.16.1)(typescript@5.4.3)(webpack@5.91.0):
     resolution: {integrity: sha512-XQ7SpvU2upXE8DSsfxms963izeagHX431jOi4wpZvBYaOQGVg39MnyUAhyCBqVHJbyfOahDRWDLWMWTQzY8Q7Q==}
     engines: {node: '>=14'}
@@ -15587,44 +15304,6 @@ packages:
       sass: 1.72.0
       vite: 5.2.7(@types/node@20.11.28)(less@4.2.0)(sass@1.72.0)
       vue: 3.4.21(typescript@5.4.3)
-    dev: true
-
-  /vite@4.5.2(@types/node@20.11.28)(less@4.1.3)(sass@1.72.0):
-    resolution: {integrity: sha512-tBCZBNSBbHQkaGyhGCDUGqeo2ph8Fstyp6FMSvTtsXeZSPpSMGlviAOav2hxVTqFcx8Hj/twtWKsMJXNY0xI8w==}
-    engines: {node: ^14.18.0 || >=16.0.0}
-    hasBin: true
-    peerDependencies:
-      '@types/node': '>= 14'
-      less: '*'
-      lightningcss: ^1.21.0
-      sass: '*'
-      stylus: '*'
-      sugarss: '*'
-      terser: ^5.4.0
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      less:
-        optional: true
-      lightningcss:
-        optional: true
-      sass:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-    dependencies:
-      '@types/node': 20.11.28
-      esbuild: 0.18.20
-      less: 4.1.3
-      postcss: 8.4.38
-      rollup: 3.29.4
-      sass: 1.72.0
-    optionalDependencies:
-      fsevents: 2.3.3
     dev: true
 
   /vite@4.5.2(@types/node@20.5.1)(less@4.1.3)(sass@1.72.0):

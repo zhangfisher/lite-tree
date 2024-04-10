@@ -7,3 +7,8 @@ export * from "./randomId"
 export * from "./enableScoped"
 export * from "./parseLinks"
 export * from "./injectCustomStyles"
+export * from "./getIcon"
+
+
+
+
