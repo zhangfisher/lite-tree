@@ -34,11 +34,7 @@ const LiteTreeNodes:React.FC<LiteTreeNodesProps> =(props) => {
                     {/* 展开折叠指示符 */}
                     { hasChildren ? <span data-lite-tree className={classnames('opener','icon','arrow',{ open: node.open})} /> : null}
                     {/* 图标 */}
-                    <span data-lite-tree className={classnames("icon",node.icon ? node.icon :{
-                        'folder-open': hasChildren && node.open,
-                        'folder': hasChildren && !node.open,
-                        'file': !hasChildren})
-                    }/>
+                    <span data-lite-tree className={classnames("icon",treeCtx.getIcon(node))} />
                     {/* 标题 */}
                     <span data-lite-tree className="title">
                         <RichLabel value={node.title}/>

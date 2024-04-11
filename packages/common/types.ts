@@ -35,12 +35,8 @@ export interface LiteTreeProps {
   data?:string
   // lite格式解析参数indent
   indent?: number;             
-  // 图标集名称
-  iconset?:string
   //根据节点数据动态解析图标名称
   getIcon?: (node:LiteTreeNode)=>string  
-  // 在线图标库地址
-  iconSource?:string
 }
 
 

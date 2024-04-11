@@ -4,7 +4,7 @@ import React,{ useState} from "react"
 import LiteTreeNodes from "./LiteTreeNodes"
 import { parseTree } from "@common/parsers";
 import {LiteTreeReactContext} from "./context"
-import { injectCustomStyles, injectSvgIcons } from "@common/utils";
+import { getIcon, injectCustomStyles, injectSvgIcons } from "@common/utils";
 import classnames from 'classnames'; 
 import "@common/styles"
 
@@ -22,17 +22,18 @@ export const LiteTree = React.forwardRef<any,LiteTreeReactProps>((props:LiteTree
         indent: 4,
         styles: {},
         classs: {},
-        icons: {} 
+        icons: {},
+        getIcon
     });
     const [treeData] = useState(()=>{
-        return data || props.children && Array.isArray(props.children) ? 
-        (props.children as any[]).map(n=>String(n)).join("\n") : String(props.children)    
+        return data || (props.children && Array.isArray(props.children) ? 
+        (props.children as any[]).map(n=>String(n)).join("\n") : String(props.children))
     })
     
     
     const [nodes] = useState<LiteTreeNode[]>(()=>{
         const {styles,classs,icons,nodes=[],hasFlag} = parseTree(treeData,{format})
-        setCtx({indent,hasFlag,styles,classs,icons});            
+        setCtx({indent,hasFlag,styles,classs,icons,getIcon});            
         injectCustomStyles(classs)
         injectSvgIcons(icons)
         return nodes        

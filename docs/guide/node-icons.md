@@ -20,6 +20,10 @@
     [arrow] arrow
 </LiteTree>
 
+::: tip
+如果节点标题内容以`/`结尾，则显示为`folder`图标。
+:::
+
 ## 使用图标
 
 在节点标题、标签、标识、注释中使用`[图标名]`即可指定图标。
@@ -48,7 +52,11 @@
 
 ## 自定义图标
 
-`LiteTree`支持自定义图标,在使用`lite`格式时，可以在`变量声明区`指定`图标数据`。
+`LiteTree`支持自定义图标,有两种方式：
+
+- **嵌入图标数据**
+
+在使用`lite`格式时，可以在`变量声明区`指定`图标数据`。
 
 ```ts
 <LiteTree>
@@ -61,6 +69,26 @@ github=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9
 
 以上在`---`配置了`github`图标变量数据，然后在节点`标题`/`注释`/`标识`中使用`[github]`指定了图标。
 
+如果使用`JSON`格式，同样可以在`data`属性中`指定`图标数据`。
+
+```tsx
+<LiteTree data={`
+github=data:image/svg+xml;base64,图标数据
+---
+{
+    title:"我的开源项目",
+    children:[
+        {   title:"VoerkaI18n",
+            commect: "[github]",
+            icon: "github"
+        },
+        {   title:"SpeedForm",
+            commect: "[github]{color:red}",
+        }
+`}/>
+```
+
+
 **渲染效果如下：**
 
 <LiteTree>
@@ -71,24 +99,45 @@ github=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9
     SpeedForm    //[github]{color:red}
 </LiteTree>
 
-::: warning 如何读取图标数据?
-访问https://icones.js.org/ ,选取图标，点击`Data URL`复制图标数据即可。
-:::
+
+- **使用`css`图标**
+
+自定义图标时，可以使用`css`图标，只需在编写一个包含图标的`css`样式文件然后导入即可，如下：
 
 
-## 扩展图标
+```css
+/* custom-icon.css */
 
-`@lite-tree/icons`提供了一个图标集，可以作为`css`直接引入使用。
+.lite-icon .icon 图标名{
+    mask-image: url('图标路径或数据');
+}
 
-以在`vitepress`中为例：
+```
+
+接来在您的应用中导入该`css`文件即可。
+
+
+## 扩展图标包
+
+`@lite-tree/icons`提供了一个专门用来显示文件类型的图标集，可以作为`css`直接引入使用。
 
 ```ts
 // .vitepress/theme/index.ts
 import '@lite-tree/icons/filetypes.css'    // 引入图标样式
+import { getFileTypeIcon } from "@lite-tree/icons"
+
+// 在React组件中使用
+<LiteTree getIcon={getFileTypeIcon}/>
+// 在Vue组件中使用
+<LiteTree :getIcon="getFileTypeIcon"/>
+
 ```
 
-
-<LiteTree>
+- `getFileTypeIcon`函数会根据文件扩展名返回对应的图标.
+<script setup>
+import { getFileTypeIcon } from "@lite-tree/icons"
+</script>
+<LiteTree :getIcon="getFileTypeIcon" >
 我的项目
     .vitepress
         config.ts
@@ -113,7 +162,7 @@ import '@lite-tree/icons/filetypes.css'    // 引入图标样式
         test.doc
         about.ppt
     tsconfig.json
-    vite.config.ts
+    [xy]vite.config.ts
     log.jpg
     index.html
     .git
@@ -124,3 +173,7 @@ import '@lite-tree/icons/filetypes.css'    // 引入图标样式
 
 
 
+
+::: warning 如何读取图标数据?
+访问https://icones.js.org/ ,选取图标，点击`Data URL`复制图标数据即可。
+:::
