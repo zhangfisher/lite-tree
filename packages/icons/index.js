@@ -74,7 +74,8 @@ export const SupportedIcons =  [
     'kt',
     'h',
     'hpp',
-    'hxx'
+    'hxx',
+    'bat'
 ]
 export function getFileTypeIcon(node){
     // 优先使用节点数据中指定的图标
