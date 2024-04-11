@@ -1,5 +1,11 @@
 # @lite-tree/react
 
+## 1.0.4
+
+### Patch Changes
+
+- cb4da24: add icons custom
+
 ## 1.0.3
 
 ## 1.0.2

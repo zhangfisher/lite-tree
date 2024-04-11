@@ -1,12 +1,19 @@
 {
   "name": "@lite-tree/icons",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "icons for lite-tree",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
+  "type": "module",
+  "scripts": {},
+  "keywords": [
+    "icons",
+    "lite-tree"
+  ],
+  "files": [
+    "index.js",
+    "filetypes.css",
+    "readme.md"
+  ],
+  "author": "wxzhang",
   "license": "ISC"
 }
