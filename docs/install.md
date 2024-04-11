@@ -20,3 +20,16 @@ yarn add @lite-tree/vue
 // or
 pnpm add @lite-tree/vue
 ```
+
+
+## 图标集
+
+如果需要使用文件类型图标，可以安装`@lite-tree/icons`:
+
+```ts
+npm install @lite-tree/icons
+// or
+yarn add @lite-tree/icons
+// or
+pnpm add @lite-tree/icons
+```

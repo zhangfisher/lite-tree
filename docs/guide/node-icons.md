@@ -138,37 +138,84 @@ import { getFileTypeIcon } from "@lite-tree/icons"
 import { getFileTypeIcon } from "@lite-tree/icons"
 </script>
 <LiteTree :getIcon="getFileTypeIcon" >
-我的项目
-    .vitepress
-        config.ts
-        theme
-            index.ts
-    CHANGELOG.md
-    dist/
-    node_modules/
-    package.json
-    readme.md
-    src
-        index.ts
-        List.vue
-        Tree.tsx
-        utils.js
-        history.txt
-        user.java
-        logo.png
-        style.css
-        demo.avi
-        help.pdf
-        test.doc
-        about.ppt
-    tsconfig.json
-    [xy]vite.config.ts
-    log.jpg
-    index.html
-    .git
-    .vscode
-    .github
-    .gitignore
+支持的文件类型
+    [ts]ts
+    [tsx]tsx
+    [js]js
+    [jsx]jsx
+    [json]json
+    [vue]vue
+    [md]md
+    [gif]gif
+    [jpg]jpg
+    [jpeg]jpeg
+    [png]png
+    [bmp]bmp
+    [webp]webp
+    [ico]ico
+    [tiff]tiff
+    [img]img
+    [txt]txt
+    [svg]svg
+    [java]java
+    [go]go
+    [less]less
+    [sass]sass
+    [scss]scss
+    [css]css
+    [htm]htm
+    [yml]yml
+    [com]com
+    [yaml]yaml
+    [zip]zip
+    [py]py
+    [pyc]pyc
+    [dat]dat
+    [db]db
+    [astro]astro
+    [html]html
+    [yaml]yaml
+    [pdf]pdf
+    [doc]doc
+    [docx]docx
+    [mp4]mp4
+    [avi]avi
+    [mov]mov
+    [wmv]wmv
+    [mpeg]mpeg
+    [mpg]mpg
+    [rm]rm
+    [ram]ram
+    [swf]swf
+    [flv]flv
+    [video]video
+    [xls]xls
+    [xlsx]xlsx
+    [ppt]ppt
+    [pptx]pptx
+    [exe]exe
+    [xml]xml
+    [svelte]svelte
+    [tar]tar
+    [gz]gz
+    [bz2]bz2
+    [rar]rar    
+    [mp3]mp3
+    [ogg]ogg
+    [flac]flac
+    [wav]wav
+    [csv]csv
+    [php]php
+    [vb]vb
+    [cs]cs
+    [kt]kt
+    [h]h
+    [hpp]hpp
+    [hxx]hxx
+    [cpp]cpp
+    [c]c 
+
+    
 </LiteTree>
 
 

@@ -25,6 +25,14 @@ export const SupportedIcons =  [
     'scss',
     'css',
     'htm',
+    "yml",
+    'com',
+    'yaml',
+    'py',
+    'pyc',
+    'dat',
+    'db',
+    "astro",
     'html',
     'yaml',
     'pdf',
@@ -49,7 +57,24 @@ export const SupportedIcons =  [
     'xml',
     'svelte',
     'cpp',
-    'svelte',
+    'zip',
+    'tar',
+    'c',
+    'gz',
+    'bz2',
+    'rar',
+    'mp3',
+    'ogg',
+    'flac',
+    'wav',
+    'csv',
+    'php',
+    'vb',
+    'cs',
+    'kt',
+    'h',
+    'hpp',
+    'hxx'
 ]
 export function getFileTypeIcon(node){
     // 优先使用节点数据中指定的图标
@@ -70,11 +95,10 @@ export function getFileTypeIcon(node){
     }
     // 取得文件扩展名，如果不包括'.'，则是文件
     if(title.indexOf('.')<0) return 'file'
-    
-    const ext = title.split('.').pop().toLowerCase()
-    // ext不能是数字，如.11
-    if(ext.length>1 && String(parseInt(ext))!==ext && !title.startsWith('.') && SupportedIcons.includes(ext)){
-        return ext
+
+    const index = SupportedIcons.findIndex(ext=>ext==title.endsWith(`.${ext}`))
+    if(index>=0) {
+        return SupportedIcons[index]
     }
     return 'file'
 }
