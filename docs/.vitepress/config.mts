@@ -43,6 +43,7 @@ export default defineConfig({
           { text: 'Vue', link: '/integration/vue' },
           { text: 'VitePress', link: '/integration/vitepress' },
           { text: 'Dumi', link: '/integration/dumi' },
+          { text: 'rspress', link: '/integration/rspress' },
         ]}
     ],
 
