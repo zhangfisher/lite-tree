@@ -1,5 +1,11 @@
 # @lite-tree/vue
 
+## 1.0.5
+
+### Patch Changes
+
+- a773237: Fix the issue of abnormal display of SVG icons in lower versions of Chrome
+
 ## 1.0.4
 
 ## 1.0.3

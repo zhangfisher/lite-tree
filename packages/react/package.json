@@ -1,13 +1,12 @@
 {
   "name": "@lite-tree/react",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "lite tree component for react",
   "homepage": "https://zhangfisher.github.io/lite-tree/",
   "repository": {
     "type": "git",
     "url": "https://github.com/zhangfisher/lite-tree"
   },
-  
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
