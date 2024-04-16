@@ -16,8 +16,8 @@ const RichLabel:React.FC<RichLabelProps> = (props:RichLabelProps) => {
     const {style,classs=[],value} = StyledString(props.value,treeCtx.styles);
     return <span
         data-lite-tree
-        className={className + " " +classs.join(" ")}
-        style={{display:"inline-flex",...inlineStyle,...toStyleObject(style)!}}
+        className={'richlabel '+className + " " +classs.join(" ")}
+        style={{...inlineStyle,...toStyleObject(style)!}}
         dangerouslySetInnerHTML={{__html: parseLinks(value)}}    
     />
 }

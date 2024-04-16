@@ -30,3 +30,8 @@
         节点2.1  // [tag]注释中[star]包含[yes]图标
         节点2.2  // 注释中包含超链接[官网:star](https://github.com/zhangfisher/voerka-i18n)
 </LiteTree>
+
+
+::: tip 提示
+在`@media screen and (max-width: 480px)`下注释不显示
+:::

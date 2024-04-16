@@ -23,7 +23,7 @@
           <RichLabel :value="node.title" />
           <RichLabel class="tag" v-for="tag in node.tags" :key="tag" :value="tag" />
         </span>
-        <RichLabel  class="comment" :value="node.comment" />
+        <RichLabel class="comment" :value="node.comment" />
       </span>
       <SlideUpDown :active="isNodeOpen(node)" :duration="200">
         <LiteTreeNodes v-if="hasChildren(node) && isNodeOpen(node)" :indent="indent + 20"

@@ -8,6 +8,9 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
+.lite-tree .richlabel {
+  display: inline-flex;
+}
 .lite-tree::-webkit-scrollbar {
   width: 4px;
   height: 1px;
@@ -95,6 +98,11 @@
 .lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.comment {
   color: #bbb;
   display: inline-flex;
+}
+@media screen and (max-width: 480px) {
+  .lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.comment {
+    display: none;
+  }
 }
 .lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.opener {
   width: 1em;

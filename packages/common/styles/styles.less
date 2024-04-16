@@ -9,6 +9,9 @@
     box-sizing: border-box;
     overflow-y: auto;
     overflow-x: hidden;
+    .richlabel{
+        display: inline-flex;
+    }
     &::-webkit-scrollbar{        
         width: 4px; 
         height: 1px;
@@ -101,9 +104,11 @@
         
                 &>span.comment {
                     color: #bbb;
-                    display: inline-flex;
-                }  
-        
+                    display: inline-flex;                    
+                    @media screen and (max-width: 480px) {
+                        display:none;
+                    }    
+                }          
                 &>span.opener {
                     width: 1em;
                     height: 1em;
@@ -124,6 +129,7 @@
             } 
         } 
     }
+    
 }
 
 .dark{
@@ -178,3 +184,5 @@
         }
     }
 }
+
+
