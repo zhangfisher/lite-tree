@@ -1,5 +1,11 @@
 # @lite-tree/react
 
+## 1.0.6
+
+### Patch Changes
+
+- c9cfc4b: hide comment on @media screen and (max-width:480px)
+
 ## 1.0.5
 
 ## 1.0.4
