@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress'
-
+import { resolve } from "path"
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "LiteTree",
@@ -53,7 +53,7 @@ export default defineConfig({
   vite:{
     resolve:{
       alias:{
-        // "@common": resolve(__dirname,'../../packages/common'),
+        //"@common": resolve(__dirname,'../../packages/common'),
         // "@lite-tree/vue": resolve(__dirname,'../../packages/vue')
       }
     }

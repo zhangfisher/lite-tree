@@ -45,8 +45,9 @@ export function injectSvgIcons(svgIcons:Record<string,string>){
         const isSvg =define.startsWith("<svg") 
         const svgData=isSvg ? compressSvgData(define).replaceAll("<","%3C").replaceAll(">","%3E").replaceAll('"',"'") : define
         const iconStyle = `.lite-tree ${iconClassName}{
-            background-color: currentColor;
-            mask-image: url("${isSvg ? `data:image/svg+xml,${svgData}` : svgData}");            
+            background-color: transparent;
+            color: currentColor;
+            background-image: url("${isSvg ? `data:image/svg+xml,${svgData}` : svgData}");            
         }`;
         if(svgIconContainer.innerHTML.includes(`.lite-tree ${iconClassName}`)) continue
         svgIconContainer.innerHTML = svgIconContainer.innerHTML + "\n" + iconStyle

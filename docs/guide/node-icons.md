@@ -109,7 +109,7 @@ github=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9
 /* custom-icon.css */
 
 .lite-icon .icon 图标名{
-    mask-image: url('图标路径或数据');
+    bakcground-image: url('图标路径或数据');
 }
 
 ```
@@ -119,7 +119,7 @@ github=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9
 
 ## 扩展图标包
 
-`@lite-tree/icons`提供了一个专门用来显示文件类型的图标集，可以作为`css`直接引入使用。
+`@lite-tree/icons`提供了一个专门用来显示支持文件类型的图标集，可以作为`css`直接引入使用。
 
 ```ts
 // .vitepress/theme/index.ts
@@ -134,6 +134,7 @@ import { getFileTypeIcon } from "@lite-tree/icons"
 ```
 
 - `getFileTypeIcon`函数会根据文件扩展名返回对应的图标.
+
 <script setup>
 import { getFileTypeIcon } from "@lite-tree/icons"
 </script>
@@ -214,11 +215,7 @@ import { getFileTypeIcon } from "@lite-tree/icons"
     [hxx]hxx
     [cpp]cpp
     [c]c 
-
-    
 </LiteTree>
-
-
 
 
 ::: warning 如何读取图标数据?

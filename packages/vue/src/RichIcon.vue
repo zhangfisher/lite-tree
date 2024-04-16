@@ -3,7 +3,7 @@
 </template>
 <script setup lang="ts">
  
- import { inject, ref, watch } from 'vue';  
+ import { inject, ref, watch ,computed} from 'vue';  
 import type { LiteTreeContext } from '@common/types';  
 import { LiteTreeContextId } from '@common/consts';  
 import { StyledString } from '@common/utils/styledString';  
@@ -17,11 +17,8 @@ const props = defineProps({
   }   
 })
   
-const icon = ref(StyledString(props.value, treeCtx.styles));  
+const icon = computed(()=>StyledString(props.value, treeCtx.styles));  
   
-watch(props, (newVal) => {  
-  icon.value = StyledString(newVal.value, treeCtx.styles);  
-}, { immediate: true });  
 
 </script>
 
