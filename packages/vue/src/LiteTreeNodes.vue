@@ -8,7 +8,7 @@
         <span  data-lite-tree class="flag" v-if="treeCtx.hasFlag">
           <RichLabel :value="node.flag" />
         </span>
-        <span  data-lite-tree class="indent" :style="{ width: indent + 'px' }"></span>
+        <span  data-lite-tree class="indent" :style="{ width: indent + 'em' }"></span>
         <span 
           data-lite-tree
           v-if="hasChildren(node)"
@@ -26,7 +26,7 @@
         <RichLabel class="comment" :value="node.comment" />
       </span>
       <SlideUpDown :active="isNodeOpen(node)" :duration="200">
-        <LiteTreeNodes v-if="hasChildren(node) && isNodeOpen(node)" :indent="indent + 20"
+        <LiteTreeNodes v-if="hasChildren(node) && isNodeOpen(node)" :indent="indent + 1.4"
           :class="isNodeOpen(node) ? 'open' : 'close'" :nodes="node.children">
         </LiteTreeNodes>
       </SlideUpDown>

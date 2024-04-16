@@ -1,6 +1,6 @@
 # 图标
 
-`LiteTree`支持在节点标题、标签、标识、注释中指定图标。
+`LiteTree`支持在节点标题、标签、标识、注释中显示图标。
 
 ## 内置图标
 
@@ -107,14 +107,57 @@ github=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9
 
 ```css
 /* custom-icon.css */
+:root{
+    --lite-tree-icon-myicon: url('图标路径或数据');
+}
 
-.lite-icon .icon 图标名{
-    bakcground-image: url('图标路径或数据');
+.lite-icon .icon .myicon{
+    mask-image: var('--lite-tree-icon-myicon');
+    -webkit-mask-image: var('--lite-tree-icon-myicon');
+    -moz-mask-image: var('--lite-tree-icon-myicon');
 }
 
 ```
 
 接来在您的应用中导入该`css`文件即可。
+
+## 指定图标样式
+
+允许单独为图标指定样式，如`[{color:red}图标名]`,显示红色图标。
+
+```tsx
+<LiteTree>
+内置图标
+    [{color:red}file] file
+    [{color:blue}folder] folder
+    [{color:yellow}folder-open] folder-open
+    [{color:green}tag] tag
+    [{color:orange}star] star
+    [{color:purple}yes] yes
+    [{color:pink}no] no
+    [{color:red}checked] checked
+    [unchecked] unchecked
+    [arrow] arrow
+</LiteTree>
+```
+
+**渲染效果如下：**
+
+<LiteTree>
+内置图标
+    [{color:red}file] file
+    [{color:blue}folder] folder
+    [{color:yellow}folder-open] folder-open
+    [{color:green}tag] tag
+    [{color:orange}star] star
+    [{color:purple}yes] yes
+    [{color:pink}no] no
+    [{color:red}checked] checked
+    [unchecked] unchecked
+    [arrow] arrow
+</LiteTree>
+
+
 
 
 ## 扩展图标包

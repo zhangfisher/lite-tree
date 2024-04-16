@@ -13,6 +13,8 @@
 }
 .lite-tree .icon {
   background-color: currentColor;
+  mask-size: cover;
+  -webkit-mask-size: cover;
 }
 .lite-tree .icon.file {
   mask-image: var(--lite-tree-icon-file);

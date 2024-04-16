@@ -47,7 +47,7 @@ const LiteTreeNodes:React.FC<LiteTreeNodesProps> =(props) => {
                 {/* 子节点 */}
                 { node.children && node.children.length>0 ?                         (
                         <SlideDown closed={!node.open}>
-                            <LiteTreeNodes nodes={node.children} indent={indent+2}/>
+                            <LiteTreeNodes nodes={node.children} indent={indent+1.4}/>
                         </SlideDown>
                     ) : null
                 }   

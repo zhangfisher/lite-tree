@@ -107,12 +107,12 @@
 .lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.opener {
   width: 1em;
   height: 1em;
-  transform-origin: 8px center;
+  transform-origin: 0.5em center;
   transform: rotate(0deg);
   transition: all 0.2s;
 }
 .lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.opener.open {
-  transform-origin: 8px center;
+  transform-origin: 0.5em center;
   transform: rotate(90deg);
   transition: all 0.2s;
 }
