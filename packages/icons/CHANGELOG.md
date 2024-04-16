@@ -1,5 +1,11 @@
 # @lite-tree/icons
 
+## 1.0.5
+
+### Patch Changes
+
+- ba9b1fe: 修复在 chrome 低版本下 svg 图标显示异常的问题
+
 ## 1.0.4
 
 ### Patch Changes
