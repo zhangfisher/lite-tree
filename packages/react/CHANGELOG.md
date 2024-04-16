@@ -1,5 +1,11 @@
 # @lite-tree/react
 
+## 1.0.7
+
+### Patch Changes
+
+- 65f6d9a: 优先在大字体下的图标显示异常和缩进
+
 ## 1.0.6
 
 ### Patch Changes
