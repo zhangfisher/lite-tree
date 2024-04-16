@@ -1,4 +1,5 @@
 export const LiteTreeContextId = Symbol("LiteTreeContext")
+// 标识符=>[样式类，样式字符串]
 export const flagAlias:Record<string,string | string[]> = { 
     "+": "diff-add", 
     "-": "diff-delete", 

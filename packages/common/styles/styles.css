@@ -54,20 +54,20 @@
 }
 .lite-tree .lite-tree-nodes > li > span.lite-tree-node.diff-delete {
   background-color: #ffeaea;
-  color: red;
+  color: red!important;
 }
 .lite-tree .lite-tree-nodes > li > span.lite-tree-node.important {
   background-color: #d7f0ff;
-  color: #037be5;
+  color: #037be5 !important;
   font-weight: bold;
 }
 .lite-tree .lite-tree-nodes > li > span.lite-tree-node.correct {
   background-color: #f3ffec;
-  color: green;
+  color: green!important;
 }
 .lite-tree .lite-tree-nodes > li > span.lite-tree-node.error {
   background-color: #ffeaea;
-  color: red;
+  color: red!important;
 }
 .lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.flag {
   width: 1.2em;
@@ -137,7 +137,7 @@
 }
 .dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node.diff-add {
   background-color: #212121;
-  color: #00d500;
+  color: #00d500 !important;
 }
 .dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node.diff-modify {
   background-color: #212121;
@@ -150,7 +150,7 @@
 }
 .dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node.correct {
   background-color: #212121;
-  color: #00d500;
+  color: #00d500 !important;
 }
 .dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node.error {
   background-color: #212121;
