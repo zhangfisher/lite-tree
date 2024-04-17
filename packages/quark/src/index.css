@@ -1,0 +1,242 @@
+@import url('../../common/styles/sidedown.css');
+:root {
+  --lite-tree-icon-file: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjU2IDI1NiI+PHBhdGggZmlsbD0iY3VycmVudENvbG9yIiBkPSJtMjEzLjY2IDgyLjM0bC01Ni01NkE4IDggMCAwIDAgMTUyIDI0SDU2YTE2IDE2IDAgMCAwLTE2IDE2djE3NmExNiAxNiAwIDAgMCAxNiAxNmgxNDRhMTYgMTYgMCAwIDAgMTYtMTZWODhhOCA4IDAgMCAwLTIuMzQtNS42Nk0xNjAgNTEuMzFMMTg4LjY5IDgwSDE2MFpNMjAwIDIxNkg1NlY0MGg4OHY0OGE4IDggMCAwIDAgOCA4aDQ4eiIvPjwvc3ZnPg==");
+  --lite-tree-icon-folder: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgZD0iTTUgNGg0bDMgM2g3YTIgMiAwIDAgMSAyIDJ2OGEyIDIgMCAwIDEtMiAySDVhMiAyIDAgMCAxLTItMlY2YTIgMiAwIDAgMSAyLTIiLz48L3N2Zz4=");
+  --lite-tree-icon-folder-open: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgZD0ibTUgMTlsMi43NTctNy4zNTFBMSAxIDAgMCAxIDguNjkzIDExSDIxYTEgMSAwIDAgMSAuOTg2IDEuMTY0bC0uOTk2IDUuMjExQTIgMiAwIDAgMSAxOS4wMjYgMTl6YTIgMiAwIDAgMS0yLTJWNmEyIDIgMCAwIDEgMi0yaDRsMyAzaDdhMiAyIDAgMCAxIDIgMnYyIi8+PC9zdmc+");
+  --lite-tree-icon-arrow: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMzIgMzIiPjxwYXRoIGZpbGw9IiNhYmFiYWIiIGQ9Im0xMiA4bDEwIDhsLTEwIDh6Ii8+PC9zdmc+");
+  --lite-tree-icon-tag: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMzIgMzIiPjxwYXRoIGZpbGw9ImN1cnJlbnRDb2xvciIgZD0iTTEwIDE0YTQgNCAwIDEgMSA0LTRhNC4wMDUgNC4wMDUgMCAwIDEtNCA0Wm0wLTZhMiAyIDAgMSAwIDEuOTk4IDIuMDA0QTIuMDAyIDIuMDAyIDAgMCAwIDEwIDhaIi8+PHBhdGggZmlsbD0iY3VycmVudENvbG9yIiBkPSJNMTYuNjQ0IDI5LjQxNUwyLjU4NiAxNS4zNTRBMiAyIDAgMCAxIDIgMTMuOTQxVjRhMiAyIDAgMCAxIDItMmg5Ljk0MWEyIDIgMCAwIDEgMS40MTQuNTg2bDE0LjA2IDE0LjA1OGEyIDIgMCAwIDEgMCAyLjgyOGwtOS45NDMgOS45NDNhMiAyIDAgMCAxLTIuODI5IDBaTTQgNHY5Ljk0MkwxOC4wNTggMjhMMjggMTguMDU4TDEzLjk0MiA0WiIvPjwvc3ZnPg==");
+  --lite-tree-icon-checked: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjEgMjEiPjxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTUuNSAzLjVoMTBhMiAyIDAgMCAxIDIgMnYxMGEyIDIgMCAwIDEtMiAyaC0xMGEyIDIgMCAwIDEtMi0ydi0xMGEyIDIgMCAwIDEgMi0yIi8+PHBhdGggZD0ibTcuNSAxMC41bDIgMmw0LTQiLz48L2c+PC9zdmc+");
+  --lite-tree-icon-unchecked: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjEgMjEiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Ik01LjUgMy41aDEwYTIgMiAwIDAgMSAyIDJ2MTBhMiAyIDAgMCAxLTIgMmgtMTBhMiAyIDAgMCAxLTItMnYtMTBhMiAyIDAgMCAxIDItMiIvPjwvc3ZnPg==");
+  --lite-tree-icon-star: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9ImN1cnJlbnRDb2xvciIgZD0ibTIyIDkuMjRsLTcuMTktLjYyTDEyIDJMOS4xOSA4LjYzTDIgOS4yNGw1LjQ2IDQuNzNMNS44MiAyMUwxMiAxNy4yN0wxOC4xOCAyMWwtMS42My03LjAzek0xMiAxNS40bC0zLjc2IDIuMjdsMS00LjI4bC0zLjMyLTIuODhsNC4zOC0uMzhMMTIgNi4xbDEuNzEgNC4wNGw0LjM4LjM4bC0zLjMyIDIuODhsMSA0LjI4eiIvPjwvc3ZnPg==");
+  --lite-tree-icon-yes: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgNDggNDgiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iNCIgZD0ibTQgMjRsNS01bDEwIDEwTDM5IDlsNSA1bC0yNSAyNXoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPjwvc3ZnPg==");
+  --lite-tree-icon-no: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtZGFzaGFycmF5PSIyMiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS13aWR0aD0iMiI+PHBhdGggZD0iTTE5IDVMNSAxOSI+PGFuaW1hdGUgZmlsbD0iZnJlZXplIiBhdHRyaWJ1dGVOYW1lPSJzdHJva2UtZGFzaG9mZnNldCIgYmVnaW49IjAuM3MiIGR1cj0iMC4zcyIgdmFsdWVzPSIyMjswIi8+PC9wYXRoPjxwYXRoIGQ9Ik01IDVMMTkgMTkiPjxhbmltYXRlIGZpbGw9ImZyZWV6ZSIgYXR0cmlidXRlTmFtZT0ic3Ryb2tlLWRhc2hvZmZzZXQiIGR1cj0iMC4zcyIgdmFsdWVzPSIyMjswIi8+PC9wYXRoPjwvZz48L3N2Zz4=");
+  --lite-tree-icon-important: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9ImN1cnJlbnRDb2xvciIgZD0iTTEyIDIuMDAyYTMuODc1IDMuODc1IDAgMCAwLTMuODc1IDMuODc1YzAgMi45MiAxLjIwNyA2LjU1MiAxLjgxMyA4LjE5OWEyLjE4NyAyLjE4NyAwIDAgMCAyLjA2NCAxLjQyM2MuOTA0IDAgMS43MzktLjU0MiAyLjA2My0xLjQxOGMuNjA2LTEuNjQgMS44MS01LjI1NCAxLjgxLTguMjA0QTMuODc1IDMuODc1IDAgMCAwIDEyIDIuMDAyTTkuNjI1IDUuODc3YTIuMzc1IDIuMzc1IDAgMCAxIDQuNzUgMGMwIDIuNjU1LTEuMTExIDYuMDQzLTEuNzE3IDcuNjg0YS42ODYuNjg2IDAgMCAxLS42NTUuNDM4YS42ODcuNjg3IDAgMCAxLS42NTctLjQ0Yy0uNjA3LTEuNjUyLTEuNzIxLTUuMDU4LTEuNzIxLTcuNjgybTIuMzc2IDExLjEyNGEyLjUwMSAyLjUwMSAwIDEgMCAwIDUuMDAyYTIuNTAxIDIuNTAxIDAgMCAwIDAtNS4wMDJNMTEgMTkuNTAyYTEuMDAxIDEuMDAxIDAgMSAxIDIuMDAyIDBhMS4wMDEgMS4wMDEgMCAwIDEtMi4wMDIgMCIvPjwvc3ZnPg==");
+}
+.lite-tree .icon {
+  background-color: currentColor;
+  mask-size: cover;
+  -webkit-mask-size: cover;
+}
+.lite-tree .icon.file {
+  mask-image: var(--lite-tree-icon-file);
+  -webkit-mask-image: var(--lite-tree-icon-file);
+  -moz-mask-image: var(--lite-tree-icon-file);
+}
+.lite-tree .icon.folder {
+  mask-image: var(--lite-tree-icon-folder);
+  -webkit-mask-image: var(--lite-tree-icon-folder);
+  -moz-mask-image: var(--lite-tree-icon-folder);
+}
+.lite-tree .icon.folder-open {
+  mask-image: var(--lite-tree-icon-folder-open);
+  -webkit-mask-image: var(--lite-tree-icon-folder-open);
+  -moz-mask-image: var(--lite-tree-icon-folder-open);
+}
+.lite-tree .icon.arrow {
+  mask-image: var(--lite-tree-icon-arrow);
+  -webkit-mask-image: var(--lite-tree-icon-arrow);
+  -moz-mask-image: var(--lite-tree-icon-arrow);
+}
+.lite-tree .icon.tag {
+  mask-image: var(--lite-tree-icon-tag);
+  -webkit-mask-image: var(--lite-tree-icon-tag);
+  -moz-mask-image: var(--lite-tree-icon-tag);
+}
+.lite-tree .icon.checked {
+  mask-image: var(--lite-tree-icon-checked);
+  -webkit-mask-image: var(--lite-tree-icon-checked);
+  -moz-mask-image: var(--lite-tree-icon-checked);
+}
+.lite-tree .icon.unchecked {
+  mask-image: var(--lite-tree-icon-unchecked);
+  -webkit-mask-image: var(--lite-tree-icon-unchecked);
+  -moz-mask-image: var(--lite-tree-icon-unchecked);
+}
+.lite-tree .icon.star {
+  mask-image: var(--lite-tree-icon-star);
+  -webkit-mask-image: var(--lite-tree-icon-star);
+  -moz-mask-image: var(--lite-tree-icon-star);
+}
+.lite-tree .icon.yes {
+  mask-image: var(--lite-tree-icon-yes);
+  -webkit-mask-image: var(--lite-tree-icon-yes);
+  -moz-mask-image: var(--lite-tree-icon-yes);
+}
+.lite-tree .icon.no {
+  mask-image: var(--lite-tree-icon-no);
+  -webkit-mask-image: var(--lite-tree-icon-no);
+  -moz-mask-image: var(--lite-tree-icon-no);
+}
+.lite-tree .icon.important {
+  mask-image: var(--lite-tree-icon-important);
+  -webkit-mask-image: var(--lite-tree-icon-important);
+  -moz-mask-image: var(--lite-tree-icon-important);
+}
+.lite-tree {
+  position: relative;
+  padding: 8px;
+  border: 1px solid #eee;
+  text-align: left;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.lite-tree .richlabel {
+  display: inline-flex;
+}
+.lite-tree::-webkit-scrollbar {
+  width: 4px;
+  height: 1px;
+}
+.lite-tree::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #b1b1b1;
+}
+.lite-tree::-webkit-scrollbar-track {
+  background: #ededed;
+  border-radius: 10px;
+}
+.lite-tree .lite-tree-nodes {
+  color: #555;
+  display: flex;
+  flex-direction: column;
+  list-style: none !important;
+  padding: 0px;
+  margin: 0px;
+}
+.lite-tree .lite-tree-nodes > li {
+  margin: 0px;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node {
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 4px;
+  margin: 0px;
+  align-items: center;
+  position: relative;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node.diff-add {
+  background-color: #f3ffec;
+  color: green;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node.diff-modify {
+  background-color: #fff6e9;
+  color: orange;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node.diff-delete {
+  background-color: #ffeaea;
+  color: red!important;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node.important {
+  background-color: #d7f0ff;
+  color: #037be5 !important;
+  font-weight: bold;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node.correct {
+  background-color: #f3ffec;
+  color: green!important;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node.error {
+  background-color: #ffeaea;
+  color: red!important;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.flag {
+  width: 1.2em;
+  text-align: center;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.title {
+  flex-grow: 1;
+  padding-right: 4px;
+  display: inline-flex;
+  align-items: center;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.title > span.tag {
+  background-color: #eee;
+  box-sizing: border-box;
+  color: #333;
+  padding: 2px 4px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  margin-left: 2px;
+  margin-right: 2px;
+  font-size: 1em;
+  height: 1.5em;
+  align-items: center;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.title > span.tag span.icon {
+  font-size: 1em;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.comment {
+  color: #bbb;
+  display: inline-flex;
+}
+@media screen and (max-width: 480px) {
+  .lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.comment {
+    display: none;
+  }
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.opener {
+  width: 1em;
+  height: 1em;
+  transform-origin: 0.5em center;
+  transform: rotate(0deg);
+  transition: all 0.2s;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.opener.open {
+  transform-origin: 0.5em center;
+  transform: rotate(90deg);
+  transition: all 0.2s;
+}
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node:hover {
+  background-color: #f8f8f8;
+  border-radius: 4px;
+}
+.dark .lite-tree {
+  border: 1px solid #1a1a1a;
+}
+.dark .lite-tree::-webkit-scrollbar-thumb {
+  background-color: #555;
+}
+.dark .lite-tree::-webkit-scrollbar-track {
+  background: black;
+}
+.dark .lite-tree .lite-tree-nodes {
+  color: #999;
+}
+.dark .lite-tree .lite-tree-nodes > li {
+  margin: 0px;
+}
+.dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node.diff-add {
+  background-color: #212121;
+  color: #00d500 !important;
+}
+.dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node.diff-modify {
+  background-color: #212121;
+}
+.dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node.diff-delete {
+  background-color: #212121;
+}
+.dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node.important {
+  background-color: #212121;
+}
+.dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node.correct {
+  background-color: #212121;
+  color: #00d500 !important;
+}
+.dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node.error {
+  background-color: #212121;
+}
+.dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.title > span.tag {
+  background-color: #212121;
+  color: #aaa;
+  border: 1px solid #333;
+}
+.dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.comment {
+  color: #bbb;
+}
+.dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node:hover {
+  background-color: #333;
+}

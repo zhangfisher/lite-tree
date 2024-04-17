@@ -1,0 +1,17 @@
+.slidedown {
+    overflow: hidden;
+    position: relative;
+    display: flex; 
+    flex-direction: column;
+    width: 100%; 
+    height:0;
+    transition-property: none;
+    transition-duration: .3s;
+    transition-timing-function: ease-in-out;
+}
+.slidedown.transitioning {
+    overflow-y: hidden;
+}
+.slidedown.closed {
+    display: none;
+}
