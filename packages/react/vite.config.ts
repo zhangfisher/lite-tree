@@ -15,7 +15,7 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
       "@common": resolve(__dirname,'../common')
-    }    
+    }   
   },   
   optimizeDeps: {  
     exclude: ['tslib']  

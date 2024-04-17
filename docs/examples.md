@@ -4,7 +4,7 @@
 
 支持采用`lite`或`json`格式来声明树形结构。
 
-### **使用`Lite`**格式
+### 使用`Lite`格式
 
 ```ts
 <LiteTree>
@@ -46,7 +46,7 @@ ts=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmc
 :::
 
 
-### **使用`JSON`**格式
+### 使用`JSON`格式
 
 ```vue
 <LiteTree :data="`

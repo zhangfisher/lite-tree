@@ -1,0 +1,40 @@
+{
+  "name": "@lite-tree/quark",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "npm run start",
+    "start": "vite --open",
+    "build": "vite build --config vite.config.build.ts && tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "type": "module",
+  "main": "./lib/index.umd.js",
+  "module": "./lib/index.js",
+  "types": "./lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "require": "./lib/index.umd.js",
+      "types": "./lib/types/index.d.ts"
+    }
+  },
+  "keywords": [
+    "frontend",
+    "quark",
+    "web components"
+  ],
+  "dependencies": {
+    "classnames": "^2.5.1",
+    "quarkc": "^1.0.40"
+  },
+  "devDependencies": {
+    "@types/node": "^20.2.5",
+    "less": "^4.1.3",
+    "tslib": "^2.5.3",
+    "typescript": "^5.1.3",
+    "vite": "^4.3.0"
+  },
+  "engines": {
+    "node": ">=14.18.0"
+  }
+}
