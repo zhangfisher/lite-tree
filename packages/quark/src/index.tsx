@@ -6,7 +6,7 @@ import classnames from 'classnames';
 import style from  "@common/styles?inline"
 
 
-export
+ 
 @customElement({ tag: "lite-tree", style })
 class LiteTree extends QuarkElement {
 	@property({ type: Number })
