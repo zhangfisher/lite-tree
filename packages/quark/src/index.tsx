@@ -3,11 +3,11 @@ import { parseTree } from "@common/parsers";
 import { getIcon, injectCustomStyles, injectSvgIcons } from "@common/utils";
 import type { LiteTreeProps, LiteTreeNode } from "@common/types";
 import classnames from 'classnames'; 
-import style from  "@common/styles?inline"
+import "@common/styles?inline"
 
 
  
-@customElement({ tag: "lite-tree", style })
+@customElement({ tag: "lite-tree" })
 class LiteTree extends QuarkElement {
 	@property({ type: Number })
 	indent = 4;
