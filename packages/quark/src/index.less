@@ -1,5 +1,17 @@
-@import url('../../common/styles/sidedown.css');
-@import url('../../common/styles/icons.less');
-@import url('../../common/styles/styles.less');
- 
- 
+@import url('../../common/styles/host-icons.less');
+@import url('../../common/styles/styles.less'); 
+// @import url('../../common/styles/sidedown.less');
+
+.slidedown {
+    overflow: hidden;
+    position: relative;
+    display: flex; 
+    flex-direction: column;
+    width: 100%; 
+    transition-property: height;
+    transition-duration: .2s;
+    transition-timing-function: ease-in-out;
+}
+.slidedown.closed {
+    height: 0px;
+}

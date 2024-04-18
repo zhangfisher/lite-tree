@@ -1,10 +1,9 @@
-import { QuarkElement, property, customElement } from "quarkc";
+import { QuarkElement, property, customElement,state,createRef } from "quarkc";
 import { parseTree } from "@common/parsers";
 import { StyledString, getIcon, injectCustomStyles, injectSvgIcons, parseLinks, toStyleObject } from "@common/utils";
 import type { LiteTreeProps, LiteTreeNode } from "@common/types";
 import classnames from 'classnames'; 
-import style from  "./index.css?raw"  
- 
+import style from  "./index.css?raw"   
 @customElement({ tag: "lite-tree",style})
 class LiteTree extends QuarkElement {
 	@property({ type: Number })
@@ -19,6 +18,7 @@ class LiteTree extends QuarkElement {
 	//是否显示标识
 	hasFlag: boolean = false;
 	// 树节点数据
+	@state()
 	nodes: LiteTreeNode[] = [];
 	// 声明的嵌入样式
 	inlineStyles: Record<string, string> = {};
@@ -55,27 +55,51 @@ class LiteTree extends QuarkElement {
 			<ul className="lite-tree-nodes">
         	{ 
 				nodes.map((node,index)=>{
-					return this.renderNode(node);
+					return this.renderNode(node,indent);
 				})
 			}
 			</ul>
 		)
 	}
-	toggleNode(node:LiteTreeNode){
-		node.open = !node.open;	
+	toggleNode(el:HTMLLIElement,node:LiteTreeNode){ 
+		if(el.children.length>0){
+			node.open = !node.open;	
+			const childrenEl = el.children[1] as HTMLElement
+			if(node.open){ // 展开
+				childrenEl.style.height = '0px'; // 初始高度设为0  
+				childrenEl.style.display = 'block'; // 确保元素是可见的  			
+				// 使用requestAnimationFrame来确保在下一帧设置最终高度  
+				requestAnimationFrame(() => {  
+					childrenEl.classList.remove("closed"); // 移除closed类以应用过渡效果  
+				  	childrenEl.style.height = `${200}px`; // 设置实际高度以开始过渡  
+					setTimeout(()=>{childrenEl.style.height ='auto'},300)
+				});  
+			}else{ // 折叠
+				childrenEl.style.height = String(childrenEl.offsetHeight)+'px'				
+				requestAnimationFrame(()=>{
+					childrenEl.style.height = '0px'						
+					childrenEl.classList.add("closed")				
+					setTimeout(()=>{
+						childrenEl.style.height ='auto'
+						childrenEl.style.display='none'
+					},300)
+				})	
+			}
+		}
 	}
 	renderNode(node:LiteTreeNode,indent:number=0) {
 		const hasChildren = node.children && node.children.length > 0
-    	return (<li data-lite-tree>
-			<span className={"lite-tree-node "+node.classs.join(" ")} 
-				onClick={()=>this.toggleNode(node)}
+		const ref = createRef<HTMLLIElement>()
+    	return (<li data-lite-tree ref={ref}>
+			<span className={"lite-tree-node "+node.classs.join(" ")} 				
+				onClick={()=>this.toggleNode(ref.current,node)}
 				style={toStyleObject(node.style)}>
 				{/* 显示标识 */}
 				{ this.hasFlag ? <span className ="flag">                        
 					{this.renderLabel(node.flag)}
 				</span> : null } 
 				{/* 缩进距离 */}
-				<span className="indent" style={ {width: this.indent + 'em'} }></span>
+				<span className="indent" style={ {width: indent + 'em'} }></span>
 				{/* 展开折叠指示符 */}
 				{ hasChildren ? <span className={classnames('opener','icon','arrow',{ open: node.open})} /> : null}
 				{/* 图标 */}

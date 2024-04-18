@@ -11,6 +11,12 @@
 .lite-tree .richlabel {
   display: inline-flex;
 }
+.lite-tree .icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin: 0.2em;
+}
 .lite-tree::-webkit-scrollbar {
   width: 4px;
   height: 1px;
