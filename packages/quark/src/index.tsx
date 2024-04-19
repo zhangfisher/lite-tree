@@ -1,7 +1,7 @@
 import { QuarkElement, property, customElement,state,createRef } from "quarkc";
 import { parseTree } from "@common/parsers";
 import { StyledString, getIcon, injectCustomStyles, injectSvgIcons, parseLinks, toStyleObject } from "@common/utils";
-import type { LiteTreeProps, LiteTreeNode } from "@common/types";
+import type { LiteTreeNode } from "@common/types";
 import classnames from 'classnames'; 
 import style from  "./index.css?raw"   
 @customElement({ tag: "lite-tree",style})
@@ -22,8 +22,6 @@ class LiteTree extends QuarkElement {
 	nodes: LiteTreeNode[] = [];
 	// 声明的嵌入样式
 	inlineStyles: Record<string, string> = {};
-
-
 	constructor(){
 		super()
 		const treeDefine = this.innerHTML.trim();
@@ -62,7 +60,11 @@ class LiteTree extends QuarkElement {
 		)
 	}
 	toggleNode(el:HTMLLIElement,node:LiteTreeNode){ 
-		if(el.children.length>0){
+		if(el.children.length>0){ 
+			const opener = el.querySelector('span.opener') as HTMLElement
+			if(opener) opener.classList.toggle('open')
+
+			const nodeHeight =  (el.children[0] as HTMLElement).offsetHeight
 			node.open = !node.open;	
 			const childrenEl = el.children[1] as HTMLElement
 			if(node.open){ // 展开
@@ -71,7 +73,7 @@ class LiteTree extends QuarkElement {
 				// 使用requestAnimationFrame来确保在下一帧设置最终高度  
 				requestAnimationFrame(() => {  
 					childrenEl.classList.remove("closed"); // 移除closed类以应用过渡效果  
-				  	childrenEl.style.height = `${200}px`; // 设置实际高度以开始过渡  
+				  	childrenEl.style.height = `${childrenEl.querySelectorAll("ul>li").length*nodeHeight}px`; // 设置实际高度以开始过渡  
 					setTimeout(()=>{childrenEl.style.height ='auto'},300)
 				});  
 			}else{ // 折叠
@@ -79,18 +81,18 @@ class LiteTree extends QuarkElement {
 				requestAnimationFrame(()=>{
 					childrenEl.style.height = '0px'						
 					childrenEl.classList.add("closed")				
-					setTimeout(()=>{
-						childrenEl.style.height ='auto'
-						childrenEl.style.display='none'
-					},300)
+					setTimeout(()=>{childrenEl.style.display='none'},300)
 				})	
 			}
 		}
 	}
+	getNodeOpener(el:HTMLLIElement){
+		
+	}
 	renderNode(node:LiteTreeNode,indent:number=0) {
 		const hasChildren = node.children && node.children.length > 0
 		const ref = createRef<HTMLLIElement>()
-    	return (<li data-lite-tree ref={ref}>
+    	return (<li ref={ref}>
 			<span className={"lite-tree-node "+node.classs.join(" ")} 				
 				onClick={()=>this.toggleNode(ref.current,node)}
 				style={toStyleObject(node.style)}>
@@ -108,7 +110,7 @@ class LiteTree extends QuarkElement {
 				<span className="title">					
 					{this.renderLabel(node.title)}
 					{/* 标签 */}
-					{ node.tags.map((tag,index)=>{return this.renderLabel(tag,'tag')}) }
+					{ node.tags.map((tag)=>{return this.renderLabel(tag,'tag')}) }
 				</span>
 				{/* 注释 */}
 				{this.renderLabel(node.comment,'comment')}

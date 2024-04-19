@@ -7,6 +7,36 @@ export interface LiteTreeParseOptions{
     forEach?:(node:LiteTreeNode)=>void;  // 遍历节点
 }
 
+
+/**
+ * 
+ * 在HTML等场景中，用不清除公共前置空格
+ * 
+ * 例如：
+ * 合格的代码：
+ * 根节点
+ *    子节点1
+ *    子节点2
+ * 但在HTML、Markdiwn中，由于统一的缩进，会导致缩进而产生不必要的空格
+ *             根节点
+ *                  子节点1
+ *                  子节点2
+ * 这个函数用于清除无效的缩进空格
+ * 
+ * @param lines 
+ * @returns 
+ */
+function clearPrefixSpace(lines:string[],indent:number=4){
+    // 计算出最小的前置空格数
+    const minSpaceCount = lines.reduce<number>((count:number,line:string,index:number)=>{
+        line = line.replace(/\t/g,' '.repeat(indent))
+        const spaceCount = line.match(/^\s+/)?.[0].length || 0
+        return count==-1 ?  spaceCount : (spaceCount < count ? spaceCount : count)  
+    },-1)
+
+
+}
+
 // 节点正则表达式 
 //const nodeRegex= /(\+|\-)?\s*(\[([^\[\]]+?)\])?\s*([^\(\/\\]+)(\((.*?)\))?\s*(\/\/(\S+)?\s*(.*?))?$/gm
 const nodeRegex= /(\+|\-)?\s*(\[([^\[\]]+?)\])?\s*(\/?[^\(\/\\]+\/?)(\((.*?)\))?\s*(\/\/(\S+)?\s*(.*?))?$/gm
