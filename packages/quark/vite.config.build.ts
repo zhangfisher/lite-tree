@@ -19,7 +19,7 @@ export default defineConfig({
           return `${entryName}.js`;
         } 
       },
-      name: "LiteTree",
+      name: "lite-tree",
     },
     rollupOptions: {
       //external: ["quarkc"], // 可选项，是否将 quarkc 打包进组件
