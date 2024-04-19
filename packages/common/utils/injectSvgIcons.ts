@@ -7,7 +7,7 @@
  * 创建一个容器来保存所有Svg图标
  * @returns 
  */
-export function getSvgIconContainer(callback?:(ele:HTMLElement)=>void){
+export function createSvgIconContainer(loc?:HTMLElement){
     if(globalThis.document==undefined) return
     let svgContainer = document.querySelector("#lite_tree_icons") as HTMLElement
     if(!svgContainer){
@@ -19,10 +19,11 @@ export function getSvgIconContainer(callback?:(ele:HTMLElement)=>void){
             height:1em;
             margin:0.2em;
         }`
-        document.head.appendChild(svgContainer)              
-        if(callback){
-            callback(svgContainer)
-        }
+        if(loc){
+            loc.appendChild(svgContainer)              
+        }else{
+            document.head.appendChild(svgContainer)              
+        } 
     }    
     return svgContainer
 } 
@@ -35,11 +36,14 @@ function compressSvgData(svgData:string){
     return svgData.replace(compressRegex,'')
 }
 /**
- * 注入所有icons文件夹中的图标
+ * 注入所有图标
+ * @param svgIcons 
+ * @param loc       注入的位置
+ * @returns 
  */
-export function injectSvgIcons(svgIcons:Record<string,string>){
+export function injectSvgIcons(svgIcons:Record<string,string>,loc?:HTMLElement){
     if(globalThis.document==undefined) return
-    const svgIconContainer = getSvgIconContainer()
+    const svgIconContainer = createSvgIconContainer(loc)
     for(let [name,define] of Object.entries(svgIcons)){
         const iconClassName = `.icon.${name}`
         const isSvg =define.startsWith("<svg") 

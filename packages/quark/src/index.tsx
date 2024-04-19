@@ -35,15 +35,16 @@ class LiteTree extends QuarkElement {
 		this.hasFlag = hasFlag;
 		this.nodes = nodes;
 		this.inlineStyles = styles;
-		injectCustomStyles(classs);
-		injectSvgIcons(icons);
+		this.classs = classs;
+		this.icons = icons;
 	}
-
-
-	componentDidMount() {
-		// 生命周期
-		
+	classs = {}
+	icons = {}
+	componentDidMount(): void {				
+		injectCustomStyles(this.classs,this.shadowRoot as any);
+		injectSvgIcons(this.icons,this.shadowRoot as any);
 	}
+ 
 	/**
 	 * 渲染节点
 	 * @param node
@@ -52,7 +53,7 @@ class LiteTree extends QuarkElement {
     	return  (
 			<ul className="lite-tree-nodes">
         	{ 
-				nodes.map((node,index)=>{
+				nodes.map((node)=>{
 					return this.renderNode(node,indent);
 				})
 			}
@@ -67,27 +68,26 @@ class LiteTree extends QuarkElement {
 			const nodeHeight =  (el.children[0] as HTMLElement).offsetHeight
 			node.open = !node.open;	
 			const childrenEl = el.children[1] as HTMLElement
-			if(node.open){ // 展开
-				childrenEl.style.height = '0px'; // 初始高度设为0  
-				childrenEl.style.display = 'block'; // 确保元素是可见的  			
-				// 使用requestAnimationFrame来确保在下一帧设置最终高度  
-				requestAnimationFrame(() => {  
-					childrenEl.classList.remove("closed"); // 移除closed类以应用过渡效果  
-				  	childrenEl.style.height = `${childrenEl.querySelectorAll("ul>li").length*nodeHeight}px`; // 设置实际高度以开始过渡  
-					setTimeout(()=>{childrenEl.style.height ='auto'},300)
-				});  
-			}else{ // 折叠
-				childrenEl.style.height = String(childrenEl.offsetHeight)+'px'				
-				requestAnimationFrame(()=>{
-					childrenEl.style.height = '0px'						
-					childrenEl.classList.add("closed")				
-					setTimeout(()=>{childrenEl.style.display='none'},300)
-				})	
+			if(childrenEl){
+				if(node.open){ // 展开
+					childrenEl.style.height = '0px'; // 初始高度设为0  
+					childrenEl.style.display = 'block'; // 确保元素是可见的  			
+					// 使用requestAnimationFrame来确保在下一帧设置最终高度  
+					requestAnimationFrame(() => {  
+						childrenEl.classList.remove("closed"); // 移除closed类以应用过渡效果  
+						  childrenEl.style.height = `${childrenEl.querySelectorAll("ul>li").length*nodeHeight}px`; // 设置实际高度以开始过渡  
+						setTimeout(()=>{childrenEl.style.height ='auto'},300)
+					});  
+				}else{ // 折叠
+					childrenEl.style.height = String(childrenEl.offsetHeight)+'px'				
+					requestAnimationFrame(()=>{
+						childrenEl.style.height = '0px'						
+						childrenEl.classList.add("closed")				
+						setTimeout(()=>{childrenEl.style.display='none'},300)
+					})	
+				}
 			}
 		}
-	}
-	getNodeOpener(el:HTMLLIElement){
-		
 	}
 	renderNode(node:LiteTreeNode,indent:number=0) {
 		const hasChildren = node.children && node.children.length > 0
@@ -134,7 +134,7 @@ class LiteTree extends QuarkElement {
 	}
 	render() {
 		return ( 
-      		<div className={classnames("lite-tree")}>
+      		<div className="lite-tree">
           		{this.renderNodes(this.nodes)}
       		</div> 
 		);

@@ -30,10 +30,14 @@ function clearPrefixSpace(lines:string[],indent:number=4){
     // 计算出最小的前置空格数
     const minSpaceCount = lines.reduce<number>((count:number,line:string,index:number)=>{
         line = line.replace(/\t/g,' '.repeat(indent))
+        lines[index] = line
         const spaceCount = line.match(/^\s+/)?.[0].length || 0
         return count==-1 ?  spaceCount : (spaceCount < count ? spaceCount : count)  
     },-1)
 
+    lines.forEach((line,index)=>{
+        lines[index] = line.substring(minSpaceCount)
+    })
 
 }
 
@@ -140,13 +144,14 @@ export default function parseLiteTree(treeData:string,vars:LiteTreeVars,options:
     let rootNode:LiteTreeNode = {level:0,children:[]}
     const stackNodes:LiteTreeNode[] = [rootNode]
 
+    clearPrefixSpace(lines,opts.indent)
 
     for(let line of lines){
         const trimLine = line.trim()
         if(trimLine == '' || trimLine.startsWith("//")) continue        
         line = line.substring(preSpace.length)        
         // 前置1个Tab替换为 opts.indent个空格
-        line = line.replace(/\t/g,' '.repeat(opts.indent))
+        //line = line.replace(/\t/g,' '.repeat(opts.indent))
         const node = parseNode(line) 
         node.level= Math.ceil((line.match(/^\s+/) || [''])[0].length / opts.indent) + 1
 

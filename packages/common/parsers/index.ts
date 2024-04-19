@@ -6,7 +6,7 @@ import { setObjectDefaultValue } from "../utils/setObjectDefaultValue";
 import { getTreeFormat } from "../utils/getTreeFormat";
 
 
-const SplitterRegex = /^---\s*$/gm;
+const SplitterRegex = /^\s*[-]{3,}\s*$/gm;
 
 export interface LiteTreeVars{
     styles:Record<string,any> 
@@ -97,11 +97,28 @@ export interface ParseTreeOptions{
     forEach?: (node:LiteTreeNode)=>void
 } 
 
+
+/**
+ * 当组件在html里面使用时，在解析前会先显示树数据，再进行渲染，这会导致页面闪烁
+ * 
+ * 为此需要使用<!-- -->进行注释
+ * 
+ * 
+ * 本函数的功能就是去掉注释符号<!-- -->，并返回去掉注释符号后的字符串
+ * 
+ * 
+ * @param str 
+ * @returns 
+ */
+function removeCommentWrapper(str:string){
+    return str.replace(/^\s*<!--/,'').replace(/-->\s*$/,'')
+}
+
 let NodeIndex = 0
 
 export function parseTree(context:string,options?:ParseTreeOptions):LiteTreeParseResults{
     const opts = Object.assign({},options)
-    const [strVars,strTree] = splitTreeContent(context)
+    const [strVars,strTree] = splitTreeContent(removeCommentWrapper(context))
     if(!opts.format) opts.format = getTreeFormat(strTree)
     const vars = parseVars(strVars)
     let hasFlag:boolean = false 

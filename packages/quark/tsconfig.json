@@ -9,7 +9,7 @@
     "jsxFragmentFactory": "QuarkElement.Fragment",
     "sourceMap": false,
     "declaration": true,
-    "declarationDir": "lib/types",
+    "declarationDir": "dist/types",
     "emitDeclarationOnly": true,
     "removeComments": true,
     "resolveJsonModule": true,
@@ -17,6 +17,7 @@
     "skipLibCheck": true,
     "experimentalDecorators": true,
     "lib": ["esnext", "dom"],
+    "outDir": "dist",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],

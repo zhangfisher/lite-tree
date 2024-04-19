@@ -5,6 +5,8 @@ export interface InjectStylesheetOptions{
 	id:string
 	// 默认仅当指定id的样式不存在时注入
 	mode?:'replace' | 'append' | 'default',
+	// 当指定时，将在该元素下注入样式
+	el?:HTMLElement,
 	scoped?:boolean | string,
 	// 当样式已经存在时的回调
 	onExist?:(style:HTMLStyleElement)=>void
@@ -23,7 +25,9 @@ export function injectStylesheet(css:string,options?:InjectStylesheetOptions){
 		style = document.createElement('style');
 		style.innerHTML = css;
 		style.id = id		
-		if(location=='head'){
+		if(options?.el){
+			options.el.appendChild(style)
+		}else if(location=='head'){
 			document.head.appendChild(style);
 		}else{
 			document.body.appendChild(style); 
