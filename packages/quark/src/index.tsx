@@ -25,15 +25,11 @@ class LiteTree extends QuarkElement {
 	classs = {}
 	icons = {}
 	constructor(){
-		super()		
-		this.parseTree();		
-
+		super()				
+		this.parseTree();
 	}
 	private parseTree(){
 		const treeDefine = this.innerHTML; 
-		console.log('LiteTree Element:',this,this.shadowRoot.innerHTML)
-		console.log('treeData 1:',this.innerHTML)
-
 		const {
 			styles,
 			classs,
@@ -48,7 +44,7 @@ class LiteTree extends QuarkElement {
 		this.icons = icons;
 	}
 
-	componentDidMount(): void {		
+	componentDidMount(): void {				
 		injectCustomStyles(this.classs,this.shadowRoot as any);
 		injectSvgIcons(this.icons,this.shadowRoot as any);
 	}
