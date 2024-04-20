@@ -6,9 +6,13 @@ export default defineConfig({
   resolve: {
     alias: {
         "@common": resolve(__dirname,'../common')
-    }
+    },    
+  },
+  define: {
+    process: {env:{}}
   },
   build: {
+    minify: false,
     lib: {
       entry: resolve("./src/index.tsx"),
       formats: ["es", "umd"], // 打包输出格式，默认输出 esm/umd
@@ -17,9 +21,11 @@ export default defineConfig({
           return `${entryName}.esm.js`;
         }else{
           return `${entryName}.js`;
-        } 
+        }         
       },
+      
       name: "LiteTree",
+    
     },
     rollupOptions: {
       //external: ["quarkc"], // 可选项，是否将 quarkc 打包进组件

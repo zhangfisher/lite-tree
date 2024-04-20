@@ -3,7 +3,11 @@
   "changelog": "@changesets/cli/changelog",
   "commit": true,
   "fixed": [
-    ["@lite-tree/vue","@lite-tree/react"]
+    [
+      "@lite-tree/vue",
+      "@lite-tree/react",
+      "@lite-tree/webcomponent"
+    ]
   ],
   "linked": [],
   "access": "public",

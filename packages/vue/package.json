@@ -19,7 +19,10 @@
     "readme.md"
   ],
   "keywords": [
-    "lite-tree"
+    "lite-tree",    
+    "tree",
+    "vitepress",
+    "vuepress"
   ],
   "author": "zhangfisher",
   "license": "MIT",

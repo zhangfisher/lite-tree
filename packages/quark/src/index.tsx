@@ -22,11 +22,9 @@ class LiteTree extends QuarkElement {
 	nodes: LiteTreeNode[] = [];
 	// 声明的嵌入样式
 	inlineStyles: Record<string, string> = {};	
-	classs = {}
-	icons = {}
 	constructor(){
-		super()				
-		this.parseTree();
+		super()	
+		this.setup()			
 	}
 	private parseTree(){
 		const treeDefine = this.innerHTML; 
@@ -40,15 +38,44 @@ class LiteTree extends QuarkElement {
 		this.hasFlag = hasFlag;
 		this.nodes = nodes;
 		this.inlineStyles = styles;
-		this.classs = classs;
-		this.icons = icons;
+		injectCustomStyles(classs,this.shadowRoot as any);
+		injectSvgIcons(icons,this.shadowRoot as any);
 	}
 
 	componentDidMount(): void {				
-		injectCustomStyles(this.classs,this.shadowRoot as any);
-		injectSvgIcons(this.icons,this.shadowRoot as any);
+		
 	}
- 
+	parentNodes = [];
+	mutationObserver:any;
+
+	setup() {
+		// collect the parentNodes
+		let el:any = this;
+		while (el.parentNode) {
+		  el = el.parentNode
+		  this.parentNodes.push(el)
+		}
+		// check if the parser has already passed the end tag of the component
+		// in which case this element, or one of its parents, should have a nextSibling
+		// if not (no whitespace at all between tags and no nextElementSiblings either)
+		// resort to DOMContentLoaded or load having triggered
+		if ([this, ...this.parentNodes].some(el=> el.nextSibling) || document.readyState !== 'loading') {
+		  this.onChildrenAvailable();
+		} else {
+		  this.mutationObserver = new MutationObserver(() => {
+			if ([this, ...this.parentNodes].some(el=> el.nextSibling) || document.readyState !== 'loading') {
+			  this.onChildrenAvailable()
+			  this.mutationObserver.disconnect()
+			}
+		  });
+	
+		  this.mutationObserver.observe(this, {childList: true});
+		}
+	}
+	onChildrenAvailable(){	
+		this.parseTree();
+	}
+
 	/**
 	 * 渲染节点
 	 * @param node
@@ -64,12 +91,31 @@ class LiteTree extends QuarkElement {
 			</ul>
 		)
 	}
-	toggleNode(el:HTMLLIElement,node:LiteTreeNode){ 
+
+	/**
+	 * 获取可见节点（包括子节点）的数量
+	 * - 如果节点是折叠的，则返回1
+	 * - 如果节点是展开的，则返回节点本身加上所有子节点的数量
+	 * 
+	 * 
+	 * @param node 
+	 */
+	private getVisibleNodeSize(node:LiteTreeNode):number{
+		let size = 0;
+		if(node.open && node.children){			
+			node.children.forEach((child)=>{
+				size++;
+				size += this.getVisibleNodeSize(child);
+			})
+		}
+		return size;	
+	}
+	private toggleNode(el:HTMLLIElement,node:LiteTreeNode){ 
 		if(el.children.length>0){ 
 			const opener = el.querySelector('span.opener') as HTMLElement
 			if(opener) opener.classList.toggle('open')
 
-			const nodeHeight =  (el.children[0] as HTMLElement).offsetHeight
+			const nodeHeight =  (el.children[0] as HTMLElement).offsetHeight 
 			node.open = !node.open;	
 			const childrenEl = el.children[1] as HTMLElement
 			if(childrenEl){
@@ -79,7 +125,7 @@ class LiteTree extends QuarkElement {
 					// 使用requestAnimationFrame来确保在下一帧设置最终高度  
 					requestAnimationFrame(() => {  
 						childrenEl.classList.remove("closed"); // 移除closed类以应用过渡效果  
-						  childrenEl.style.height = `${childrenEl.querySelectorAll("ul>li").length*nodeHeight}px`; // 设置实际高度以开始过渡  
+						  childrenEl.style.height = `${this.getVisibleNodeSize(node)*nodeHeight}px`; // 设置实际高度以开始过渡  
 						setTimeout(()=>{childrenEl.style.height ='auto'},300)
 					});  
 				}else{ // 折叠
