@@ -53,5 +53,10 @@ export type LiteTreeParseResults = {
 
 export type LiteTreeEvents = 'expand' | 'collapse' | 'click'
 
-export type LiteTreeClickPosition='title' | 'tag'  | 'flag' | 'comment' | 'icon' | 'opener'
+export type LiteTreeClickPosition = 'title' | 'tag'  | 'flag' | 'comment' | 'icon' | 'opener'
+export type LiteTreeClickParams = {
+    position:LiteTreeClickPosition
+    node:string        // 节点id
+    element:HTMLElement
+}
 

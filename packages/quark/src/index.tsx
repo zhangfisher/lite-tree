@@ -1,9 +1,9 @@
 import { QuarkElement, property, customElement,state,createRef } from "quarkc";
 import { parseTree } from "@common/parsers";
-import { StyledString, getIcon, injectCustomStyles, injectSvgIcons, parseLinks, toStyleObject } from "@common/utils";
+import { StyledString, getIcon, injectCustomStyles, injectSvgIcons, parseLinks, toStyleObject,handleNodeClick } from "@common/utils";
 import type { LiteTreeNode } from "@common/types";
 import classnames from 'classnames'; 
-import style from  "./index.css?raw"   
+import style from  "./index.css?raw"    
 
 @customElement({ tag: "lite-tree",style})
 class LiteTree extends QuarkElement {
@@ -139,8 +139,7 @@ class LiteTree extends QuarkElement {
 						childrenEl.classList.remove("closed"); // 移除closed类以应用过渡效果  
 						  childrenEl.style.height = `${this.getVisibleNodeSize(node)*nodeHeight}px`; // 设置实际高度以开始过渡  
 						setTimeout(()=>{childrenEl.style.height ='auto'},300)
-					});  
-					
+					});  					
 					this.$emit('expand',{
 						detail:node
 					})
@@ -162,7 +161,8 @@ class LiteTree extends QuarkElement {
 		const hasChildren = node.children && node.children.length > 0
 		const ref = createRef<HTMLLIElement>()
     	return (<li ref={ref}>
-			<span className={"lite-tree-node "+node.classs.join(" ")} 				
+			<span className={"lite-tree-node "+node.classs.join(" ")} 			
+				data-node-id={node.id}	
 				onClick={()=>this.toggleNode(ref.current,node)}
 				style={toStyleObject(node.style)}>
 				{/* 显示标识 */}
@@ -179,7 +179,7 @@ class LiteTree extends QuarkElement {
 				<span className="title">					
 					{this.renderLabel(node.title)}
 					{/* 标签 */}
-					{ node.tags.map((tag)=>{return this.renderLabel(tag,'tag')}) }
+					{ node.tags.map((tag,index)=>{return this.renderLabel(tag,'tag')}) }
 				</span>
 				{/* 注释 */}
 				{this.renderLabel(node.comment,'comment')}
@@ -200,37 +200,10 @@ class LiteTree extends QuarkElement {
 			style={{...this.inlineStyles,...toStyleObject(style)!}}
         	dangerouslySetInnerHTML={{__html: parseLinks(value)}}
 		/>
-	}
-	private handleClick(e:any){
-		const target = e.target as HTMLElement
-		const nodeEle = target.closest('.lite-tree-node')
-		if(nodeEle){
-			const nodeId=nodeEle.getAttribute("id")
-			const param ={
-				position:'node',
-				node:nodeId
-			}
-			if(target.classList.contains('tag')){
-				param.position='tag'
-			}else if(target.classList.contains('flag')){
-				param.position='flag'
-			}else if(target.classList.contains('comment')){
-				param.position='comment'
-			}else if(target.classList.contains('action')){
-				param.position='action'
-			}else if(target.closest("span.title")){
-				param.position='title'
-			}else if(target.closest("span.flag")){
-				param.position='flag'
-			}
-			this.$emit('click',{detail:param})
-			e.stopPropagation()
-		}
-		
-	}
+	} 
 	render() {
 		return ( 
-      		<div ref ={this.treeRef} className="lite-tree" onClick={this.handleClick.bind(this)}>
+      		<div ref ={this.treeRef} className="lite-tree" onClick={(e:any)=>handleNodeClick(e,(param)=>this.$emit('click',{detail:param}))}>
           		{this.renderNodes(this.nodes)}
       		</div> 
 		);

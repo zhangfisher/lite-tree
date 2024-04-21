@@ -8,7 +8,7 @@ export * from "./enableScoped"
 export * from "./parseLinks"
 export * from "./injectCustomStyles"
 export * from "./getIcon"
-
+export * from "./eventHandler"
 
 
 

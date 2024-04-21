@@ -11,7 +11,8 @@
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "vite build"
+    "build": "vite build",
+    "build:watch": "vite build --watch"
   },
   "publishConfig": {
     "access": "public",

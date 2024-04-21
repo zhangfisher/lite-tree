@@ -22,7 +22,9 @@ const LiteTreeNodes:React.FC<LiteTreeNodesProps> =(props) => {
         { nodes.map((node,index)=>{
             const hasChildren = node.children && node.children.length > 0
             return (<li data-lite-tree key={index}>
-                <span data-lite-tree className={"lite-tree-node "+node.classs.join(" ")} 
+                <span data-lite-tree 
+                    data-node-id = {node.id}
+                    className={"lite-tree-node "+node.classs.join(" ")} 
                     onClick={()=>toggleNode(node)}
                     style={toStyleObject(node.style)}>
                     {/* 显示标识 */}
