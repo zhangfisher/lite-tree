@@ -6,8 +6,9 @@
     <script src="../../packages/quark/dist/index.js"></script>
   </head>
   <body>
+
 <div style="width: 800px;margin:0 auto;padding:20px;">
-    <lite-tree>
+    <lite-tree id="tree1">
         <!-- 
         - A公司
           行政中心
@@ -70,6 +71,17 @@
                           -->
                         </lite-tree>     
 </div>
- 
+<script>
+  const tree1 = document.getElementById("tree1")
+  tree1.addEventListener('expand', (e) => {
+    console.log("expand node:",e.detail)
+  })
+  tree1.addEventListener('collapse', (e) => {
+    console.log("collapse node: ",e.detail)
+  })
+  tree1.addEventListener('click', (e) => {
+    console.log("click node: ",e.detail)
+  })
+</script>
   </body>
 </html>

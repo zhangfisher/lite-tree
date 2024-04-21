@@ -14,7 +14,7 @@
     "dev": "npm run start",
     "start": "vite --open",
     "build": "vite build --config vite.config.build.ts && tsc",
-    "prepublishOnly": "npm run build"
+    "build:watch": "vite build  --watch --config vite.config.build.ts"
   },
   "type": "module", 
   "keywords": [

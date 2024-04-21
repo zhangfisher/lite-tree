@@ -47,3 +47,11 @@ export type LiteTreeParseResults = {
   icons:Record<string,string>,
   nodes: LiteTreeNode[]
 }
+
+
+
+
+export type LiteTreeEvents = 'expand' | 'collapse' | 'click'
+
+export type LiteTreeClickPosition='title' | 'tag'  | 'flag' | 'comment' | 'icon' | 'opener'
+
