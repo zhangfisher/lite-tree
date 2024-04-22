@@ -16,7 +16,9 @@
     "changeset": "changeset",
     "release": "changeset version && changeset publish",
     "build:all": "turbo build --filter=@lite-tree/*",
-    "build": "turbo build --filter "
+    "build": "turbo build --filter ",
+    "docsify:run":"docsify serve examples/docsify"
+
   },
   "files": [
     "dist",
@@ -30,13 +32,14 @@
   "license": "ISC",
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
-    "@lite-tree/vue": "workspace:^",
     "@lite-tree/icons": "workspace:^",
+    "@lite-tree/vue": "workspace:^",
     "@tsconfig/node20": "^20.1.2",
     "@types/node": "^20.11.28",
     "@types/react": "^18.2.73",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.2",
+    "vite-plugin-static-copy": "^1.0.3",
     "vitepress": "1.0.2"
   },
   "dependencies": {

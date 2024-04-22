@@ -1,6 +1,4 @@
-# Headline
-
-> An awesome project.
+# LiteTree
 
 
 <lite-tree>

@@ -14,6 +14,7 @@
     "removeComments": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "experimentalDecorators": true,
     "lib": ["esnext", "dom"],

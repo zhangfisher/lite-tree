@@ -39,6 +39,9 @@ importers:
       typescript:
         specifier: ^5.4.2
         version: 5.4.2
+      vite-plugin-static-copy:
+        specifier: ^1.0.3
+        version: 1.0.3(vite@5.2.7)
       vitepress:
         specifier: 1.0.2
         version: 1.0.2(@algolia/client-search@4.23.3)(@types/node@20.11.28)(@types/react@18.2.73)(search-insights@2.13.0)(typescript@5.4.2)
@@ -96,18 +99,6 @@ importers:
       stylelint:
         specifier: ^14.9.1
         version: 14.16.1
-
-  examples/omit:
-    devDependencies:
-      '@types/node':
-        specifier: ^20.12.7
-        version: 20.12.7
-      typescript:
-        specifier: ^5.4.5
-        version: 5.4.5
-      vite:
-        specifier: ^5.2.9
-        version: 5.2.9(@types/node@20.12.7)
 
   examples/react:
     dependencies:
@@ -212,22 +203,6 @@ importers:
         version: 2.0.6(typescript@5.4.3)
 
   packages/icons: {}
-
-  packages/omi:
-    dependencies:
-      omi:
-        specifier: ^7.6.7
-        version: 7.6.7
-    devDependencies:
-      '@types/node':
-        specifier: ^20.12.7
-        version: 20.12.7
-      typescript:
-        specifier: ^5.4.5
-        version: 5.4.5
-      vite:
-        specifier: ^5.2.9
-        version: 5.2.9(@types/node@20.12.7)
 
   packages/quark:
     dependencies:
@@ -9036,11 +9011,6 @@ packages:
     resolution: {integrity: sha512-xFxOwqIzR/e1k1gLiWEophSCMqXcwVHIH7akf7b/vxcUeGunlj3hvZaaqxwHsTgn+IndtkQJgSztIDWeumWJDQ==}
     dev: true
 
-  /construct-style-sheets-polyfill@3.0.1:
-    resolution: {integrity: sha512-vyAiTcS3i29IxjzJ12K2MGUUBYgrF69p6fKD+8ZPRLFhwTtuaxXLpazl4Yw4FITsQXwUMrh8juI1bOHWYjzkwA==}
-    engines: {npm: '>=7'}
-    dev: false
-
   /conventional-changelog-angular@6.0.0:
     resolution: {integrity: sha512-6qLgrBF4gueoC7AFVHu51nHL9pF9FRjXrH+ceVf7WmAfH3gs+gEYOkvxhjMPjZu57I4AGUGoNTY8V7Hrgf1uqg==}
     engines: {node: '>=14'}
@@ -9255,7 +9225,7 @@ packages:
     dev: true
 
   /css-color-keywords@1.0.0:
-    resolution: {integrity: sha1-/qJhbcZ2spYmhrOvjb2+GAskTgU=}
+    resolution: {integrity: sha512-FyyrDHZKEjXDpNJYvVsV960FiqQyXc/LlYmsxl2BcdMb2WPx0OGRVgTg55rPSyLSNMqP52R9r8geSp7apN3Ofg==}
     engines: {node: '>=4'}
     dev: true
 
@@ -12324,7 +12294,7 @@ packages:
     engines: {node: '>= 4'}
 
   /image-size@0.5.5:
-    resolution: {integrity: sha1-Cd/Uq50g4p6xw+gLiZA3jfnjy5w=}
+    resolution: {integrity: sha512-6TDAlDPZxUFCv+fuOkIoXT/V/f3Qbq8e37p+YOiYrUv3v9cc3/6x78VdfPgFVaB9dZYeLUfKgHRebpkm/oP2VQ==}
     engines: {node: '>=0.10.0'}
     hasBin: true
     requiresBuild: true
@@ -14874,14 +14844,6 @@ packages:
     resolution: {integrity: sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==}
     dev: true
 
-  /omi@7.6.7:
-    resolution: {integrity: sha512-YjoCtgCOghSFB2wc1fCzwKA9eMd01FF2auZRp17HxSpo6noal12NbuzvSfgsGXFzAy97+lwgaRjTBR3n3EGiYw==}
-    dependencies:
-      construct-style-sheets-polyfill: 3.0.1
-      reactive-signal: 1.0.3
-      weakmap-polyfill: 2.0.4
-    dev: false
-
   /omit-deep@0.3.0:
     resolution: {integrity: sha512-Lbl/Ma59sss2b15DpnWnGmECBRL8cRl/PjPbPMVW+Y8zIQzRrwMaI65Oy6HvxyhYeILVKBJb2LWeG81bj5zbMg==}
     engines: {node: '>=0.10.0'}
@@ -17232,10 +17194,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
-
-  /reactive-signal@1.0.3:
-    resolution: {integrity: sha512-UlbIDgdkreGW0QFdrxCsVQNcPkiv+aOT4bWIF3inHb4jZlBdvRCZtgO9Ie5ayFxlnjetQg1QvRhg5PlGKSxZEA==}
-    dev: false
 
   /read-cache@1.0.0:
     resolution: {integrity: sha512-Owdv/Ft7IjOgm/i0xvNDZ1LrRANRfew4b2prF3OWMQLxLfu3bS8FVhCsrSCMK4lR56Y9ya+AThoTpDCTxCmpRA==}
@@ -20018,6 +19976,19 @@ packages:
       - supports-color
     dev: true
 
+  /vite-plugin-static-copy@1.0.3(vite@5.2.7):
+    resolution: {integrity: sha512-hBCCz6T0uNI3oF5oJ/Ju73rhoR+ADrJ2iLAea5+wA7kpQ8clYgY8BD+GL0w0BrqsYCbgBITOByBP/3y9Y+h93A==}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    peerDependencies:
+      vite: ^5.0.0
+    dependencies:
+      chokidar: 3.6.0
+      fast-glob: 3.3.2
+      fs-extra: 11.2.0
+      picocolors: 1.0.0
+      vite: 5.2.7(@types/node@20.11.28)(less@4.2.0)(sass@1.75.0)
+    dev: true
+
   /vite-plugin-vue-devtools@7.0.17(rollup@4.14.3)(vite@5.2.7)(vue@3.4.21):
     resolution: {integrity: sha512-SNtcv3BKChPoT8ZUleHI0ya+bDAxTZYhXhsQQ5B9B9StT/j34YYhEiFRtbZd8RM9gDyj9z30V45gK4TEzL357g==}
     engines: {node: '>=v14.21.3'}
@@ -20187,42 +20158,6 @@ packages:
       postcss: 8.4.38
       rollup: 4.13.2
       sass: 1.75.0
-    optionalDependencies:
-      fsevents: 2.3.3
-    dev: true
-
-  /vite@5.2.9(@types/node@20.12.7):
-    resolution: {integrity: sha512-uOQWfuZBlc6Y3W/DTuQ1Sr+oIXWvqljLvS881SVmAj00d5RdgShLcuXWxseWPd4HXwiYBFW/vXHfKFeqj9uQnw==}
-    engines: {node: ^18.0.0 || >=20.0.0}
-    hasBin: true
-    peerDependencies:
-      '@types/node': ^18.0.0 || >=20.0.0
-      less: '*'
-      lightningcss: ^1.21.0
-      sass: '*'
-      stylus: '*'
-      sugarss: '*'
-      terser: ^5.4.0
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      less:
-        optional: true
-      lightningcss:
-        optional: true
-      sass:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-    dependencies:
-      '@types/node': 20.12.7
-      esbuild: 0.20.2
-      postcss: 8.4.38
-      rollup: 4.14.3
     optionalDependencies:
       fsevents: 2.3.3
     dev: true
@@ -20400,11 +20335,6 @@ packages:
     resolution: {integrity: sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg==}
     dependencies:
       defaults: 1.0.4
-
-  /weakmap-polyfill@2.0.4:
-    resolution: {integrity: sha512-ZzxBf288iALJseijWelmECm/1x7ZwQn3sMYIkDr2VvZp7r6SEKuT8D0O9Wiq6L9Nl5mazrOMcmiZE/2NCenaxw==}
-    engines: {node: '>=8.10.0'}
-    dev: false
 
   /web-namespaces@2.0.1:
     resolution: {integrity: sha512-bKr1DkiNa2krS7qxNtdrtHAmzuYGFQLiQ13TsorsdT6ULTkPLKuu5+GsFpDlg6JFjUTwX2DyhMPG2be8uPrqsQ==}

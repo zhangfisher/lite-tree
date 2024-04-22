@@ -46,7 +46,7 @@ class LiteTree extends QuarkElement {
 		this.nodes = nodes;
 		this.inlineStyles = styles;
 		this.classs = classs;
-		this.icons = icons;
+		this.icons = icons; 
 	}
 
 	componentDidMount(): void {		
