@@ -1,5 +1,7 @@
 # @lite-tree/react
 
+## 1.1.2
+
 ## 1.1.1
 
 ### Patch Changes

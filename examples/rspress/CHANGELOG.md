@@ -1,5 +1,11 @@
 # rspress-doc-template
 
+## 1.0.6
+
+### Patch Changes
+
+- @lite-tree/react@1.1.2
+
 ## 1.0.5
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @lite-tree/webcomponent
 
+## 1.1.2
+
+### Patch Changes
+
+- d087966: fix webcomponent custom icons insert invalid
+
 ## 1.1.1
 
 ### Patch Changes
