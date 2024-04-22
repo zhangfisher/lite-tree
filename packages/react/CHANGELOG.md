@@ -1,5 +1,11 @@
 # @lite-tree/react
 
+## 1.1.1
+
+### Patch Changes
+
+- b4c129a: fix custom icons & styles is not work
+
 ## 1.1.0
 
 ### Minor Changes
