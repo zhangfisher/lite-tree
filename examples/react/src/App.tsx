@@ -1,13 +1,21 @@
-import { useCallback, useEffect, useState } from 'react' 
+import { useCallback,  useState } from 'react' 
 import './App.css'
-import { LiteTree,NodeClickEventHandler ,NodeClickEvent} from '@lite-tree/react'
+import { LiteTree, LiteTreeClickEventHandler, LiteTreeClickParams, LiteTreeCollapseEventHandler, LiteTreeExpandEventHandler} from '@lite-tree/react'
 
 function App() {
   const [darkMode, setDarkMode] = useState(true)
   const [largeFont, setlargeFont] = useState(false)
-  const onNodeClick = useCallback<NodeClickEventHandler>((e:NodeClickEvent)=>{
-    console.log(e)
+  const onNodeClick = useCallback<LiteTreeClickEventHandler>((params:LiteTreeClickParams)=>{
+    console.log("Click: ",params)
   },[]) 
+
+  const onNodeExpand = useCallback<LiteTreeExpandEventHandler>((node)=>{
+    console.log('Expand: ',node)
+  },[])
+  const onNodeCollapse = useCallback<LiteTreeCollapseEventHandler>((node)=>{
+    console.log('Collapse: ',node)
+  },[])
+
   return (
     <div className={'app' + (darkMode ? ' dark' : '')}>
       <div className='card'>
@@ -18,6 +26,8 @@ function App() {
       </div> 
         <LiteTree 
           onClick={onNodeClick}
+          onExpand={onNodeExpand}
+          onCollapse={onNodeCollapse}
         style={{
           height:'600px',
           fontSize:largeFont ? '2em' : '1em',

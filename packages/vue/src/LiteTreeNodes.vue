@@ -2,7 +2,8 @@
   <ul  data-lite-tree :class="['lite-tree-nodes']">
     <li  data-lite-tree v-for="(node, index) in nodes" :key="index">
       <span  data-lite-tree class="lite-tree-node" 
-        @click="toggleNode(node)"
+        :data-node-id="node.id"
+        @click="(e)=>toggleNode(node,e)"
         :class="node.classs" 
         :style="node.style">
         <span  data-lite-tree class="flag" v-if="treeCtx.hasFlag">
@@ -48,12 +49,21 @@ const props = withDefaults(defineProps<LiteTreeNodesProps>(), {
   nodes: () => ([])
 });
 
-const treeCtx = inject<LiteTreeContext>(LiteTreeContextId)!
+const treeCtx = inject<LiteTreeContext & { emit:any}>(LiteTreeContextId)!
 
 // 展开/折叠节点
-const toggleNode = (node: LiteTreeNode): void => {
+const toggleNode = (node: LiteTreeNode,e:any): void => {
+  if(!hasChildren(node)) return;
   node.open = node.open == undefined ? false : !node.open;
+  if(node.open){
+      treeCtx.emit("expand",node,e)
+  }else{
+    treeCtx.emit("collapse",node,e)
+  } 
+  //e.stopPropagation();  
 };
+
+
 // 是否有子节点
 const hasChildren = (node: LiteTreeNode): boolean => {
   return Array.isArray(node.children) && node.children.length > 0;

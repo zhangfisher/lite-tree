@@ -14,10 +14,16 @@ export type LiteTreeNodesProps =React.PropsWithRef<{
 const LiteTreeNodes:React.FC<LiteTreeNodesProps> =(props) => {
     const {indent=0} = props    
     const [nodes,setNodes] = useState<LiteTreeNode[]>(()=>props.nodes)
-    const toggleNode = useCallback((node:LiteTreeNode)=>{ 
-        setNodes(nodes.map(n=>n.id===node.id ? {...n,open:!n.open} : n))
-    },[nodes])
     const treeCtx = useContext(Context)        
+    const toggleNode = useCallback((node:LiteTreeNode,e:MouseEvent)=>{ 
+        setNodes(nodes.map(n=>n.id===node.id ? {...n,open:!n.open} : n))
+        if(!node.open && typeof(treeCtx.onExpand)=='function'){
+            treeCtx.onExpand(node,e)
+        }else if(typeof(treeCtx.onCollapse)=='function'){
+            treeCtx.onCollapse(node,e)            
+        }
+        e.stopPropagation()                
+    },[nodes])
     return  (<ul data-lite-tree className="lite-tree-nodes">
         { nodes.map((node,index)=>{
             const hasChildren = node.children && node.children.length > 0
@@ -25,7 +31,7 @@ const LiteTreeNodes:React.FC<LiteTreeNodesProps> =(props) => {
                 <span data-lite-tree 
                     data-node-id = {node.id}
                     className={"lite-tree-node "+node.classs.join(" ")} 
-                    onClick={()=>toggleNode(node)}
+                    onClick={(e:any)=>toggleNode(node,e)}
                     style={toStyleObject(node.style)}>
                     {/* 显示标识 */}
                     { treeCtx.hasFlag ? <span data-lite-tree className ="flag">                        

@@ -23,7 +23,8 @@ class LiteTree extends QuarkElement {
 	nodes: LiteTreeNode[] = [];
 	// 声明的嵌入样式
 	inlineStyles: Record<string, string> = {};	
-
+	classs: Record<string, string> = {};
+	icons: Record<string, string> = {};
 	
 	treeRef = createRef<HTMLDivElement>()
 
@@ -44,12 +45,13 @@ class LiteTree extends QuarkElement {
 		this.hasFlag = hasFlag;
 		this.nodes = nodes;
 		this.inlineStyles = styles;
-		injectCustomStyles(classs,this.shadowRoot as any);
-		injectSvgIcons(icons,this.shadowRoot as any);
+		this.classs = classs;
+		this.icons = icons;
 	}
 
-	componentDidMount(): void {				
-		
+	componentDidMount(): void {		
+		injectCustomStyles(this.classs,this.shadowRoot as any);
+		injectSvgIcons(this.icons,this.shadowRoot as any);
 	}
 	parentNodes = [];
 	mutationObserver:any;

@@ -2,7 +2,11 @@
 <template> 
 <div class="app" :class="isDark ? 'dark' : ''">
   <main > 
-     <LiteTree format="json">
+     <LiteTree format="json" 
+        @click="(params)=>console.log('Node click:',params)"
+        @expand="(node)=>console.log('Node expand:',node)"
+        @collapse="(node)=>console.log('Node collapse:',node)"
+      >
       {
         title: "A公司([官网](https://github.com/zhangfisher 点击访问))",   
         open: true,

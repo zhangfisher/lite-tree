@@ -2,13 +2,19 @@
 
 
 import { createContext} from "react"
-import type { LiteTreeContext } from "@common/types"
+import type { LiteTreeContext, LiteTreeExpandEventHandler } from "@common/types" 
  
-export type LiteTreeReactContext = LiteTreeContext  
+export type LiteTreeReactContext = LiteTreeContext & {
+    onExpand?:LiteTreeExpandEventHandler
+    onCollapse?:LiteTreeExpandEventHandler
+}
 export const Context = createContext<LiteTreeReactContext>({
     hasFlag:false,
     indent:20,
     styles:{},
     classs:{},
-    icons:{}
+    icons:{},
+    getIcon:()=>'',
+    onExpand:()=>{},
+    onCollapse:()=>{},
 })

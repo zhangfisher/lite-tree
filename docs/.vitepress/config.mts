@@ -32,6 +32,7 @@ export default defineConfig({
           { text: '标签', link: '/guide/node-tags' },
           { text: '图标', link: '/guide/node-icons' },
           { text: '链接', link: '/guide/node-links' },
+          { text: '事件', link: '/guide/events' },
           { text: '定制变量', link: '/guide/vars' },
         ]    
       },
@@ -42,7 +43,9 @@ export default defineConfig({
           { text: 'Vue', link: '/integration/vue' },
           { text: 'VitePress', link: '/integration/vitepress' },
           { text: 'Dumi', link: '/integration/dumi' },
-          { text: 'rspress', link: '/integration/rspress' },
+          { text: 'Rspress', link: '/integration/rspress' },
+          { text: 'WebComponent', link: '/integration/webcomponent' },
+          { text: 'Docsify', link: '/integration/docsify' },
         ]}
     ],
 

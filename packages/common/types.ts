@@ -60,3 +60,6 @@ export type LiteTreeClickParams = {
     element:HTMLElement
 }
 
+export type LiteTreeExpandEventHandler = (node:LiteTreeNode,e:MouseEvent)=>void
+export type LiteTreeCollapseEventHandler = (node:LiteTreeNode,e:MouseEvent)=>void
+export type LiteTreeClickEventHandler = (params:LiteTreeClickParams,e:MouseEvent)=>void

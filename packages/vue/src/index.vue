@@ -1,5 +1,5 @@
 <template>
-    <div data-lite-tree class="lite-tree" >
+    <div data-lite-tree class="lite-tree" @click="nodeEventHandler">
         <LiteTreeNodes :nodes="nodes"></LiteTreeNodes>
     </div>
 </template>
@@ -8,11 +8,10 @@
 import { ref, useSlots, withDefaults, provide, reactive } from 'vue';
 import { LiteTreeContextId} from '@common/consts';
 import { parseTree } from '@common/parsers';
-import type { LiteTreeContext,LiteTreeProps,LiteTreeParseResults } from '@common/types';
+import type { LiteTreeContext,LiteTreeProps,LiteTreeParseResults,LiteTreeClickParams,LiteTreeNode} from '@common/types';
 import LiteTreeNodes from "./LiteTreeNodes.vue";
-import { injectSvgIcons ,injectCustomStyles,getIcon} from '@common/utils';
-import '@common/styles';
-
+import { injectSvgIcons ,injectCustomStyles,getIcon,handleNodeClick} from '@common/utils';
+import '@common/styles';  
 
 // 默认使用Lite格式
 const props = withDefaults(defineProps<LiteTreeProps>(), {
@@ -22,12 +21,26 @@ const props = withDefaults(defineProps<LiteTreeProps>(), {
     getIcon,
 });
 
+
+const emit = defineEmits<{
+  (e: 'click', params: LiteTreeClickParams,event:MouseEvent): void
+  (e: 'expand', node: LiteTreeNode,event:MouseEvent): void
+  (e: 'collapse', node: LiteTreeNode,event:MouseEvent): void
+}>()
+
+
 let format = ref(props.format)
 
 if(props.json) format.value="json"
 if(props.lite) format.value="lite"
 
 const slots = useSlots();
+
+const nodeEventHandler = (e:MouseEvent)=>{
+    handleNodeClick(e,(params:any)=>{
+        emit('click',params,e)
+    })
+}
 
 const getSlotData = ()=>{
     const slotContent = slots.default?.()[0];
@@ -52,13 +65,14 @@ injectSvgIcons(icons)
 
 let nodes=reactive(rNodes)
 
-provide<LiteTreeContext>(LiteTreeContextId, {
+provide<LiteTreeContext & {emit:typeof emit}>(LiteTreeContextId, {
     hasFlag: isShowFlag,
     indent: props.indent,
     styles,
     classs,
     icons,
-    getIcon:props.getIcon
+    getIcon:props.getIcon,
+    emit    
 })
 
 </script>
