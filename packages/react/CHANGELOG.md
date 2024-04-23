@@ -1,5 +1,11 @@
 # @lite-tree/react
 
+## 1.1.3
+
+### Patch Changes
+
+- 36d2710: fix injectSvgIcons error
+
 ## 1.1.2
 
 ## 1.1.1

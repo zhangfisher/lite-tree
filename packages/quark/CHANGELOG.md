@@ -1,5 +1,11 @@
 # @lite-tree/webcomponent
 
+## 1.1.3
+
+### Patch Changes
+
+- 36d2710: fix injectSvgIcons error
+
 ## 1.1.2
 
 ### Patch Changes
