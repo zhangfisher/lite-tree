@@ -9,7 +9,7 @@
  */
 export function createSvgIconContainer(loc?:HTMLElement){
     if(globalThis.document==undefined) return
-    let svgContainer = loc.querySelector("#lite_tree_icons") as HTMLElement
+    let svgContainer = (loc || document).querySelector("#lite_tree_icons") as HTMLElement
     if(!svgContainer){
         svgContainer = document.createElement("style")
         svgContainer.id="lite_tree_icons"
