@@ -1,6 +1,10 @@
 # WebComponent
 
-`@lite-tree/webcomponent`是一个基于`WebComponent`规范的组件，提供了`lite-tree`的`WebComponent`版本。
+`@lite-tree/webcomponent`是`lite-tree`的`WebComponent`版本，基于`Quarkc`构建，可以直接在浏览器中使用。
+
+::: tip
+`Quarkc`是由哈啰平台前端团队开发的一套面向未来的`Web components`构建工具。[访问官网](https://quark-ecosystem.github.io/quarkc-docs/#/zh-CN/docs/introduce)
+:::
 
 ## 安装
 
