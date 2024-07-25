@@ -1,5 +1,11 @@
 # @lite-tree/vue
 
+## 1.1.4
+
+### Patch Changes
+
+- 80011ba: 修复 insjectSvgIcon 时提示错误
+
 ## 1.1.3
 
 ### Patch Changes

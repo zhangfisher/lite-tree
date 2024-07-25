@@ -1,5 +1,11 @@
 # @lite-tree/icons
 
+## 1.0.6
+
+### Patch Changes
+
+- 80011ba: 修复 insjectSvgIcon 时提示错误
+
 ## 1.0.5
 
 ### Patch Changes
