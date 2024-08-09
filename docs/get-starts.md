@@ -1,6 +1,6 @@
 # 快速使用
 
-`LiteTree`包含`@lite-tree/react`和`@lite-tree/vue`两个版本，分别在`React`和`Vue`中使用,两者的使用方式基本相同。下面以`VitePress`为例进行说明。
+`LiteTree`包含`@lite-tree/react`、`@lite-tree/vue`和`@lite-tree/webcomponent`三个版本，分别在`React/Vue/html`中使用,使用方式基本相同。下面以`VitePress`为例进行说明。
 
 ## 第1步：安装
 
