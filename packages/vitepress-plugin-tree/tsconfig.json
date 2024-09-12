@@ -1,0 +1,30 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "compilerOptions": {
+    "declaration": true, 
+    "declarationDir": "./dist",
+    "moduleResolution": "Node",
+    "module": "ES2022",
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@common/*": ["../common/*"]
+    },
+    "rootDirs": ["src"],
+  },
+  "include": [
+    "env.d.ts",  
+    "src/*.ts", 
+    "src/**/*.ts", 
+    "src/**/*/*.ts", 
+    "src/**/*.vue", 
+    "src/**/*/*.vue", 
+    "../common/**/*",
+    "../common/**/*/*.ts"
+  ],
+  "exclude": ["src/**/__tests__/*"],
+}
+
+ 
