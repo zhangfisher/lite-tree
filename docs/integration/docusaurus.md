@@ -1,4 +1,4 @@
-# docusaurus
+# Docusaurus
 
 ## Installation
 

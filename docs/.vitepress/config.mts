@@ -46,6 +46,7 @@ export default defineConfig({
           { text: 'Rspress', link: '/integration/rspress' },
           { text: 'WebComponent', link: '/integration/webcomponent' },
           { text: 'Docsify', link: '/integration/docsify' },
+          { text: 'Docusaurus', link: '/integration/docusaurus' }
         ]}
     ],
 
