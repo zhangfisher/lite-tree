@@ -15,9 +15,9 @@
     "docs:preview": "vitepress preview docs",
     "changeset": "changeset",
     "release": "changeset version && changeset publish",
+    "publish:all": "turbo build --filter=./packages/* && changeset version && changeset publish",
     "build:all": "turbo build --filter=@lite-tree/*",
-    "build": "turbo build --filter ",
-    "docsify:run":"docsify serve examples/docsify"
+    "build": "turbo build --filter "
   },
   "files": [
     "dist",
@@ -37,6 +37,7 @@
     "@types/node": "^20.11.28",
     "@types/react": "^18.2.73",
     "ts-node": "^10.9.2",
+    "turbo": "^2.3.0",
     "typescript": "^5.4.2",
     "vite-plugin-static-copy": "^1.0.3",
     "vitepress": "1.0.2"
@@ -45,5 +46,5 @@
     "@lite-tree/react": "workspace:^",
     "vue": "^3.4.21"
   },
-  "packageManager":"pnpm@9.0.0"
+  "packageManager": "pnpm@9.0.0"
 }

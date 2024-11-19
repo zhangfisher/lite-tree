@@ -33,7 +33,8 @@ export default defineConfig({
           { text: '图标', link: '/guide/node-icons' },
           { text: '链接', link: '/guide/node-links' },
           { text: '事件', link: '/guide/events' },
-          { text: '定制变量', link: '/guide/vars' },
+          { text: '定制变量', link: '/guide/vars' },          
+          { text: '输出目录树', link: '/guide/dirtree' },
         ]    
       },
       { 

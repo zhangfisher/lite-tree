@@ -1,0 +1,158 @@
+
+-before-
+<LiteTree>
+common/
+    parsers/
+        index.ts                                            
+        json.ts                                             
+        lite.ts                                             
+    styles/
+        host-icons.css                                      
+        icons.css                                           
+        iconVars.css                                        
+        styles.css                                          
+        host-icons.less                                     
+        icons.less                                          
+        iconVars.less                                       
+        styles.less                                         
+        index.ts                                            
+    theme/
+        index.ts                                            
+    utils/
+        enableImportant.ts                                  
+        enableScoped.ts                                     
+        eventHandler.ts                                     
+        getIcon.ts                                          
+        getTreeFormat.ts                                    
+        index.ts                                            
+        injectCustomStyles.ts                               
+        injectStylesheet.ts                                 
+        injectSvgIcons.ts                                   
+        parseLinks.ts                                       
+        randomId.ts                                         
+        setObjectDefaultValue.ts                            
+        styledString.ts                                     
+        toStyleObject.ts                                    
+    consts.ts                                               
+    types.ts                                                
+dirtree/
+    src/
+        index.js                                            
+    package.json                                            
+    tree.txt                                                
+icons/
+    .turbo/
+        turbo-build.log                                     
+    filetypes.css                                           
+    index.js                                                
+    package.json                                            
+    filetypes.less                                          
+    CHANGELOG.md                                            // @lite-tree/icons
+    readme.md                                               
+quark/
+    .turbo/
+        turbo-build.log                                     
+    dist/
+        types/
+            common/
+                parsers/
+                    index.d.ts                              
+                    json.d.ts                               
+                    lite.d.ts                               
+                utils/
+                    enableImportant.d.ts                    
+                    enableScoped.d.ts                       
+                    eventHandler.d.ts                       
+                    getIcon.d.ts                            
+                    getTreeFormat.d.ts                      
+                    index.d.ts                              
+                    injectCustomStyles.d.ts                 
+                    injectStylesheet.d.ts                   
+                    injectSvgIcons.d.ts                     
+                    parseLinks.d.ts                         
+                    randomId.d.ts                           
+                    setObjectDefaultValue.d.ts              
+                    styledString.d.ts                       
+                    toStyleObject.d.ts                      
+                consts.d.ts                                 
+                types.d.ts                                  
+            quark/
+                src/
+                    index.d.ts                              
+        index.esm.js                                        
+        index.js                                            
+    src/
+        index.css                                           
+        index.less                                          
+        vite-env.d.ts                                       
+        index.tsx                                           
+    index.html                                              // Hello Quark
+    index.vue.html                                          // Test in Vue.js
+    package.json                                            
+    tsconfig.json                                           
+    CHANGELOG.md                                            // @lite-tree/webcomponent
+    README.md                                               // webcomponent
+    vite.config.build.ts                                    
+    vite.config.ts                                          
+react/
+    .turbo/
+        turbo-build.log                                     
+    dist/
+        index.js                                            
+        index.js.map                                        
+        index.mjs.map                                       
+        index.mjs                                           
+        index.d.ts                                          
+    src/
+        context.ts                                          
+        hooks.ts                                            
+        styles.ts                                           
+        index.tsx                                           
+        LiteTreeNodes.tsx                                   
+        RichLabel.tsx                                       
+    package.json                                            
+    tsconfig.json                                           
+    CHANGELOG.md                                            // @lite-tree/react
+    readme.md                                               
+    tsup.config.ts                                          
+    vite.config.ts                                          
+    pnpm-lock.yaml                                          
+vitepress-plugin-tree/
+    dist/
+        index.js                                            
+        index.js.map                                        
+        index.mjs.map                                       
+        index.mjs                                           
+        index.d.ts                                          
+    src/
+        index.ts                                            
+    package.json                                            
+    tsconfig.json                                           
+    readme.md                                               // vitepress-plugin-tree
+    tree.png                                                
+    vite.config.ts                                          
+vue/
+    .turbo/
+        turbo-build.log                                     
+    dist/
+        index.js                                            
+        index.js.map                                        
+        index.mjs.map                                       
+        index.mjs                                           
+        index.d.ts                                          
+    src/
+        index.ts                                            
+        index.vue                                           
+        LiteTreeNodes.vue                                   
+        RichIcon.vue                                        
+        RichLabel.vue                                       
+    package.json                                            
+    tsconfig.json                                           
+    CHANGELOG.md                                            // @lite-tree/vue
+    readme.md                                               
+    vite.config.ts                                          
+</LiteTree>
+
+-after-
+
+
