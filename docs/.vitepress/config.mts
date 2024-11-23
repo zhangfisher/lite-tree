@@ -14,6 +14,7 @@ export default defineConfig({
     nav: [
       { text: '首页', link: '/' }, 
       { text: '指南', link: '/guide' }, 
+      { text: '开源推荐', link: 'https://zhangfisher.github.io/repos/'}
     ],
 
     sidebar: [ 
