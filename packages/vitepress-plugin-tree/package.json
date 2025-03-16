@@ -1,6 +1,6 @@
 {
   "name": "vitepress-plugin-tree",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "easy render tree component on vitepress",
   "homepage": "https://zhangfisher.github.io/lite-tree/",
   "repository": {
