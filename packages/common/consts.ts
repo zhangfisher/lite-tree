@@ -6,7 +6,8 @@ export const flagAlias:Record<string,string | string[]> = {
     "*": "diff-modify", 
     "!": ["important","[important]"],
     "x": ["error","[no]"],
-    "v": ["correct","[yes]"]
+    "v": ["correct","[yes]"],
+    "i": ["ignore",""]
 }
 
 export const LiteTreeScopeId="data-lite-tree"

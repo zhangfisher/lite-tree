@@ -75,6 +75,10 @@
   background-color: #ffeaea;
   color: red!important;
 }
+.lite-tree .lite-tree-nodes > li > span.lite-tree-node.ignore {
+  background-color: #f3ffec;
+  color: #bbb !important;
+}
 .lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.flag {
   width: 1.2em;
   text-align: center;
@@ -160,6 +164,10 @@
 }
 .dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node.error {
   background-color: #212121;
+}
+.dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node.ignore {
+  background-color: #212121;
+  color: #444 !important;
 }
 .dark .lite-tree .lite-tree-nodes > li > span.lite-tree-node > span.title > span.tag {
   background-color: #212121;

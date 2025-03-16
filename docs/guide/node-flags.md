@@ -62,7 +62,7 @@ A公司
         销售部          //-         删除标识
         客服部          //-         删除标识
         品牌部          //-         删除标识
-        市场策划部
+        市场策划部      //i         忽略标识
         市场营销部      //!        代表强调
     研发中心
         移动研发部
@@ -73,13 +73,10 @@ A公司
         设计部
 </LiteTree>
 
-
-
-
 ## **内置标识**
 
 `LiteTree`内置支持以下内置标识：
- 
+
 ```ts
 <LiteTree>
 新增       //+     代表新增
@@ -88,6 +85,7 @@ A公司
 强调       //!      代表强调
 错误       //x      代表错误
 成功       //v      代表成功
+忽略       //i      代表忽略
 </LiteTree>
 ```
 
@@ -100,6 +98,7 @@ A公司
 强调       //!      代表强调
 错误       //x      代表错误
 成功       //v      代表成功
+忽略       //i      代表忽略
 </LiteTree>
 
 
@@ -121,10 +120,10 @@ A公司
 .warning=color:#ff742e;background-color:#ffd0b3;
 github=data:image/svg+xml;base64,<...此处省略自定义图标数据...>
 ---
-成功       //s     代表成功
-警告       //w.warning      代表警告
-错误       //e{color:red}      代表错误
-VoerkaI18n       //[github]{color:green}      使用图标标识
+成功                //s     代表成功
+警告                //w.warning      代表警告
+错误                //e{color:red}      代表错误
+VoerkaI18n          //[github]{color:green}      使用图标标识
 ```
 
 **渲染效果如下：**
