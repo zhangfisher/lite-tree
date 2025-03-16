@@ -1,5 +1,11 @@
 # @lite-tree/webcomponent
 
+## 1.1.5
+
+### Patch Changes
+
+- 3ddb3e0: 节点增加 i 标识代表忽略
+
 ## 1.1.4
 
 ### Patch Changes

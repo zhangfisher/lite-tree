@@ -1,5 +1,13 @@
 # rspress-doc-template
 
+## 1.0.9
+
+### Patch Changes
+
+- 3ddb3e0: 节点增加 i 标识代表忽略
+- Updated dependencies [3ddb3e0]
+  - @lite-tree/react@1.1.5
+
 ## 1.0.8
 
 ### Patch Changes
