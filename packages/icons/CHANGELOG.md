@@ -1,5 +1,11 @@
 # @lite-tree/icons
 
+## 1.0.7
+
+### Patch Changes
+
+- 3ddb3e0: 节点增加 i 标识代表忽略
+
 ## 1.0.6
 
 ### Patch Changes
