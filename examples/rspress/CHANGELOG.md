@@ -1,5 +1,13 @@
 # rspress-doc-template
 
+## 1.0.10
+
+### Patch Changes
+
+- a60c6b9: fix ignore backcolor
+- Updated dependencies [a60c6b9]
+  - @lite-tree/react@1.1.6
+
 ## 1.0.9
 
 ### Patch Changes

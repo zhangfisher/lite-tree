@@ -1,5 +1,11 @@
 # @lite-tree/dirtree
 
+## 1.0.3
+
+### Patch Changes
+
+- a60c6b9: fix ignore backcolor
+
 ## 1.0.2
 
 ### Patch Changes
