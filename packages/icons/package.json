@@ -1,6 +1,6 @@
 {
   "name": "@lite-tree/icons",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "icons for lite-tree",
   "main": "index.js",
   "type": "module",

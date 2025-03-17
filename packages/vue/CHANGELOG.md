@@ -1,5 +1,11 @@
 # @lite-tree/vue
 
+## 1.1.6
+
+### Patch Changes
+
+- a60c6b9: fix ignore backcolor
+
 ## 1.1.5
 
 ### Patch Changes

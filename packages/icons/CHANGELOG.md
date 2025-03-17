@@ -1,5 +1,11 @@
 # @lite-tree/icons
 
+## 1.0.8
+
+### Patch Changes
+
+- a60c6b9: fix ignore backcolor
+
 ## 1.0.7
 
 ### Patch Changes
