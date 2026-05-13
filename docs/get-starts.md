@@ -31,7 +31,7 @@ export default {
   extends: DefaultTheme,
   enhanceApp({ app }) {
     // 注册自定义全局组件
-    app.component('LiteTree'，LiteTree)
+    app.component('LiteTree',LiteTree)
   }
 }
 ``` 
